@@ -79,21 +79,96 @@ func newGoalsGetCmd() *cobra.Command {
 	}
 }
 
+type goalFields struct {
+	file, name                                            string
+	spaceRef, bucketRef, assigneeRef, parentRef           string
+	description, horizon, color, date, startTime, endTime string
+	checked                                               bool
+}
+
+func addGoalFields(cmd *cobra.Command, f *goalFields) {
+	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVar(&f.name, "name", "", "goal name")
+	cmd.Flags().StringVar(&f.spaceRef, "space", "", "parent space (ID or name)")
+	cmd.Flags().StringVar(&f.bucketRef, "bucket", "", "parent bucket (ID or name)")
+	cmd.Flags().StringVar(&f.assigneeRef, "assignee", "", "assignee (user ID, email, or full name)")
+	cmd.Flags().StringVar(&f.parentRef, "parent", "", "parent goal (ID or name)")
+	cmd.Flags().StringVar(&f.description, "description", "", "goal description")
+	cmd.Flags().StringVar(&f.horizon, "horizon", "", "horizon: day|week|month|quarter|year|decade|life")
+	cmd.Flags().StringVar(&f.color, "color", "", "palette color (e.g. #ecce32)")
+	cmd.Flags().StringVar(&f.date, "date", "", "ISO date (YYYY-MM-DD)")
+	cmd.Flags().StringVar(&f.startTime, "start-time", "", "start time")
+	cmd.Flags().StringVar(&f.endTime, "end-time", "", "end time")
+	cmd.Flags().BoolVar(&f.checked, "checked", false, "whether the goal is checked/done")
+}
+
+func (f *goalFields) build(cmd *cobra.Command, client *api.ClientWithResponses) (map[string]any, error) {
+	body, err := loadBodyFromFile(cmd, f.file)
+	if err != nil {
+		return nil, err
+	}
+	ifChanged(cmd, "name", "name", f.name, body)
+	ifChanged(cmd, "description", "description", f.description, body)
+	ifChanged(cmd, "horizon", "horizon", f.horizon, body)
+	ifChanged(cmd, "color", "color", f.color, body)
+	ifChanged(cmd, "date", "date", f.date, body)
+	ifChanged(cmd, "start-time", "startTime", f.startTime, body)
+	ifChanged(cmd, "end-time", "endTime", f.endTime, body)
+	ifChanged(cmd, "checked", "checked", f.checked, body)
+	if cmd.Flags().Changed("space") {
+		id, err := resolveSpaceRef(cmd.Context(), client, f.spaceRef)
+		if err != nil {
+			return nil, err
+		}
+		body["spaceId"] = id
+	}
+	if cmd.Flags().Changed("bucket") {
+		id, err := resolveBucketRef(cmd.Context(), client, f.bucketRef)
+		if err != nil {
+			return nil, err
+		}
+		body["bucketId"] = id
+	}
+	if cmd.Flags().Changed("assignee") {
+		id, err := resolveUserRef(cmd.Context(), client, f.assigneeRef)
+		if err != nil {
+			return nil, err
+		}
+		body["assigneeId"] = id
+	}
+	if cmd.Flags().Changed("parent") {
+		id, err := resolveGoalRef(cmd.Context(), client, f.parentRef)
+		if err != nil {
+			return nil, err
+		}
+		body["parentId"] = id
+	}
+	return body, nil
+}
+
 func newGoalsCreateCmd() *cobra.Command {
-	var file string
+	var f goalFields
 	cmd := &cobra.Command{
-		Use:   "create",
-		Short: "Create a goal from a JSON body",
+		Use:   "create [name]",
+		Short: "Create a goal",
+		Args:  cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			body, err := readJSONBody[api.GoalsCreateJSONRequestBody](cmd, file)
-			if err != nil {
-				return err
-			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
 			}
-			resp, err := client.GoalsCreateWithResponse(cmd.Context(), body)
+			body, err := f.build(cmd, client)
+			if err != nil {
+				return err
+			}
+			if len(args) == 1 {
+				body["name"] = args[0]
+			}
+			ct, r, err := encodeJSONBody(body)
+			if err != nil {
+				return err
+			}
+			resp, err := client.GoalsCreateWithBodyWithResponse(cmd.Context(), ct, r)
 			if err != nil {
 				return err
 			}
@@ -103,26 +178,30 @@ func newGoalsCreateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON201, (&goalTabular{[]api.Goal{*resp.JSON201}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "path to a JSON body (or - for stdin)")
+	addGoalFields(cmd, &f)
 	return cmd
 }
 
 func newGoalsUpdateCmd() *cobra.Command {
-	var file string
+	var f goalFields
 	cmd := &cobra.Command{
 		Use:   "update <id>",
 		Short: "Partially update a goal (PATCH)",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			body, err := readJSONBody[api.GoalsPartialUpdateJSONRequestBody](cmd, file)
-			if err != nil {
-				return err
-			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
 			}
-			resp, err := client.GoalsPartialUpdateWithResponse(cmd.Context(), args[0], body)
+			body, err := f.build(cmd, client)
+			if err != nil {
+				return err
+			}
+			ct, r, err := encodeJSONBody(body)
+			if err != nil {
+				return err
+			}
+			resp, err := client.GoalsPartialUpdateWithBodyWithResponse(cmd.Context(), args[0], ct, r)
 			if err != nil {
 				return err
 			}
@@ -132,7 +211,7 @@ func newGoalsUpdateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON200, (&goalTabular{[]api.Goal{*resp.JSON200}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "path to a JSON body (or - for stdin)")
+	addGoalFields(cmd, &f)
 	return cmd
 }
 

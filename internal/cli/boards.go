@@ -79,21 +79,67 @@ func newBoardsGetCmd() *cobra.Command {
 	}
 }
 
+type boardFields struct {
+	file, name, spaceRef, description, background, layout string
+	archived                                              bool
+	sequenceNo                                            int
+}
+
+func addBoardFields(cmd *cobra.Command, f *boardFields) {
+	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVar(&f.name, "name", "", "board name")
+	cmd.Flags().StringVar(&f.spaceRef, "space", "", "parent space (ID or name)")
+	cmd.Flags().StringVar(&f.description, "description", "", "board description")
+	cmd.Flags().StringVar(&f.background, "background", "", "background (URL or token)")
+	cmd.Flags().StringVar(&f.layout, "layout", "", "board layout")
+	cmd.Flags().BoolVar(&f.archived, "archived", false, "whether the board is archived")
+	cmd.Flags().IntVar(&f.sequenceNo, "sequence-no", 0, "sort order within the parent space")
+}
+
+func (f *boardFields) build(cmd *cobra.Command, client *api.ClientWithResponses) (map[string]any, error) {
+	body, err := loadBodyFromFile(cmd, f.file)
+	if err != nil {
+		return nil, err
+	}
+	ifChanged(cmd, "name", "name", f.name, body)
+	ifChanged(cmd, "description", "description", f.description, body)
+	ifChanged(cmd, "background", "background", f.background, body)
+	ifChanged(cmd, "layout", "layout", f.layout, body)
+	ifChanged(cmd, "archived", "archived", f.archived, body)
+	ifChanged(cmd, "sequence-no", "sequenceNo", f.sequenceNo, body)
+	if cmd.Flags().Changed("space") {
+		id, err := resolveSpaceRef(cmd.Context(), client, f.spaceRef)
+		if err != nil {
+			return nil, err
+		}
+		body["spaceId"] = id
+	}
+	return body, nil
+}
+
 func newBoardsCreateCmd() *cobra.Command {
-	var file string
+	var f boardFields
 	cmd := &cobra.Command{
-		Use:   "create",
-		Short: "Create a board from a JSON body",
+		Use:   "create [name]",
+		Short: "Create a board",
+		Args:  cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			body, err := readJSONBody[api.BoardsCreateJSONRequestBody](cmd, file)
-			if err != nil {
-				return err
-			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
 			}
-			resp, err := client.BoardsCreateWithResponse(cmd.Context(), body)
+			body, err := f.build(cmd, client)
+			if err != nil {
+				return err
+			}
+			if len(args) == 1 {
+				body["name"] = args[0]
+			}
+			ct, r, err := encodeJSONBody(body)
+			if err != nil {
+				return err
+			}
+			resp, err := client.BoardsCreateWithBodyWithResponse(cmd.Context(), ct, r)
 			if err != nil {
 				return err
 			}
@@ -103,26 +149,30 @@ func newBoardsCreateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON201, (&boardTabular{[]api.Board{*resp.JSON201}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "path to a JSON body (or - for stdin)")
+	addBoardFields(cmd, &f)
 	return cmd
 }
 
 func newBoardsUpdateCmd() *cobra.Command {
-	var file string
+	var f boardFields
 	cmd := &cobra.Command{
 		Use:   "update <id>",
 		Short: "Partially update a board (PATCH)",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			body, err := readJSONBody[api.BoardsPartialUpdateJSONRequestBody](cmd, file)
-			if err != nil {
-				return err
-			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
 			}
-			resp, err := client.BoardsPartialUpdateWithResponse(cmd.Context(), args[0], body)
+			body, err := f.build(cmd, client)
+			if err != nil {
+				return err
+			}
+			ct, r, err := encodeJSONBody(body)
+			if err != nil {
+				return err
+			}
+			resp, err := client.BoardsPartialUpdateWithBodyWithResponse(cmd.Context(), args[0], ct, r)
 			if err != nil {
 				return err
 			}
@@ -132,7 +182,7 @@ func newBoardsUpdateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON200, (&boardTabular{[]api.Board{*resp.JSON200}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "path to a JSON body (or - for stdin)")
+	addBoardFields(cmd, &f)
 	return cmd
 }
 

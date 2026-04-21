@@ -80,21 +80,34 @@ func newSpacesGetCmd() *cobra.Command {
 }
 
 func newSpacesCreateCmd() *cobra.Command {
-	var file string
+	var file, name string
 	cmd := &cobra.Command{
-		Use:   "create",
-		Short: "Create a space from a JSON body",
-		Long:  "Reads a JSON body from --file <path>, or --file - for stdin.",
+		Use:   "create [name]",
+		Short: "Create a space",
+		Long: "Create a space.\n\n" +
+			"The space name may be given as a positional argument or via --name. " +
+			"A base JSON body can be loaded with --file (or --file - for stdin); " +
+			"any flags passed override the corresponding fields.",
+		Args: cobra.MaximumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			body, err := readJSONBody[api.SpacesCreateJSONRequestBody](cmd, file)
+			body, err := loadBodyFromFile(cmd, file)
 			if err != nil {
 				return err
 			}
+			if len(args) == 1 {
+				body["name"] = args[0]
+			}
+			ifChanged(cmd, "name", "name", name, body)
+
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
 			}
-			resp, err := client.SpacesCreateWithResponse(cmd.Context(), body)
+			ct, r, err := encodeJSONBody(body)
+			if err != nil {
+				return err
+			}
+			resp, err := client.SpacesCreateWithBodyWithResponse(cmd.Context(), ct, r)
 			if err != nil {
 				return err
 			}
@@ -104,26 +117,33 @@ func newSpacesCreateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON201, (&spaceTabular{[]api.Space{*resp.JSON201}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "path to a JSON body (or - for stdin)")
+	cmd.Flags().StringVar(&file, "file", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVar(&name, "name", "", "space name")
 	return cmd
 }
 
 func newSpacesUpdateCmd() *cobra.Command {
-	var file string
+	var file, name string
 	cmd := &cobra.Command{
 		Use:   "update <id>",
-		Short: "Partially update a space from a JSON body (PATCH)",
+		Short: "Partially update a space (PATCH)",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			body, err := readJSONBody[api.SpacesPartialUpdateJSONRequestBody](cmd, file)
+			body, err := loadBodyFromFile(cmd, file)
 			if err != nil {
 				return err
 			}
+			ifChanged(cmd, "name", "name", name, body)
+
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
 			}
-			resp, err := client.SpacesPartialUpdateWithResponse(cmd.Context(), args[0], body)
+			ct, r, err := encodeJSONBody(body)
+			if err != nil {
+				return err
+			}
+			resp, err := client.SpacesPartialUpdateWithBodyWithResponse(cmd.Context(), args[0], ct, r)
 			if err != nil {
 				return err
 			}
@@ -133,7 +153,8 @@ func newSpacesUpdateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON200, (&spaceTabular{[]api.Space{*resp.JSON200}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "path to a JSON body (or - for stdin)")
+	cmd.Flags().StringVar(&file, "file", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVar(&name, "name", "", "space name")
 	return cmd
 }
 
