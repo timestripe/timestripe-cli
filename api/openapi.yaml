@@ -1,0 +1,1652 @@
+openapi: 3.0.3
+info:
+  title: Timestripe API
+  version: v3
+paths:
+  /boards/:
+    get:
+      operationId: boardsList
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - boards
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBoardList'
+          description: ''
+    post:
+      operationId: boardsCreate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      tags:
+      - boards
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Board'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Board'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Board'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+          description: ''
+  /boards/{id}/:
+    get:
+      operationId: boardsRetrieve
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - boards
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+          description: ''
+    put:
+      operationId: boardsUpdate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - boards
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Board'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Board'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Board'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+          description: ''
+    patch:
+      operationId: boardsPartialUpdate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - boards
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBoard'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBoard'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBoard'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Board'
+          description: ''
+    delete:
+      operationId: boardsDestroy
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - boards
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
+  /buckets/:
+    get:
+      operationId: bucketsList
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - buckets
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBucketList'
+          description: ''
+    post:
+      operationId: bucketsCreate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+          description: ''
+  /buckets/{id}/:
+    get:
+      operationId: bucketsRetrieve
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - buckets
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+          description: ''
+    put:
+      operationId: bucketsUpdate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+          description: ''
+    patch:
+      operationId: bucketsPartialUpdate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedBucket'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBucket'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedBucket'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+          description: ''
+    delete:
+      operationId: bucketsDestroy
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - buckets
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
+  /goals/:
+    get:
+      operationId: goalsList
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - goals
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedGoalList'
+          description: ''
+    post:
+      operationId: goalsCreate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      tags:
+      - goals
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+  /goals/{id}/:
+    get:
+      operationId: goalsRetrieve
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - goals
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+    put:
+      operationId: goalsUpdate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - goals
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Goal'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+    patch:
+      operationId: goalsPartialUpdate
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - goals
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGoal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGoal'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGoal'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+          description: ''
+    delete:
+      operationId: goalsDestroy
+      description: Wraps write actions in a TrackEvents context so signal-based event
+        logging fires.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - goals
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
+  /memberships/:
+    get:
+      operationId: membershipsList
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - memberships
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMembershipList'
+          description: ''
+  /memberships/{id}/:
+    get:
+      operationId: membershipsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - memberships
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+          description: ''
+  /spaces/:
+    get:
+      operationId: spacesList
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - spaces
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSpaceList'
+          description: ''
+    post:
+      operationId: spacesCreate
+      tags:
+      - spaces
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Space'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Space'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Space'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Space'
+          description: ''
+  /spaces/{id}/:
+    get:
+      operationId: spacesRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - spaces
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Space'
+          description: ''
+    put:
+      operationId: spacesUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - spaces
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Space'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Space'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Space'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Space'
+          description: ''
+    patch:
+      operationId: spacesPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - spaces
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSpace'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSpace'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSpace'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Space'
+          description: ''
+    delete:
+      operationId: spacesDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - spaces
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
+  /spaces/{id}/clone/:
+    post:
+      operationId: spacesCloneCreate
+      summary: spacesClone
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - spaces
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Space'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Space'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Space'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Space'
+          description: ''
+  /users/:
+    get:
+      operationId: usersList
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - users
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
+          description: ''
+  /users/{id}/:
+    get:
+      operationId: usersRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /users/me/:
+    get:
+      operationId: usersMeRetrieve
+      tags:
+      - users
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /webhooks/:
+    get:
+      operationId: webhooksList
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - webhooks
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWebhookList'
+          description: ''
+    post:
+      operationId: webhooksCreate
+      tags:
+      - webhooks
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+          description: ''
+  /webhooks/{id}/:
+    get:
+      operationId: webhooksRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - webhooks
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+          description: ''
+    put:
+      operationId: webhooksUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - webhooks
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Webhook'
+        required: true
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+          description: ''
+    patch:
+      operationId: webhooksPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - webhooks
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWebhook'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWebhook'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWebhook'
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+          description: ''
+    delete:
+      operationId: webhooksDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - webhooks
+      security:
+      - Bearer: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Board:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        spaceId:
+          type: string
+        name:
+          type: string
+          maxLength: 250
+        description:
+          type: string
+        background:
+          type: string
+          nullable: true
+          maxLength: 250
+        layout:
+          type: string
+          nullable: true
+          maxLength: 250
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        archived:
+          type: boolean
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+      required:
+      - createdDatetime
+      - id
+      - spaceId
+      - url
+    Bucket:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        boardId:
+          type: string
+        name:
+          type: string
+          maxLength: 250
+        emoji:
+          type: string
+          maxLength: 10
+        showEmoji:
+          type: boolean
+        expanded:
+          type: boolean
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+      required:
+      - boardId
+      - createdDatetime
+      - id
+      - url
+    Goal:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        spaceId:
+          type: string
+        bucketId:
+          type: string
+          nullable: true
+        parentId:
+          type: string
+          nullable: true
+        assigneeId:
+          type: string
+          nullable: true
+        horizon:
+          enum:
+          - day
+          - week
+          - month
+          - quarter
+          - year
+          - decade
+          - life
+          - null
+          type: string
+          description: |-
+            * `day` - day
+            * `week` - week
+            * `month` - month
+            * `quarter` - quarter
+            * `year` - year
+            * `decade` - decade
+            * `life` - life
+          x-spec-enum-id: 13429041ce24120c
+          nullable: true
+        date:
+          type: string
+          format: date
+          nullable: true
+        startTime:
+          type: string
+          format: time
+          nullable: true
+        endTime:
+          type: string
+          format: time
+          nullable: true
+        name:
+          type: string
+          maxLength: 250
+        description:
+          type: string
+        color:
+          enum:
+          - '#ecce32'
+          - '#df496d'
+          - '#92ce14'
+          - '#278dea'
+          - '#955be0'
+          - '#f2713a'
+          - null
+          type: string
+          description: |-
+            * `#ecce32` - #ecce32
+            * `#df496d` - #df496d
+            * `#92ce14` - #92ce14
+            * `#278dea` - #278dea
+            * `#955be0` - #955be0
+            * `#f2713a` - #f2713a
+          x-spec-enum-id: bf9322e458ef9c42
+          nullable: true
+        checked:
+          type: boolean
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+      required:
+      - createdDatetime
+      - id
+      - spaceId
+      - url
+    MagicLink:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+        role:
+          enum:
+          - OWNER
+          - ADMIN
+          - EDITOR
+          - VIEWER
+          type: string
+          description: |-
+            * `OWNER` - Owner
+            * `ADMIN` - Admin
+            * `EDITOR` - Editor
+            * `VIEWER` - Viewer
+          x-spec-enum-id: 8c80dc16c3f88cd5
+      required:
+      - id
+      - url
+    Membership:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        spaceId:
+          type: string
+          readOnly: true
+        userId:
+          type: string
+          readOnly: true
+        role:
+          enum:
+          - OWNER
+          - ADMIN
+          - EDITOR
+          - VIEWER
+          type: string
+          description: |-
+            * `OWNER` - Owner
+            * `ADMIN` - Admin
+            * `EDITOR` - Editor
+            * `VIEWER` - Viewer
+          x-spec-enum-id: 8c80dc16c3f88cd5
+          readOnly: true
+      required:
+      - id
+      - role
+      - spaceId
+      - userId
+    PaginatedBoardList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Board'
+    PaginatedBucketList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bucket'
+    PaginatedGoalList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Goal'
+    PaginatedMembershipList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Membership'
+    PaginatedSpaceList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Space'
+    PaginatedUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PaginatedWebhookList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Webhook'
+    PatchedBoard:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        spaceId:
+          type: string
+        name:
+          type: string
+          maxLength: 250
+        description:
+          type: string
+        background:
+          type: string
+          nullable: true
+          maxLength: 250
+        layout:
+          type: string
+          nullable: true
+          maxLength: 250
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        archived:
+          type: boolean
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+    PatchedBucket:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        boardId:
+          type: string
+        name:
+          type: string
+          maxLength: 250
+        emoji:
+          type: string
+          maxLength: 10
+        showEmoji:
+          type: boolean
+        expanded:
+          type: boolean
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+    PatchedGoal:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        spaceId:
+          type: string
+        bucketId:
+          type: string
+          nullable: true
+        parentId:
+          type: string
+          nullable: true
+        assigneeId:
+          type: string
+          nullable: true
+        horizon:
+          enum:
+          - day
+          - week
+          - month
+          - quarter
+          - year
+          - decade
+          - life
+          - null
+          type: string
+          description: |-
+            * `day` - day
+            * `week` - week
+            * `month` - month
+            * `quarter` - quarter
+            * `year` - year
+            * `decade` - decade
+            * `life` - life
+          x-spec-enum-id: 13429041ce24120c
+          nullable: true
+        date:
+          type: string
+          format: date
+          nullable: true
+        startTime:
+          type: string
+          format: time
+          nullable: true
+        endTime:
+          type: string
+          format: time
+          nullable: true
+        name:
+          type: string
+          maxLength: 250
+        description:
+          type: string
+        color:
+          enum:
+          - '#ecce32'
+          - '#df496d'
+          - '#92ce14'
+          - '#278dea'
+          - '#955be0'
+          - '#f2713a'
+          - null
+          type: string
+          description: |-
+            * `#ecce32` - #ecce32
+            * `#df496d` - #df496d
+            * `#92ce14` - #92ce14
+            * `#278dea` - #278dea
+            * `#955be0` - #955be0
+            * `#f2713a` - #f2713a
+          x-spec-enum-id: bf9322e458ef9c42
+          nullable: true
+        checked:
+          type: boolean
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+    PatchedSpace:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 250
+        magicLinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/MagicLink'
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+    PatchedWebhook:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        space:
+          type: string
+          nullable: true
+        url:
+          type: string
+          maxLength: 250
+        enabled:
+          type: boolean
+        lastSuccessDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        lastFailureDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        nextRetryDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        failuresStreak:
+          type: integer
+          readOnly: true
+        retriesLeft:
+          type: integer
+          readOnly: true
+    Space:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 250
+        magicLinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/MagicLink'
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+      required:
+      - id
+      - magicLinks
+      - url
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        firstName:
+          type: string
+          readOnly: true
+        lastName:
+          type: string
+          readOnly: true
+        image:
+          type: string
+          readOnly: true
+          nullable: true
+        timezone:
+          type: string
+          readOnly: true
+          nullable: true
+        url:
+          type: string
+          readOnly: true
+      required:
+      - email
+      - firstName
+      - id
+      - image
+      - lastName
+      - timezone
+      - url
+    Webhook:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        space:
+          type: string
+          nullable: true
+        url:
+          type: string
+          maxLength: 250
+        enabled:
+          type: boolean
+        lastSuccessDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        lastFailureDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        nextRetryDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        failuresStreak:
+          type: integer
+          readOnly: true
+        retriesLeft:
+          type: integer
+          readOnly: true
+      required:
+      - failuresStreak
+      - id
+      - lastFailureDatetime
+      - lastSuccessDatetime
+      - nextRetryDatetime
+      - retriesLeft
+      - space
+      - url
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'Format: Bearer <user api key>'
+    OAuth2:
+      type: oauth2
+      description: OAuth2 bearer token in the Authorization header.
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth/authorize/
+          tokenUrl: /oauth/token/
+          scopes:
+            read_only: Read-only access
+            read_write: Read and write access
+servers:
+- url: https://timestripe.com/api/v3/

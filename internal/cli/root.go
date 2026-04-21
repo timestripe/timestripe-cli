@@ -1,0 +1,65 @@
+// Package cli wires Cobra commands, global flags, and command-level helpers.
+package cli
+
+import (
+	"github.com/spf13/cobra"
+
+	"github.com/timestripe/timestripe-cli/internal/output"
+	"github.com/timestripe/timestripe-cli/internal/pagination"
+)
+
+// outputFlags holds the mutually-exclusive format selectors. Populated by the
+// persistent flags registered on the root command.
+var outputFlags output.Flags
+
+// listFlags holds the pagination selectors shared by every list subcommand.
+type listFlags struct {
+	Limit    int
+	PageSize int
+	All      bool
+}
+
+// Execute runs the CLI.
+func Execute() error {
+	root := &cobra.Command{
+		Use:           "timestripe",
+		Short:         "Timestripe command-line interface",
+		Long:          "timestripe is the official command-line client for the Timestripe API.",
+		SilenceUsage:  true,
+		SilenceErrors: true,
+	}
+
+	pf := root.PersistentFlags()
+	pf.BoolVar(&outputFlags.JSON, "json", false, "output JSON")
+	pf.BoolVar(&outputFlags.YAML, "yaml", false, "output YAML")
+	pf.BoolVar(&outputFlags.Markdown, "markdown", false, "output a Markdown table")
+	pf.BoolVar(&outputFlags.Table, "table", false, "output a pretty table (default on a TTY)")
+	pf.BoolVar(&outputFlags.CSV, "csv", false, "output CSV")
+	root.MarkFlagsMutuallyExclusive("json", "yaml", "markdown", "table", "csv")
+
+	root.AddCommand(
+		newAuthCmd(),
+		newSpacesCmd(),
+		newBoardsCmd(),
+		newBucketsCmd(),
+		newGoalsCmd(),
+		newMembershipsCmd(),
+		newUsersCmd(),
+		newConfigCmd(),
+		newCompletionCmd(),
+		newVersionCmd(),
+	)
+
+	return root.Execute()
+}
+
+// addListFlags registers --limit, --page-size, and --all on a list command.
+func addListFlags(cmd *cobra.Command, f *listFlags) {
+	cmd.Flags().IntVar(&f.Limit, "limit", pagination.DefaultLimit, "maximum number of items to return across all pages")
+	cmd.Flags().IntVar(&f.PageSize, "page-size", pagination.DefaultPageSize, "per-request page size (the server may cap lower)")
+	cmd.Flags().BoolVar(&f.All, "all", false, "fetch every page; ignores --limit")
+}
+
+func (f *listFlags) options() pagination.Options {
+	return pagination.Options{Limit: f.Limit, PageSize: f.PageSize, All: f.All}
+}
