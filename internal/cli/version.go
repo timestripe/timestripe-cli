@@ -13,6 +13,9 @@ var (
 	date    = "unknown"
 )
 
+// userAgent is the HTTP User-Agent sent on requests to Timestripe services.
+func userAgent() string { return "timestripe-cli/" + version }
+
 func newVersionCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "version",

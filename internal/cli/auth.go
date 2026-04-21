@@ -46,7 +46,7 @@ scripting and CI).
 				fmt.Fprintln(cmd.OutOrStdout(), "Saved personal token.")
 				return nil
 			}
-			creds, err := auth.LoginPKCE(cmd.Context(), scopes)
+			creds, err := auth.LoginPKCE(cmd.Context(), scopes, userAgent())
 			if err != nil {
 				return err
 			}

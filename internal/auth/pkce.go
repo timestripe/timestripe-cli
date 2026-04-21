@@ -42,12 +42,15 @@ var RedirectURL = fmt.Sprintf("http://127.0.0.1:%d/callback", CallbackPort)
 // LoginPKCE runs the OAuth2 authorization-code flow with PKCE against a
 // loopback redirect on the fixed callback port.
 //
+// userAgent, if non-empty, is sent on the token-exchange request so the
+// OAuth server can identify the CLI client.
+//
 // Flow:
 //  1. Start an HTTP server on 127.0.0.1:CallbackPort.
 //  2. Open the user's browser to the authorization URL.
 //  3. Wait for the browser to hit /callback with ?code=...&state=....
 //  4. Exchange code + PKCE verifier for tokens.
-func LoginPKCE(ctx context.Context, scopes []string) (*Credentials, error) {
+func LoginPKCE(ctx context.Context, scopes []string, userAgent string) (*Credentials, error) {
 	ln, err := net.Listen("tcp", fmt.Sprintf("127.0.0.1:%d", CallbackPort))
 	if err != nil {
 		return nil, fmt.Errorf("bind 127.0.0.1:%d (is another login in progress, or is the port in use?): %w", CallbackPort, err)
@@ -119,6 +122,13 @@ func LoginPKCE(ctx context.Context, scopes []string) (*Credentials, error) {
 		fmt.Fprintf(os.Stderr, "Open this URL to authorize:\n%s\n", authCodeURL)
 	}
 
+	exchangeCtx := ctx
+	if userAgent != "" {
+		exchangeCtx = context.WithValue(ctx, oauth2.HTTPClient, &http.Client{
+			Transport: &userAgentTransport{ua: userAgent, base: http.DefaultTransport},
+		})
+	}
+
 	select {
 	case <-ctx.Done():
 		return nil, ctx.Err()
@@ -126,7 +136,7 @@ func LoginPKCE(ctx context.Context, scopes []string) (*Credentials, error) {
 		if r.err != nil {
 			return nil, r.err
 		}
-		tok, err := conf.Exchange(ctx, r.code, oauth2.VerifierOption(verifier))
+		tok, err := conf.Exchange(exchangeCtx, r.code, oauth2.VerifierOption(verifier))
 		if err != nil {
 			return nil, fmt.Errorf("token exchange: %w", err)
 		}
@@ -137,6 +147,18 @@ func LoginPKCE(ctx context.Context, scopes []string) (*Credentials, error) {
 			ExpiresAt:    tok.Expiry,
 		}, nil
 	}
+}
+
+// userAgentTransport sets User-Agent on each request before delegating.
+type userAgentTransport struct {
+	ua   string
+	base http.RoundTripper
+}
+
+func (t *userAgentTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	clone := req.Clone(req.Context())
+	clone.Header.Set("User-Agent", t.ua)
+	return t.base.RoundTrip(clone)
 }
 
 func randomString(nBytes int) (string, error) {
