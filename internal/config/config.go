@@ -50,15 +50,16 @@ func OAuthAuthorizeURL() string { return Backend() + OAuthAuthorizePath }
 func OAuthTokenURL() string { return Backend() + OAuthTokenPath }
 
 // Dir returns the config directory, creating it if missing.
-// Honors XDG_CONFIG_HOME; falls back to os.UserConfigDir.
+// Honors XDG_CONFIG_HOME; falls back to $HOME/.config (uniform across
+// platforms, overriding the macOS "Application Support" default).
 func Dir() (string, error) {
 	base := os.Getenv("XDG_CONFIG_HOME")
 	if base == "" {
-		d, err := os.UserConfigDir()
+		home, err := os.UserHomeDir()
 		if err != nil {
-			return "", fmt.Errorf("resolve config dir: %w", err)
+			return "", fmt.Errorf("resolve home dir: %w", err)
 		}
-		base = d
+		base = filepath.Join(home, ".config")
 	}
 	dir := filepath.Join(base, appDir)
 	if err := os.MkdirAll(dir, 0o700); err != nil {
