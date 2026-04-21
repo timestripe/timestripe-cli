@@ -24,7 +24,7 @@ func newAPIClient(ctx context.Context) (*api.ClientWithResponses, error) {
 		req.Header.Set("Authorization", "Bearer "+creds.AccessToken)
 		return nil
 	}
-	return api.NewClientWithResponses(config.Backend(), api.WithRequestEditorFn(editor))
+	return api.NewClientWithResponses(config.APIBase(), api.WithRequestEditorFn(editor))
 }
 
 // pickFormat resolves the output format against the command's writer.

@@ -23,8 +23,11 @@ func newConfigShowCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			fmt.Fprintf(cmd.OutOrStdout(), "backend:    %s\n", config.Backend())
-			fmt.Fprintf(cmd.OutOrStdout(), "config dir: %s\n", dir)
+			fmt.Fprintf(cmd.OutOrStdout(), "backend:     %s\n", config.Backend())
+			fmt.Fprintf(cmd.OutOrStdout(), "api:         %s\n", config.APIBase())
+			fmt.Fprintf(cmd.OutOrStdout(), "oauth auth:  %s\n", config.OAuthAuthorizeURL())
+			fmt.Fprintf(cmd.OutOrStdout(), "oauth token: %s\n", config.OAuthTokenURL())
+			fmt.Fprintf(cmd.OutOrStdout(), "config dir:  %s\n", dir)
 			return nil
 		},
 	}

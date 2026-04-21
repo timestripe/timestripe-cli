@@ -5,13 +5,23 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const (
-	// DefaultBackend is the production Timestripe API base URL.
-	DefaultBackend = "https://timestripe.com/api/v3"
+	// DefaultBackend is the production Timestripe site root.
+	DefaultBackend = "https://timestripe.com"
 
-	// EnvBackend overrides the API base URL when set.
+	// APIPath is the path suffix for v3 of the REST API.
+	APIPath = "/api/v3"
+
+	// OAuthAuthorizePath is the path suffix for the OAuth authorization endpoint.
+	OAuthAuthorizePath = "/oauth/authorize"
+
+	// OAuthTokenPath is the path suffix for the OAuth token endpoint.
+	OAuthTokenPath = "/oauth/token"
+
+	// EnvBackend overrides the Timestripe site root when set.
 	EnvBackend = "TIMESTRIPE_BACKEND"
 
 	// EnvToken allows passing a bearer token via environment (bypasses stored credentials).
@@ -20,13 +30,24 @@ const (
 	appDir = "timestripe"
 )
 
-// Backend returns the API base URL. Precedence: TIMESTRIPE_BACKEND env > default.
+// Backend returns the Timestripe site root (no path). Precedence: TIMESTRIPE_BACKEND env > default.
+// Any trailing slash is stripped so callers can safely concatenate paths.
 func Backend() string {
-	if v := os.Getenv(EnvBackend); v != "" {
-		return v
+	v := os.Getenv(EnvBackend)
+	if v == "" {
+		v = DefaultBackend
 	}
-	return DefaultBackend
+	return strings.TrimRight(v, "/")
 }
+
+// APIBase returns the full base URL for the REST API.
+func APIBase() string { return Backend() + APIPath }
+
+// OAuthAuthorizeURL returns the OAuth2 authorization endpoint URL.
+func OAuthAuthorizeURL() string { return Backend() + OAuthAuthorizePath }
+
+// OAuthTokenURL returns the OAuth2 token endpoint URL.
+func OAuthTokenURL() string { return Backend() + OAuthTokenPath }
 
 // Dir returns the config directory, creating it if missing.
 // Honors XDG_CONFIG_HOME; falls back to os.UserConfigDir.

@@ -16,63 +16,42 @@ import (
 	"time"
 
 	"golang.org/x/oauth2"
+
+	"github.com/timestripe/timestripe-cli/internal/config"
 )
 
-// OAuth endpoint + client configuration.
-//
-// These values are not yet issued by Timestripe at the time of this writing;
-// once an OAuth application is provisioned for the public CLI, populate them
-// either at build time via -ldflags or at runtime via env vars:
-//
-//	TIMESTRIPE_OAUTH_CLIENT_ID
-//	TIMESTRIPE_OAUTH_AUTH_URL
-//	TIMESTRIPE_OAUTH_TOKEN_URL
-//
-// The CLI is a *public* OAuth client and MUST NOT embed a client secret.
-// PKCE (RFC 7636) protects the authorization code in transit.
-var (
-	DefaultClientID = "" // populated via -ldflags when published
-	DefaultAuthURL  = ""
-	DefaultTokenURL = ""
-)
+// ClientID is the OAuth client identifier for the CLI.
+const ClientID = "timestripe-cli"
 
-// OAuthEnvConfig returns the resolved OAuth config, honoring env overrides.
-func OAuthEnvConfig() (clientID, authURL, tokenURL string) {
-	clientID = firstNonEmpty(os.Getenv("TIMESTRIPE_OAUTH_CLIENT_ID"), DefaultClientID)
-	authURL = firstNonEmpty(os.Getenv("TIMESTRIPE_OAUTH_AUTH_URL"), DefaultAuthURL)
-	tokenURL = firstNonEmpty(os.Getenv("TIMESTRIPE_OAUTH_TOKEN_URL"), DefaultTokenURL)
-	return
-}
+// ClientSecret is sent alongside ClientID during the token exchange. Because
+// the CLI is distributed as a public binary, this value is not actually secret
+// — PKCE (RFC 7636) is what protects the authorization code in transit.
+const ClientSecret = "timestripe-cli"
 
-func firstNonEmpty(v ...string) string {
-	for _, s := range v {
-		if s != "" {
-			return s
-		}
-	}
-	return ""
-}
+// CallbackPort is the fixed loopback port used for the OAuth redirect URI.
+// The Timestripe OAuth application must register the matching redirect URI:
+//
+//	http://127.0.0.1:53682/callback
+//
+// A static port is required so the redirect URI can be pre-registered.
+const CallbackPort = 53682
+
+// RedirectURL is the full OAuth redirect URI the CLI listens on.
+var RedirectURL = fmt.Sprintf("http://127.0.0.1:%d/callback", CallbackPort)
 
 // LoginPKCE runs the OAuth2 authorization-code flow with PKCE against a
-// loopback redirect, returning persisted Credentials on success.
+// loopback redirect on the fixed callback port.
 //
 // Flow:
-//  1. Start an HTTP server on 127.0.0.1:<random>.
+//  1. Start an HTTP server on 127.0.0.1:CallbackPort.
 //  2. Open the user's browser to the authorization URL.
 //  3. Wait for the browser to hit /callback with ?code=...&state=....
 //  4. Exchange code + PKCE verifier for tokens.
 func LoginPKCE(ctx context.Context, scopes []string) (*Credentials, error) {
-	clientID, authURL, tokenURL := OAuthEnvConfig()
-	if clientID == "" || authURL == "" || tokenURL == "" {
-		return nil, errors.New("OAuth is not configured yet; use `timestripe auth login --token <api-key>` instead " +
-			"or set TIMESTRIPE_OAUTH_CLIENT_ID / TIMESTRIPE_OAUTH_AUTH_URL / TIMESTRIPE_OAUTH_TOKEN_URL")
-	}
-
-	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	ln, err := net.Listen("tcp", fmt.Sprintf("127.0.0.1:%d", CallbackPort))
 	if err != nil {
-		return nil, fmt.Errorf("bind loopback listener: %w", err)
+		return nil, fmt.Errorf("bind 127.0.0.1:%d (is another login in progress, or is the port in use?): %w", CallbackPort, err)
 	}
-	redirect := fmt.Sprintf("http://%s/callback", ln.Addr().String())
 
 	state, err := randomString(24)
 	if err != nil {
@@ -82,10 +61,14 @@ func LoginPKCE(ctx context.Context, scopes []string) (*Credentials, error) {
 	verifier := oauth2.GenerateVerifier()
 
 	conf := &oauth2.Config{
-		ClientID:    clientID,
-		RedirectURL: redirect,
-		Scopes:      scopes,
-		Endpoint:    oauth2.Endpoint{AuthURL: authURL, TokenURL: tokenURL},
+		ClientID:     ClientID,
+		ClientSecret: ClientSecret,
+		RedirectURL:  RedirectURL,
+		Scopes:       scopes,
+		Endpoint: oauth2.Endpoint{
+			AuthURL:  config.OAuthAuthorizeURL(),
+			TokenURL: config.OAuthTokenURL(),
+		},
 	}
 
 	type result struct {
