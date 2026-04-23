@@ -74,7 +74,7 @@ func newUsersListCmd() *cobra.Command {
 				return err
 			}
 			tab := (&userTabular{Users: env.Items}).build()
-			return renderOrFail(cmd, env, tab)
+			return renderListOrFail(cmd, env, f.Offset, tab)
 		},
 	}
 	addListFlags(cmd, &f)

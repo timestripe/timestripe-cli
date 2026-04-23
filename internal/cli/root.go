@@ -14,9 +14,9 @@ var outputFlags output.Flags
 
 // listFlags holds the pagination selectors shared by every list subcommand.
 type listFlags struct {
-	Limit    int
-	PageSize int
-	All      bool
+	Limit  int
+	Offset int
+	All    bool
 }
 
 // Execute runs the CLI.
@@ -63,13 +63,13 @@ func Execute() error {
 	return root.Execute()
 }
 
-// addListFlags registers --limit, --page-size, and --all on a list command.
+// addListFlags registers --limit, --offset, and --all on a list command.
 func addListFlags(cmd *cobra.Command, f *listFlags) {
 	cmd.Flags().IntVar(&f.Limit, "limit", pagination.DefaultLimit, "maximum number of items to return across all pages")
-	cmd.Flags().IntVar(&f.PageSize, "page-size", pagination.DefaultPageSize, "per-request page size (the server may cap lower)")
+	cmd.Flags().IntVar(&f.Offset, "offset", 0, "starting offset into the result set")
 	cmd.Flags().BoolVar(&f.All, "all", false, "fetch every page; ignores --limit")
 }
 
 func (f *listFlags) options() pagination.Options {
-	return pagination.Options{Limit: f.Limit, PageSize: f.PageSize, All: f.All}
+	return pagination.Options{Limit: f.Limit, Offset: f.Offset, All: f.All}
 }

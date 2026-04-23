@@ -11,6 +11,7 @@ import (
 	"github.com/timestripe/timestripe-cli/internal/auth"
 	"github.com/timestripe/timestripe-cli/internal/config"
 	"github.com/timestripe/timestripe-cli/internal/output"
+	"github.com/timestripe/timestripe-cli/internal/pagination"
 )
 
 // newAPIClient builds an authenticated API client from stored credentials.
@@ -41,6 +42,29 @@ func renderOrFail(cmd *cobra.Command, v any, t *output.Tabular) error {
 		return err
 	}
 	return output.Render(cmd.OutOrStdout(), f, v, t)
+}
+
+// renderListOrFail renders a paginated envelope and, for tabular formats,
+// writes a one-line pagination hint to stderr when more results are available.
+// JSON and YAML already carry this information in the pageInfo envelope.
+func renderListOrFail[T any](cmd *cobra.Command, env *pagination.Envelope[T], offset int, t *output.Tabular) error {
+	f, err := pickFormat(cmd)
+	if err != nil {
+		return err
+	}
+	if err := output.Render(cmd.OutOrStdout(), f, env, t); err != nil {
+		return err
+	}
+	switch f {
+	case output.FormatTable, output.FormatMarkdown, output.FormatCSV:
+		if env.PageInfo.HasMore && len(env.Items) > 0 {
+			next := offset + len(env.Items)
+			fmt.Fprintf(cmd.ErrOrStderr(),
+				"Showing %d of %d. Use --offset %d or --all for more.\n",
+				len(env.Items), env.PageInfo.Count, next)
+		}
+	}
+	return nil
 }
 
 // apiError pulls a readable message out of a non-2xx API response body.

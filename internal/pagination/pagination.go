@@ -11,8 +11,8 @@ import "context"
 // Chosen to be small enough for quick inspection and large enough to be useful.
 const DefaultLimit = 30
 
-// DefaultPageSize is the per-request window size. The server may cap it lower.
-const DefaultPageSize = 50
+// pageSize is the per-request window size. The server may cap it lower.
+const pageSize = 50
 
 // PageInfo is the list metadata included in JSON/YAML output envelopes.
 type PageInfo struct {
@@ -43,8 +43,8 @@ type Fetcher[T any] func(ctx context.Context, limit, offset int) (*Page[T], erro
 type Options struct {
 	// Limit is the total number of items to return. Ignored when All is true.
 	Limit int
-	// PageSize is the per-request window; server may cap lower.
-	PageSize int
+	// Offset is the starting offset into the result set.
+	Offset int
 	// All iterates until the server reports no more results.
 	All bool
 }
@@ -55,14 +55,13 @@ func Fetch[T any](ctx context.Context, fn Fetcher[T], opts Options) (*Envelope[T
 	if limit <= 0 {
 		limit = DefaultLimit
 	}
-	pageSize := opts.PageSize
-	if pageSize <= 0 {
-		pageSize = DefaultPageSize
-	}
 
 	out := &Envelope[T]{}
 	var lastPage *Page[T]
-	offset := 0
+	offset := opts.Offset
+	if offset < 0 {
+		offset = 0
+	}
 
 	for {
 		window := pageSize
@@ -92,7 +91,7 @@ func Fetch[T any](ctx context.Context, fn Fetcher[T], opts Options) (*Envelope[T
 			Count:    lastPage.Count,
 			Next:     lastPage.Next,
 			Previous: lastPage.Previous,
-			HasMore:  lastPage.Count > len(out.Items),
+			HasMore:  opts.Offset+len(out.Items) < lastPage.Count,
 		}
 	}
 	return out, nil

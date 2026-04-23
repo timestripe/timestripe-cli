@@ -83,7 +83,7 @@ Webhooks, goal completion, and space cloning are intentionally not exposed.
 
 - `--limit N` — total items to return across all pages (default `30`).
   The CLI auto-paginates under the hood.
-- `--page-size N` — per-request window (default `50`; server may cap lower).
+- `--offset N` — starting offset into the result set (default `0`).
 - `--all` — fetch every page; ignores `--limit`.
 
 To know if more results exist, inspect `pageInfo.hasMore` in the JSON envelope.

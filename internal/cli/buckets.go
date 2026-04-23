@@ -64,7 +64,7 @@ func newBucketsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return renderOrFail(cmd, env, (&bucketTabular{env.Items}).build())
+			return renderListOrFail(cmd, env, f.Offset, (&bucketTabular{env.Items}).build())
 		},
 	}
 	addListFlags(cmd, &f)

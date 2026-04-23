@@ -66,7 +66,7 @@ func newBoardsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return renderOrFail(cmd, env, (&boardTabular{env.Items}).build())
+			return renderListOrFail(cmd, env, f.Offset, (&boardTabular{env.Items}).build())
 		},
 	}
 	addListFlags(cmd, &f)

@@ -57,7 +57,7 @@ func newSpacesListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return renderOrFail(cmd, env, (&spaceTabular{env.Items}).build())
+			return renderListOrFail(cmd, env, f.Offset, (&spaceTabular{env.Items}).build())
 		},
 	}
 	addListFlags(cmd, &f)

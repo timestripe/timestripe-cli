@@ -105,7 +105,7 @@ func newGoalsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			return renderOrFail(cmd, env, (&goalTabular{env.Items}).build())
+			return renderListOrFail(cmd, env, f.Offset, (&goalTabular{env.Items}).build())
 		},
 	}
 	addListFlags(cmd, &f)
