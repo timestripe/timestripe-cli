@@ -24,7 +24,13 @@ func newGoalsCmd() *cobra.Command {
 }
 
 func newGoalsListCmd() *cobra.Command {
-	var f listFlags
+	var (
+		f                                                               listFlags
+		assigneeID, bucketID, parentID, spaceID                         string
+		color, search, sort, dateFrom, dateTo, updatedSince             string
+		checked                                                         bool
+		horizon                                                         []string
+	)
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List goals",
@@ -33,8 +39,53 @@ func newGoalsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			df, err := dateFlag(cmd, "date-from", dateFrom)
+			if err != nil {
+				return err
+			}
+			dt, err := dateFlag(cmd, "date-to", dateTo)
+			if err != nil {
+				return err
+			}
+			us, err := timeFlag(cmd, "updated-since", updatedSince)
+			if err != nil {
+				return err
+			}
+			var horizons *[]api.GoalsListParamsHorizon
+			if cmd.Flags().Changed("horizon") {
+				hs := make([]api.GoalsListParamsHorizon, len(horizon))
+				for i, h := range horizon {
+					hs[i] = api.GoalsListParamsHorizon(h)
+				}
+				horizons = &hs
+			}
+			var colorPtr *api.GoalsListParamsColor
+			if cmd.Flags().Changed("color") {
+				c := api.GoalsListParamsColor(color)
+				colorPtr = &c
+			}
+			var sortPtr *api.GoalsListParamsSort
+			if cmd.Flags().Changed("sort") {
+				s := api.GoalsListParamsSort(sort)
+				sortPtr = &s
+			}
 			env, err := pagination.Fetch[api.Goal](cmd.Context(), func(ctx context.Context, limit, offset int) (*pagination.Page[api.Goal], error) {
-				p := &api.GoalsListParams{Limit: &limit, Offset: &offset}
+				p := &api.GoalsListParams{
+					Limit:        &limit,
+					Offset:       &offset,
+					AssigneeId:   strFlag(cmd, "assignee-id", assigneeID),
+					BucketId:     strFlag(cmd, "bucket-id", bucketID),
+					ParentId:     strFlag(cmd, "parent-id", parentID),
+					SpaceId:      strFlag(cmd, "space-id", spaceID),
+					Search:       strFlag(cmd, "search", search),
+					Checked:      boolFlag(cmd, "checked", checked),
+					Color:        colorPtr,
+					Sort:         sortPtr,
+					Horizon:      horizons,
+					DateFrom:     df,
+					DateTo:       dt,
+					UpdatedSince: us,
+				}
 				resp, err := client.GoalsListWithResponse(ctx, p)
 				if err != nil {
 					return nil, err
@@ -54,6 +105,18 @@ func newGoalsListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
+	cmd.Flags().StringVar(&assigneeID, "assignee-id", "", "filter by assignee ID (pass \"null\" for unassigned)")
+	cmd.Flags().StringVar(&bucketID, "bucket-id", "", "filter by bucket ID (pass \"null\" for no bucket)")
+	cmd.Flags().StringVar(&parentID, "parent-id", "", "filter by parent goal ID (pass \"null\" for top-level)")
+	cmd.Flags().StringVar(&spaceID, "space-id", "", "filter by space ID")
+	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
+	cmd.Flags().BoolVar(&checked, "checked", false, "filter by checked state")
+	cmd.Flags().StringVar(&color, "color", "", "filter by palette color (e.g. #ecce32)")
+	cmd.Flags().StringSliceVar(&horizon, "horizon", nil, "filter by horizon (repeat for OR): day|week|month|quarter|year|decade|life")
+	cmd.Flags().StringVar(&dateFrom, "date-from", "", "inclusive lower bound on due date (YYYY-MM-DD)")
+	cmd.Flags().StringVar(&dateTo, "date-to", "", "inclusive upper bound on due date (YYYY-MM-DD)")
+	cmd.Flags().StringVar(&updatedSince, "updated-since", "", "inclusive lower bound on modifiedDatetime (RFC3339)")
+	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -modifiedDatetime)")
 	return cmd
 }
 

@@ -85,6 +85,65 @@ const (
 	PatchedGoalHorizonYear        PatchedGoalHorizon = "year"
 )
 
+// Defines values for BoardsListParamsSort.
+const (
+	BoardsListParamsSortArchived        BoardsListParamsSort = "archived"
+	BoardsListParamsSortMinusArchived   BoardsListParamsSort = "-archived"
+	BoardsListParamsSortMinusName       BoardsListParamsSort = "-name"
+	BoardsListParamsSortMinusSequenceNo BoardsListParamsSort = "-sequenceNo"
+	BoardsListParamsSortName            BoardsListParamsSort = "name"
+	BoardsListParamsSortSequenceNo      BoardsListParamsSort = "sequenceNo"
+)
+
+// Defines values for BucketsListParamsSort.
+const (
+	BucketsListParamsSortCreatedDatetime      BucketsListParamsSort = "createdDatetime"
+	BucketsListParamsSortMinusCreatedDatetime BucketsListParamsSort = "-createdDatetime"
+	BucketsListParamsSortMinusName            BucketsListParamsSort = "-name"
+	BucketsListParamsSortMinusSequenceNo      BucketsListParamsSort = "-sequenceNo"
+	BucketsListParamsSortName                 BucketsListParamsSort = "name"
+	BucketsListParamsSortSequenceNo           BucketsListParamsSort = "sequenceNo"
+)
+
+// Defines values for GoalsListParamsColor.
+const (
+	Hash278dea GoalsListParamsColor = "#278dea"
+	Hash92ce14 GoalsListParamsColor = "#92ce14"
+	Hash955be0 GoalsListParamsColor = "#955be0"
+	HashDf496d GoalsListParamsColor = "#df496d"
+	HashEcce32 GoalsListParamsColor = "#ecce32"
+	HashF2713a GoalsListParamsColor = "#f2713a"
+)
+
+// Defines values for GoalsListParamsHorizon.
+const (
+	Day     GoalsListParamsHorizon = "day"
+	Decade  GoalsListParamsHorizon = "decade"
+	Life    GoalsListParamsHorizon = "life"
+	Month   GoalsListParamsHorizon = "month"
+	Quarter GoalsListParamsHorizon = "quarter"
+	Week    GoalsListParamsHorizon = "week"
+	Year    GoalsListParamsHorizon = "year"
+)
+
+// Defines values for GoalsListParamsSort.
+const (
+	Assignee              GoalsListParamsSort = "assignee"
+	Checked               GoalsListParamsSort = "checked"
+	CreatedDatetime       GoalsListParamsSort = "createdDatetime"
+	Date                  GoalsListParamsSort = "date"
+	Horizon               GoalsListParamsSort = "horizon"
+	MinusAssignee         GoalsListParamsSort = "-assignee"
+	MinusChecked          GoalsListParamsSort = "-checked"
+	MinusCreatedDatetime  GoalsListParamsSort = "-createdDatetime"
+	MinusDate             GoalsListParamsSort = "-date"
+	MinusHorizon          GoalsListParamsSort = "-horizon"
+	MinusModifiedDatetime GoalsListParamsSort = "-modifiedDatetime"
+	MinusName             GoalsListParamsSort = "-name"
+	ModifiedDatetime      GoalsListParamsSort = "modifiedDatetime"
+	Name                  GoalsListParamsSort = "name"
+)
+
 // Board defines model for Board.
 type Board struct {
 	Archived        *bool      `json:"archived,omitempty"`
@@ -389,30 +448,102 @@ type Webhook struct {
 
 // BoardsListParams defines parameters for BoardsList.
 type BoardsListParams struct {
+	// Archived Filter by archived. Accepts `true` or `false`.
+	Archived *bool `form:"archived,omitempty" json:"archived,omitempty"`
+
 	// Limit Number of results to return per page.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset The initial index from which to return the results.
 	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Search Case-insensitive token search over: name.
+	Search *string `form:"search,omitempty" json:"search,omitempty"`
+
+	// Sort Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+	Sort *BoardsListParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// SpaceId Filter by space code.
+	SpaceId *string `form:"spaceId,omitempty" json:"spaceId,omitempty"`
 }
+
+// BoardsListParamsSort defines parameters for BoardsList.
+type BoardsListParamsSort string
 
 // BucketsListParams defines parameters for BucketsList.
 type BucketsListParams struct {
+	// BoardId Filter by board code.
+	BoardId *string `form:"boardId,omitempty" json:"boardId,omitempty"`
+
 	// Limit Number of results to return per page.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset The initial index from which to return the results.
 	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Search Case-insensitive token search over: name.
+	Search *string `form:"search,omitempty" json:"search,omitempty"`
+
+	// Sort Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+	Sort *BucketsListParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
 }
+
+// BucketsListParamsSort defines parameters for BucketsList.
+type BucketsListParamsSort string
 
 // GoalsListParams defines parameters for GoalsList.
 type GoalsListParams struct {
+	// AssigneeId Filter by assignee code. Pass `null` to match items where this field is unset.
+	AssigneeId *string `form:"assigneeId,omitempty" json:"assigneeId,omitempty"`
+
+	// BucketId Filter by bucket code. Pass `null` to match items where this field is unset.
+	BucketId *string `form:"bucketId,omitempty" json:"bucketId,omitempty"`
+
+	// Checked Accepts `true` or `false`.
+	Checked *bool `form:"checked,omitempty" json:"checked,omitempty"`
+
+	// Color Filter by color.
+	Color *GoalsListParamsColor `form:"color,omitempty" json:"color,omitempty"`
+
+	// DateFrom Inclusive lower bound (>=) on due_date. ISO 8601 date (YYYY-MM-DD).
+	DateFrom *openapi_types.Date `form:"date_from,omitempty" json:"date_from,omitempty"`
+
+	// DateTo Inclusive upper bound (<=) on due_date. ISO 8601 date (YYYY-MM-DD).
+	DateTo *openapi_types.Date `form:"date_to,omitempty" json:"date_to,omitempty"`
+
+	// Horizon Repeat the parameter for OR semantics (e.g. `?horizon=day&horizon=year`).
+	Horizon *[]GoalsListParamsHorizon `form:"horizon,omitempty" json:"horizon,omitempty"`
+
 	// Limit Number of results to return per page.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset The initial index from which to return the results.
 	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// ParentId Filter by parent code. Pass `null` to match items where this field is unset.
+	ParentId *string `form:"parentId,omitempty" json:"parentId,omitempty"`
+
+	// Search Search query.
+	Search *string `form:"search,omitempty" json:"search,omitempty"`
+
+	// Sort Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+	Sort *GoalsListParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// SpaceId Filter by space code.
+	SpaceId *string `form:"spaceId,omitempty" json:"spaceId,omitempty"`
+
+	// UpdatedSince Inclusive lower bound (>=) on modified_datetime. ISO 8601 datetime.
+	UpdatedSince *time.Time `form:"updated_since,omitempty" json:"updated_since,omitempty"`
 }
+
+// GoalsListParamsColor defines parameters for GoalsList.
+type GoalsListParamsColor string
+
+// GoalsListParamsHorizon defines parameters for GoalsList.
+type GoalsListParamsHorizon string
+
+// GoalsListParamsSort defines parameters for GoalsList.
+type GoalsListParamsSort string
 
 // MembershipsListParams defines parameters for MembershipsList.
 type MembershipsListParams struct {
@@ -421,6 +552,12 @@ type MembershipsListParams struct {
 
 	// Offset The initial index from which to return the results.
 	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// SpaceId Filter by space code.
+	SpaceId *string `form:"spaceId,omitempty" json:"spaceId,omitempty"`
+
+	// UserId Filter by user code.
+	UserId *string `form:"userId,omitempty" json:"userId,omitempty"`
 }
 
 // SpacesListParams defines parameters for SpacesList.
@@ -430,15 +567,24 @@ type SpacesListParams struct {
 
 	// Offset The initial index from which to return the results.
 	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Search Case-insensitive token search over: name.
+	Search *string `form:"search,omitempty" json:"search,omitempty"`
 }
 
 // UsersListParams defines parameters for UsersList.
 type UsersListParams struct {
+	// Email Exact match on email.
+	Email *string `form:"email,omitempty" json:"email,omitempty"`
+
 	// Limit Number of results to return per page.
 	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// Offset The initial index from which to return the results.
 	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Search Case-insensitive token search over: first_name, last_name, email.
+	Search *string `form:"search,omitempty" json:"search,omitempty"`
 }
 
 // WebhooksListParams defines parameters for WebhooksList.
@@ -1678,6 +1824,22 @@ func NewBoardsListRequest(server string, params *BoardsListParams) (*http.Reques
 	if params != nil {
 		queryValues := queryURL.Query()
 
+		if params.Archived != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "archived", runtime.ParamLocationQuery, *params.Archived); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
@@ -1697,6 +1859,54 @@ func NewBoardsListRequest(server string, params *BoardsListParams) (*http.Reques
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "search", runtime.ParamLocationQuery, *params.Search); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SpaceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "spaceId", runtime.ParamLocationQuery, *params.SpaceId); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -1978,6 +2188,22 @@ func NewBucketsListRequest(server string, params *BucketsListParams) (*http.Requ
 	if params != nil {
 		queryValues := queryURL.Query()
 
+		if params.BoardId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "boardId", runtime.ParamLocationQuery, *params.BoardId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
@@ -1997,6 +2223,38 @@ func NewBucketsListRequest(server string, params *BucketsListParams) (*http.Requ
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "search", runtime.ParamLocationQuery, *params.Search); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -2278,6 +2536,118 @@ func NewGoalsListRequest(server string, params *GoalsListParams) (*http.Request,
 	if params != nil {
 		queryValues := queryURL.Query()
 
+		if params.AssigneeId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "assigneeId", runtime.ParamLocationQuery, *params.AssigneeId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.BucketId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "bucketId", runtime.ParamLocationQuery, *params.BucketId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Checked != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "checked", runtime.ParamLocationQuery, *params.Checked); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Color != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "color", runtime.ParamLocationQuery, *params.Color); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DateFrom != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "date_from", runtime.ParamLocationQuery, *params.DateFrom); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DateTo != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "date_to", runtime.ParamLocationQuery, *params.DateTo); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Horizon != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "horizon", runtime.ParamLocationQuery, *params.Horizon); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
@@ -2297,6 +2667,86 @@ func NewGoalsListRequest(server string, params *GoalsListParams) (*http.Request,
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ParentId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "parentId", runtime.ParamLocationQuery, *params.ParentId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "search", runtime.ParamLocationQuery, *params.Search); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SpaceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "spaceId", runtime.ParamLocationQuery, *params.SpaceId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UpdatedSince != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_since", runtime.ParamLocationQuery, *params.UpdatedSince); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -2610,6 +3060,38 @@ func NewMembershipsListRequest(server string, params *MembershipsListParams) (*h
 
 		}
 
+		if params.SpaceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "spaceId", runtime.ParamLocationQuery, *params.SpaceId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UserId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "userId", runtime.ParamLocationQuery, *params.UserId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -2696,6 +3178,22 @@ func NewSpacesListRequest(server string, params *SpacesListParams) (*http.Reques
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "search", runtime.ParamLocationQuery, *params.Search); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -3035,6 +3533,22 @@ func NewUsersListRequest(server string, params *UsersListParams) (*http.Request,
 	if params != nil {
 		queryValues := queryURL.Query()
 
+		if params.Email != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "email", runtime.ParamLocationQuery, *params.Email); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.Limit != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
@@ -3054,6 +3568,22 @@ func NewUsersListRequest(server string, params *UsersListParams) (*http.Request,
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Search != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "search", runtime.ParamLocationQuery, *params.Search); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err

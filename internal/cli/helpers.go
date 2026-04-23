@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 
+	openapi_types "github.com/oapi-codegen/runtime/types"
 	"github.com/spf13/cobra"
 )
 
@@ -66,3 +68,45 @@ func ptrInt(p *int) string {
 
 // intPtr is the inverse — useful for setting optional request params.
 func intPtr(v int) *int { return &v }
+
+// strFlag returns a pointer to v when the named flag was set, else nil. Used to
+// populate optional list-filter params only when the user asked for them.
+func strFlag(cmd *cobra.Command, name, v string) *string {
+	if !cmd.Flags().Changed(name) {
+		return nil
+	}
+	return &v
+}
+
+// boolFlag mirrors strFlag for *bool filters.
+func boolFlag(cmd *cobra.Command, name string, v bool) *bool {
+	if !cmd.Flags().Changed(name) {
+		return nil
+	}
+	return &v
+}
+
+// dateFlag parses v as YYYY-MM-DD when the named flag was set. Returns nil when
+// the flag was not provided.
+func dateFlag(cmd *cobra.Command, name, v string) (*openapi_types.Date, error) {
+	if !cmd.Flags().Changed(name) {
+		return nil, nil
+	}
+	t, err := time.Parse("2006-01-02", v)
+	if err != nil {
+		return nil, fmt.Errorf("--%s: %w (expected YYYY-MM-DD)", name, err)
+	}
+	return &openapi_types.Date{Time: t}, nil
+}
+
+// timeFlag parses v as RFC3339 when the named flag was set.
+func timeFlag(cmd *cobra.Command, name, v string) (*time.Time, error) {
+	if !cmd.Flags().Changed(name) {
+		return nil, nil
+	}
+	t, err := time.Parse(time.RFC3339, v)
+	if err != nil {
+		return nil, fmt.Errorf("--%s: %w (expected RFC3339, e.g. 2006-01-02T15:04:05Z)", name, err)
+	}
+	return &t, nil
+}

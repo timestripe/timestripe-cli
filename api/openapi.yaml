@@ -9,6 +9,12 @@ paths:
       description: Wraps write actions in a TrackEvents context so signal-based event
         logging fires.
       parameters:
+      - name: archived
+        in: query
+        required: false
+        description: Filter by archived. Accepts `true` or `false`.
+        schema:
+          type: boolean
       - name: limit
         required: false
         in: query
@@ -21,6 +27,31 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: search
+        in: query
+        required: false
+        description: 'Case-insensitive token search over: name.'
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+        schema:
+          type: string
+          enum:
+          - archived
+          - name
+          - sequenceNo
+          - -archived
+          - -name
+          - -sequenceNo
+      - name: spaceId
+        in: query
+        required: false
+        description: Filter by space code.
+        schema:
+          type: string
       tags:
       - boards
       security:
@@ -175,6 +206,12 @@ paths:
       description: Wraps write actions in a TrackEvents context so signal-based event
         logging fires.
       parameters:
+      - name: boardId
+        in: query
+        required: false
+        description: Filter by board code.
+        schema:
+          type: string
       - name: limit
         required: false
         in: query
@@ -187,6 +224,25 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: search
+        in: query
+        required: false
+        description: 'Case-insensitive token search over: name.'
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+        schema:
+          type: string
+          enum:
+          - createdDatetime
+          - name
+          - sequenceNo
+          - -createdDatetime
+          - -name
+          - -sequenceNo
       tags:
       - buckets
       security:
@@ -341,6 +397,71 @@ paths:
       description: Wraps write actions in a TrackEvents context so signal-based event
         logging fires.
       parameters:
+      - name: assigneeId
+        in: query
+        required: false
+        description: Filter by assignee code. Pass `null` to match items where this
+          field is unset.
+        schema:
+          type: string
+      - name: bucketId
+        in: query
+        required: false
+        description: Filter by bucket code. Pass `null` to match items where this
+          field is unset.
+        schema:
+          type: string
+      - name: checked
+        in: query
+        required: false
+        description: Accepts `true` or `false`.
+        schema:
+          type: boolean
+      - name: color
+        in: query
+        required: false
+        description: Filter by color.
+        schema:
+          type: string
+          enum:
+          - '#278dea'
+          - '#92ce14'
+          - '#955be0'
+          - '#df496d'
+          - '#ecce32'
+          - '#f2713a'
+      - name: date_from
+        in: query
+        required: false
+        description: Inclusive lower bound (>=) on due_date. ISO 8601 date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: date_to
+        in: query
+        required: false
+        description: Inclusive upper bound (<=) on due_date. ISO 8601 date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: horizon
+        in: query
+        required: false
+        description: Repeat the parameter for OR semantics (e.g. `?horizon=day&horizon=year`).
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - day
+            - decade
+            - life
+            - month
+            - quarter
+            - week
+            - year
+        style: form
+        explode: true
       - name: limit
         required: false
         in: query
@@ -353,6 +474,53 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: parentId
+        in: query
+        required: false
+        description: Filter by parent code. Pass `null` to match items where this
+          field is unset.
+        schema:
+          type: string
+      - name: search
+        in: query
+        required: false
+        description: Search query.
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+        schema:
+          type: string
+          enum:
+          - assignee
+          - checked
+          - createdDatetime
+          - date
+          - horizon
+          - modifiedDatetime
+          - name
+          - -assignee
+          - -checked
+          - -createdDatetime
+          - -date
+          - -horizon
+          - -modifiedDatetime
+          - -name
+      - name: spaceId
+        in: query
+        required: false
+        description: Filter by space code.
+        schema:
+          type: string
+      - name: updated_since
+        in: query
+        required: false
+        description: Inclusive lower bound (>=) on modified_datetime. ISO 8601 datetime.
+        schema:
+          type: string
+          format: date-time
       tags:
       - goals
       security:
@@ -517,6 +685,18 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: spaceId
+        in: query
+        required: false
+        description: Filter by space code.
+        schema:
+          type: string
+      - name: userId
+        in: query
+        required: false
+        description: Filter by user code.
+        schema:
+          type: string
       tags:
       - memberships
       security:
@@ -566,6 +746,12 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: search
+        in: query
+        required: false
+        description: 'Case-insensitive token search over: name.'
+        schema:
+          type: string
       tags:
       - spaces
       security:
@@ -739,6 +925,12 @@ paths:
     get:
       operationId: usersList
       parameters:
+      - name: email
+        in: query
+        required: false
+        description: Exact match on email.
+        schema:
+          type: string
       - name: limit
         required: false
         in: query
@@ -751,6 +943,12 @@ paths:
         description: The initial index from which to return the results.
         schema:
           type: integer
+      - name: search
+        in: query
+        required: false
+        description: 'Case-insensitive token search over: first_name, last_name, email.'
+        schema:
+          type: string
       tags:
       - users
       security:

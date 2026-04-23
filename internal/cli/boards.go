@@ -24,7 +24,11 @@ func newBoardsCmd() *cobra.Command {
 }
 
 func newBoardsListCmd() *cobra.Command {
-	var f listFlags
+	var (
+		f                      listFlags
+		spaceID, search, sort  string
+		archived               bool
+	)
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List boards",
@@ -33,8 +37,20 @@ func newBoardsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			var sortPtr *api.BoardsListParamsSort
+			if cmd.Flags().Changed("sort") {
+				s := api.BoardsListParamsSort(sort)
+				sortPtr = &s
+			}
 			env, err := pagination.Fetch[api.Board](cmd.Context(), func(ctx context.Context, limit, offset int) (*pagination.Page[api.Board], error) {
-				p := &api.BoardsListParams{Limit: &limit, Offset: &offset}
+				p := &api.BoardsListParams{
+					Limit:    &limit,
+					Offset:   &offset,
+					SpaceId:  strFlag(cmd, "space-id", spaceID),
+					Search:   strFlag(cmd, "search", search),
+					Archived: boolFlag(cmd, "archived", archived),
+					Sort:     sortPtr,
+				}
 				resp, err := client.BoardsListWithResponse(ctx, p)
 				if err != nil {
 					return nil, err
@@ -54,6 +70,10 @@ func newBoardsListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
+	cmd.Flags().StringVar(&spaceID, "space-id", "", "filter by space ID")
+	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
+	cmd.Flags().BoolVar(&archived, "archived", false, "filter by archived state")
+	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -sequenceNo)")
 	return cmd
 }
 

@@ -17,7 +17,10 @@ func newMembershipsCmd() *cobra.Command {
 }
 
 func newMembershipsListCmd() *cobra.Command {
-	var f listFlags
+	var (
+		f                listFlags
+		spaceID, userID  string
+	)
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List memberships",
@@ -27,7 +30,12 @@ func newMembershipsListCmd() *cobra.Command {
 				return err
 			}
 			env, err := pagination.Fetch[api.Membership](cmd.Context(), func(ctx context.Context, limit, offset int) (*pagination.Page[api.Membership], error) {
-				p := &api.MembershipsListParams{Limit: &limit, Offset: &offset}
+				p := &api.MembershipsListParams{
+					Limit:   &limit,
+					Offset:  &offset,
+					SpaceId: strFlag(cmd, "space-id", spaceID),
+					UserId:  strFlag(cmd, "user-id", userID),
+				}
 				resp, err := client.MembershipsListWithResponse(ctx, p)
 				if err != nil {
 					return nil, err
@@ -47,6 +55,8 @@ func newMembershipsListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
+	cmd.Flags().StringVar(&spaceID, "space-id", "", "filter by space ID")
+	cmd.Flags().StringVar(&userID, "user-id", "", "filter by user ID")
 	return cmd
 }
 

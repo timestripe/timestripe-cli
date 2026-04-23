@@ -24,7 +24,10 @@ func newBucketsCmd() *cobra.Command {
 }
 
 func newBucketsListCmd() *cobra.Command {
-	var f listFlags
+	var (
+		f                     listFlags
+		boardID, search, sort string
+	)
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List buckets",
@@ -33,8 +36,19 @@ func newBucketsListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			var sortPtr *api.BucketsListParamsSort
+			if cmd.Flags().Changed("sort") {
+				s := api.BucketsListParamsSort(sort)
+				sortPtr = &s
+			}
 			env, err := pagination.Fetch[api.Bucket](cmd.Context(), func(ctx context.Context, limit, offset int) (*pagination.Page[api.Bucket], error) {
-				p := &api.BucketsListParams{Limit: &limit, Offset: &offset}
+				p := &api.BucketsListParams{
+					Limit:   &limit,
+					Offset:  &offset,
+					BoardId: strFlag(cmd, "board-id", boardID),
+					Search:  strFlag(cmd, "search", search),
+					Sort:    sortPtr,
+				}
 				resp, err := client.BucketsListWithResponse(ctx, p)
 				if err != nil {
 					return nil, err
@@ -54,6 +68,9 @@ func newBucketsListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
+	cmd.Flags().StringVar(&boardID, "board-id", "", "filter by board ID")
+	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
+	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -sequenceNo)")
 	return cmd
 }
 

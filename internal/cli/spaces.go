@@ -24,7 +24,10 @@ func newSpacesCmd() *cobra.Command {
 }
 
 func newSpacesListCmd() *cobra.Command {
-	var f listFlags
+	var (
+		f      listFlags
+		search string
+	)
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List spaces",
@@ -34,7 +37,11 @@ func newSpacesListCmd() *cobra.Command {
 				return err
 			}
 			env, err := pagination.Fetch[api.Space](cmd.Context(), func(ctx context.Context, limit, offset int) (*pagination.Page[api.Space], error) {
-				p := &api.SpacesListParams{Limit: &limit, Offset: &offset}
+				p := &api.SpacesListParams{
+					Limit:  &limit,
+					Offset: &offset,
+					Search: strFlag(cmd, "search", search),
+				}
 				resp, err := client.SpacesListWithResponse(ctx, p)
 				if err != nil {
 					return nil, err
@@ -54,6 +61,7 @@ func newSpacesListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
+	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
 	return cmd
 }
 

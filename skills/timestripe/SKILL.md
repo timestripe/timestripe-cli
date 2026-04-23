@@ -83,6 +83,25 @@ Webhooks, goal completion, and space cloning are intentionally not exposed.
 
 To know if more results exist, inspect `pageInfo.hasMore` in the JSON envelope.
 
+## Filtering, search, and sort (list commands)
+
+Most list commands accept server-side filters. Prefer these over post-filtering
+with `jq` — they are cheaper and correct across all pages.
+
+- `spaces list`: `--search`
+- `boards list`: `--space-id`, `--archived`, `--search`, `--sort`
+- `buckets list`: `--board-id`, `--search`, `--sort`
+- `goals list`: `--space-id`, `--bucket-id`, `--assignee-id`, `--parent-id`,
+  `--checked`, `--color`, `--horizon` (repeatable), `--date-from`, `--date-to`,
+  `--updated-since`, `--search`, `--sort`
+- `memberships list`: `--space-id`, `--user-id`
+- `users list`: `--email`, `--search`
+
+Nullable foreign-key filters (`--assignee-id`, `--bucket-id`, `--parent-id`)
+accept the literal string `null` to match items where that field is unset.
+`--sort` accepts the API field name; prefix with `-` for descending, e.g.
+`--sort -modifiedDatetime`. Dates are `YYYY-MM-DD`; `--updated-since` is RFC3339.
+
 ## Create and update
 
 `create` and `update <id>` read a JSON body from `--file`:
@@ -128,7 +147,11 @@ timestripe users me --json
 timestripe goals list --all --json | jq '.items'
 
 # Goals on the "week" horizon only
-timestripe goals list --all --json | jq '.items[] | select(.horizon=="week")'
+timestripe goals list --horizon week --all --json | jq '.items'
+
+# Open goals with a due date this month, newest first
+timestripe goals list --checked=false --date-from 2026-04-01 --date-to 2026-04-30 \
+  --sort -date --json
 
 # Create a goal from a heredoc
 cat <<'EOF' | timestripe goals create --file -

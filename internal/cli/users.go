@@ -39,7 +39,10 @@ func newUsersMeCmd() *cobra.Command {
 }
 
 func newUsersListCmd() *cobra.Command {
-	var f listFlags
+	var (
+		f             listFlags
+		email, search string
+	)
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List users",
@@ -49,7 +52,12 @@ func newUsersListCmd() *cobra.Command {
 				return err
 			}
 			env, err := pagination.Fetch[api.User](cmd.Context(), func(ctx context.Context, limit, offset int) (*pagination.Page[api.User], error) {
-				p := &api.UsersListParams{Limit: &limit, Offset: &offset}
+				p := &api.UsersListParams{
+					Limit:  &limit,
+					Offset: &offset,
+					Email:  strFlag(cmd, "email", email),
+					Search: strFlag(cmd, "search", search),
+				}
 				resp, err := client.UsersListWithResponse(ctx, p)
 				if err != nil {
 					return nil, err
@@ -70,6 +78,8 @@ func newUsersListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
+	cmd.Flags().StringVar(&email, "email", "", "filter by exact email match")
+	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over first name, last name, email")
 	return cmd
 }
 
