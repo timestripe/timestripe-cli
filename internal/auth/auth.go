@@ -4,8 +4,7 @@
 //   - "bearer": personal API token
 //   - "oauth":  OAuth2 authorization-code + PKCE access/refresh token pair
 //
-// Credentials are persisted in the OS keychain when available, with a
-// file-backed fallback at $XDG_CONFIG_HOME/timestripe/credentials.json.
+// Credentials are persisted to $XDG_CONFIG_HOME/timestripe/credentials.json.
 package auth
 
 import (
@@ -54,14 +53,8 @@ type Store interface {
 // ErrNotFound is returned when no credentials are stored.
 var ErrNotFound = errors.New("no credentials stored; run `timestripe auth login`")
 
-// DefaultStore returns the best available Store: keychain if the OS supports
-// it, file-backed otherwise. Probed once per process.
-func DefaultStore() Store {
-	if kc := newKeychainStore(); kc.available() {
-		return &fallbackStore{primary: kc, secondary: &fileStore{}}
-	}
-	return &fileStore{}
-}
+// DefaultStore returns the file-backed credentials store.
+func DefaultStore() Store { return &fileStore{} }
 
 // Resolve returns the caller's current credentials, respecting the
 // TIMESTRIPE_TOKEN environment override (which wins over any stored creds).
@@ -78,40 +71,6 @@ func Resolve(ctx context.Context) (*Credentials, error) {
 		return nil, fmt.Errorf("access token expired at %s; run `timestripe auth login` to refresh", c.ExpiresAt.Format(time.RFC3339))
 	}
 	return c, nil
-}
-
-// fallbackStore tries primary first on every op; on error, falls through to secondary.
-type fallbackStore struct{ primary, secondary Store }
-
-func (s *fallbackStore) Load() (*Credentials, error) {
-	c, err := s.primary.Load()
-	if err == nil {
-		return c, nil
-	}
-	if errors.Is(err, ErrNotFound) {
-		return s.secondary.Load()
-	}
-	return s.secondary.Load()
-}
-
-func (s *fallbackStore) Save(c *Credentials) error {
-	if err := s.primary.Save(c); err == nil {
-		_ = s.secondary.Delete()
-		return nil
-	}
-	return s.secondary.Save(c)
-}
-
-func (s *fallbackStore) Delete() error {
-	e1 := s.primary.Delete()
-	e2 := s.secondary.Delete()
-	if e1 != nil && !errors.Is(e1, ErrNotFound) {
-		return e1
-	}
-	if e2 != nil && !errors.Is(e2, ErrNotFound) {
-		return e2
-	}
-	return nil
 }
 
 // encode/decode are shared between concrete stores.
