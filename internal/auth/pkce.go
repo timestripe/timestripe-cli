@@ -23,11 +23,6 @@ import (
 // ClientID is the OAuth client identifier for the CLI.
 const ClientID = "timestripe-cli"
 
-// ClientSecret is sent alongside ClientID during the token exchange. Because
-// the CLI is distributed as a public binary, this value is not actually secret
-// — PKCE (RFC 7636) is what protects the authorization code in transit.
-const ClientSecret = "timestripe-cli"
-
 // CallbackPort is the fixed loopback port used for the OAuth redirect URI.
 // The Timestripe OAuth application must register the matching redirect URI:
 //
@@ -64,9 +59,8 @@ func LoginPKCE(ctx context.Context, scopes []string, userAgent string) (*Credent
 	verifier := oauth2.GenerateVerifier()
 
 	conf := &oauth2.Config{
-		ClientID:     ClientID,
-		ClientSecret: ClientSecret,
-		RedirectURL:  RedirectURL,
+		ClientID:    ClientID,
+		RedirectURL: RedirectURL,
 		Scopes:       scopes,
 		Endpoint: oauth2.Endpoint{
 			AuthURL:  config.OAuthAuthorizeURL(),
