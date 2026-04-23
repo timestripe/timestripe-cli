@@ -39,8 +39,9 @@ scripting and CI).
 `),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			store := auth.DefaultStore()
+			backend := config.Backend()
 			if token != "" {
-				creds := &auth.Credentials{Type: auth.TypeBearer, AccessToken: token}
+				creds := &auth.Credentials{Type: auth.TypeBearer, AccessToken: token, Backend: backend}
 				if err := store.Save(creds); err != nil {
 					return fmt.Errorf("save credentials: %w", err)
 				}
@@ -51,6 +52,7 @@ scripting and CI).
 			if err != nil {
 				return err
 			}
+			creds.Backend = backend
 			if err := store.Save(creds); err != nil {
 				return fmt.Errorf("save credentials: %w", err)
 			}

@@ -2,6 +2,7 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -27,17 +28,44 @@ const (
 	// EnvToken allows passing a bearer token via environment (bypasses stored credentials).
 	EnvToken = "TIMESTRIPE_TOKEN"
 
+	// CredentialsFile is the name of the stored credentials file inside Dir().
+	CredentialsFile = "credentials.json"
+
 	appDir = "timestripe"
 )
 
-// Backend returns the Timestripe site root (no path). Precedence: TIMESTRIPE_BACKEND env > default.
+// Backend returns the Timestripe site root (no path). Precedence:
+// TIMESTRIPE_BACKEND env > stored credentials backend > default.
 // Any trailing slash is stripped so callers can safely concatenate paths.
 func Backend() string {
 	v := os.Getenv(EnvBackend)
 	if v == "" {
+		v = storedBackend()
+	}
+	if v == "" {
 		v = DefaultBackend
 	}
 	return strings.TrimRight(v, "/")
+}
+
+// storedBackend reads the "backend" field from the credentials file, if any.
+// Returns "" on any error (file missing, malformed, etc.) — callers fall back.
+func storedBackend() string {
+	p, err := Path(CredentialsFile)
+	if err != nil {
+		return ""
+	}
+	b, err := os.ReadFile(p)
+	if err != nil {
+		return ""
+	}
+	var c struct {
+		Backend string `json:"backend"`
+	}
+	if json.Unmarshal(b, &c) != nil {
+		return ""
+	}
+	return c.Backend
 }
 
 // APIBase returns the full base URL for the REST API.

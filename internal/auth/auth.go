@@ -32,6 +32,9 @@ type Credentials struct {
 	AccessToken  string    `json:"accessToken"`
 	RefreshToken string    `json:"refreshToken,omitempty"`
 	ExpiresAt    time.Time `json:"expiresAt,omitempty"`
+	// Backend is the Timestripe site root the user signed into.
+	// Used to pin subsequent requests to the same environment.
+	Backend string `json:"backend,omitempty"`
 }
 
 // Expired reports whether the access token has (or is about to) expire.

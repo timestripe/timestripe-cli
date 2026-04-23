@@ -8,11 +8,9 @@ import (
 	"github.com/timestripe/timestripe-cli/internal/config"
 )
 
-const credentialsFile = "credentials.json"
-
 type fileStore struct{}
 
-func (f *fileStore) path() (string, error) { return config.Path(credentialsFile) }
+func (f *fileStore) path() (string, error) { return config.Path(config.CredentialsFile) }
 
 func (f *fileStore) Load() (*Credentials, error) {
 	p, err := f.path()
