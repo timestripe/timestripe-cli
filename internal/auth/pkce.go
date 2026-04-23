@@ -23,33 +23,24 @@ import (
 // ClientID is the OAuth client identifier for the CLI.
 const ClientID = "timestripe-cli"
 
-// CallbackPort is the fixed loopback port used for the OAuth redirect URI.
-// The Timestripe OAuth application must register the matching redirect URI:
-//
-//	http://127.0.0.1:53682/callback
-//
-// A static port is required so the redirect URI can be pre-registered.
-const CallbackPort = 53682
-
-// RedirectURL is the full OAuth redirect URI the CLI listens on.
-var RedirectURL = fmt.Sprintf("http://127.0.0.1:%d/callback", CallbackPort)
-
 // LoginPKCE runs the OAuth2 authorization-code flow with PKCE against a
-// loopback redirect on the fixed callback port.
+// loopback redirect on an OS-assigned random port. The backend accepts any
+// 127.0.0.1 loopback redirect URI, so no static port registration is needed.
 //
 // userAgent, if non-empty, is sent on the token-exchange request so the
 // OAuth server can identify the CLI client.
 //
 // Flow:
-//  1. Start an HTTP server on 127.0.0.1:CallbackPort.
+//  1. Start an HTTP server on 127.0.0.1:0 (OS picks a free port).
 //  2. Open the user's browser to the authorization URL.
 //  3. Wait for the browser to hit /callback with ?code=...&state=....
 //  4. Exchange code + PKCE verifier for tokens.
 func LoginPKCE(ctx context.Context, scopes []string, userAgent string) (*Credentials, error) {
-	ln, err := net.Listen("tcp", fmt.Sprintf("127.0.0.1:%d", CallbackPort))
+	ln, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
-		return nil, fmt.Errorf("bind 127.0.0.1:%d (is another login in progress, or is the port in use?): %w", CallbackPort, err)
+		return nil, fmt.Errorf("bind loopback listener: %w", err)
 	}
+	redirectURL := fmt.Sprintf("http://127.0.0.1:%d/callback", ln.Addr().(*net.TCPAddr).Port)
 
 	state, err := randomString(24)
 	if err != nil {
@@ -60,7 +51,7 @@ func LoginPKCE(ctx context.Context, scopes []string, userAgent string) (*Credent
 
 	conf := &oauth2.Config{
 		ClientID:    ClientID,
-		RedirectURL: RedirectURL,
+		RedirectURL: redirectURL,
 		Scopes:       scopes,
 		Endpoint: oauth2.Endpoint{
 			AuthURL:  config.OAuthAuthorizeURL(),
