@@ -235,7 +235,7 @@ func (b *boardTabular) build() *output.Tabular {
 	t := &output.Tabular{Headers: []string{"ID", "NAME", "SPACE", "LAYOUT", "ARCHIVED"}}
 	for _, br := range b.Boards {
 		t.Rows = append(t.Rows, []string{
-			ptrStr(br.Id), ptrStr(br.Name), br.SpaceId, ptrStr(br.Layout), ptrBool(br.Archived),
+			ptrStr(br.Id), ptrStr(br.Name), br.SpaceId, ptrStr((*string)(br.Layout)), ptrBool(br.Archived),
 		})
 	}
 	return t

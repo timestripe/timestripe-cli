@@ -23,6 +23,13 @@ const (
 	OAuth2Scopes = "OAuth2.Scopes"
 )
 
+// Defines values for BoardLayout.
+const (
+	BoardLayoutHorizontal  BoardLayout = "horizontal"
+	BoardLayoutLessThannil BoardLayout = "<nil>"
+	BoardLayoutVertical    BoardLayout = "vertical"
+)
+
 // Defines values for GoalColor.
 const (
 	GoalColorHash278dea  GoalColor = "#278dea"
@@ -60,6 +67,13 @@ const (
 	MembershipRoleEDITOR MembershipRole = "EDITOR"
 	MembershipRoleOWNER  MembershipRole = "OWNER"
 	MembershipRoleVIEWER MembershipRole = "VIEWER"
+)
+
+// Defines values for PatchedBoardLayout.
+const (
+	PatchedBoardLayoutHorizontal  PatchedBoardLayout = "horizontal"
+	PatchedBoardLayoutLessThannil PatchedBoardLayout = "<nil>"
+	PatchedBoardLayoutVertical    PatchedBoardLayout = "vertical"
 )
 
 // Defines values for PatchedGoalColor.
@@ -149,14 +163,23 @@ type Board struct {
 	Archived        *bool      `json:"archived,omitempty"`
 	Background      *string    `json:"background"`
 	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
-	Description     *string    `json:"description,omitempty"`
-	Id              *string    `json:"id,omitempty"`
-	Layout          *string    `json:"layout"`
-	Name            *string    `json:"name,omitempty"`
-	SequenceNo      *int       `json:"sequenceNo,omitempty"`
-	SpaceId         string     `json:"spaceId"`
-	Url             *string    `json:"url,omitempty"`
+
+	// Description Markdown-formatted text.
+	Description *string `json:"description,omitempty"`
+	Id          *string `json:"id,omitempty"`
+
+	// Layout * `horizontal` - horizontal
+	// * `vertical` - vertical
+	Layout     *BoardLayout `json:"layout"`
+	Name       *string      `json:"name,omitempty"`
+	SequenceNo *int         `json:"sequenceNo,omitempty"`
+	SpaceId    string       `json:"spaceId"`
+	Url        *string      `json:"url,omitempty"`
 }
+
+// BoardLayout * `horizontal` - horizontal
+// * `vertical` - vertical
+type BoardLayout string
 
 // Bucket defines model for Bucket.
 type Bucket struct {
@@ -183,11 +206,17 @@ type Goal struct {
 	// * `#278dea` - #278dea
 	// * `#955be0` - #955be0
 	// * `#f2713a` - #f2713a
-	Color           *GoalColor          `json:"color"`
-	CreatedDatetime *time.Time          `json:"createdDatetime,omitempty"`
-	Date            *openapi_types.Date `json:"date"`
-	Description     *string             `json:"description,omitempty"`
-	EndTime         *string             `json:"endTime"`
+	Color           *GoalColor `json:"color"`
+	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
+
+	// Date ISO 8601 date (YYYY-MM-DD).
+	Date *openapi_types.Date `json:"date"`
+
+	// Description Markdown-formatted text.
+	Description *string `json:"description,omitempty"`
+
+	// EndTime Time in 24-hour HH:MM format.
+	EndTime *string `json:"endTime"`
 
 	// Horizon * `day` - day
 	// * `week` - week
@@ -196,13 +225,15 @@ type Goal struct {
 	// * `year` - year
 	// * `decade` - decade
 	// * `life` - life
-	Horizon   *GoalHorizon `json:"horizon"`
-	Id        *string      `json:"id,omitempty"`
-	Name      *string      `json:"name,omitempty"`
-	ParentId  *string      `json:"parentId"`
-	SpaceId   string       `json:"spaceId"`
-	StartTime *string      `json:"startTime"`
-	Url       *string      `json:"url,omitempty"`
+	Horizon  *GoalHorizon `json:"horizon"`
+	Id       *string      `json:"id,omitempty"`
+	Name     *string      `json:"name,omitempty"`
+	ParentId *string      `json:"parentId"`
+	SpaceId  string       `json:"spaceId"`
+
+	// StartTime Time in 24-hour HH:MM format.
+	StartTime *string `json:"startTime"`
+	Url       *string `json:"url,omitempty"`
 }
 
 // GoalColor * `#ecce32` - #ecce32
@@ -320,14 +351,23 @@ type PatchedBoard struct {
 	Archived        *bool      `json:"archived,omitempty"`
 	Background      *string    `json:"background"`
 	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
-	Description     *string    `json:"description,omitempty"`
-	Id              *string    `json:"id,omitempty"`
-	Layout          *string    `json:"layout"`
-	Name            *string    `json:"name,omitempty"`
-	SequenceNo      *int       `json:"sequenceNo,omitempty"`
-	SpaceId         *string    `json:"spaceId,omitempty"`
-	Url             *string    `json:"url,omitempty"`
+
+	// Description Markdown-formatted text.
+	Description *string `json:"description,omitempty"`
+	Id          *string `json:"id,omitempty"`
+
+	// Layout * `horizontal` - horizontal
+	// * `vertical` - vertical
+	Layout     *PatchedBoardLayout `json:"layout"`
+	Name       *string             `json:"name,omitempty"`
+	SequenceNo *int                `json:"sequenceNo,omitempty"`
+	SpaceId    *string             `json:"spaceId,omitempty"`
+	Url        *string             `json:"url,omitempty"`
 }
+
+// PatchedBoardLayout * `horizontal` - horizontal
+// * `vertical` - vertical
+type PatchedBoardLayout string
 
 // PatchedBucket defines model for PatchedBucket.
 type PatchedBucket struct {
@@ -354,11 +394,17 @@ type PatchedGoal struct {
 	// * `#278dea` - #278dea
 	// * `#955be0` - #955be0
 	// * `#f2713a` - #f2713a
-	Color           *PatchedGoalColor   `json:"color"`
-	CreatedDatetime *time.Time          `json:"createdDatetime,omitempty"`
-	Date            *openapi_types.Date `json:"date"`
-	Description     *string             `json:"description,omitempty"`
-	EndTime         *string             `json:"endTime"`
+	Color           *PatchedGoalColor `json:"color"`
+	CreatedDatetime *time.Time        `json:"createdDatetime,omitempty"`
+
+	// Date ISO 8601 date (YYYY-MM-DD).
+	Date *openapi_types.Date `json:"date"`
+
+	// Description Markdown-formatted text.
+	Description *string `json:"description,omitempty"`
+
+	// EndTime Time in 24-hour HH:MM format.
+	EndTime *string `json:"endTime"`
 
 	// Horizon * `day` - day
 	// * `week` - week
@@ -367,13 +413,15 @@ type PatchedGoal struct {
 	// * `year` - year
 	// * `decade` - decade
 	// * `life` - life
-	Horizon   *PatchedGoalHorizon `json:"horizon"`
-	Id        *string             `json:"id,omitempty"`
-	Name      *string             `json:"name,omitempty"`
-	ParentId  *string             `json:"parentId"`
-	SpaceId   *string             `json:"spaceId,omitempty"`
-	StartTime *string             `json:"startTime"`
-	Url       *string             `json:"url,omitempty"`
+	Horizon  *PatchedGoalHorizon `json:"horizon"`
+	Id       *string             `json:"id,omitempty"`
+	Name     *string             `json:"name,omitempty"`
+	ParentId *string             `json:"parentId"`
+	SpaceId  *string             `json:"spaceId,omitempty"`
+
+	// StartTime Time in 24-hour HH:MM format.
+	StartTime *string `json:"startTime"`
+	Url       *string `json:"url,omitempty"`
 }
 
 // PatchedGoalColor * `#ecce32` - #ecce32
@@ -424,13 +472,13 @@ type Space struct {
 
 // User defines model for User.
 type User struct {
-	Email     *openapi_types.Email `json:"email,omitempty"`
-	FirstName *string              `json:"firstName,omitempty"`
-	Id        *string              `json:"id,omitempty"`
-	Image     *string              `json:"image"`
-	LastName  *string              `json:"lastName,omitempty"`
-	Timezone  *string              `json:"timezone"`
-	Url       *string              `json:"url,omitempty"`
+	Email     *string `json:"email,omitempty"`
+	FirstName *string `json:"firstName,omitempty"`
+	Id        *string `json:"id,omitempty"`
+	Image     *string `json:"image"`
+	LastName  *string `json:"lastName,omitempty"`
+	Timezone  *string `json:"timezone"`
+	Url       *string `json:"url,omitempty"`
 }
 
 // Webhook defines model for Webhook.

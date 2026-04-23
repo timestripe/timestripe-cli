@@ -1166,14 +1166,22 @@ components:
           maxLength: 250
         description:
           type: string
+          description: Markdown-formatted text.
         background:
           type: string
           nullable: true
           maxLength: 250
         layout:
+          enum:
+          - horizontal
+          - vertical
+          - null
           type: string
+          description: |-
+            * `horizontal` - horizontal
+            * `vertical` - vertical
+          x-spec-enum-id: dcb38317a1dd75c9
           nullable: true
-          maxLength: 250
         sequenceNo:
           type: integer
           maximum: 2147483647
@@ -1268,19 +1276,23 @@ components:
           type: string
           format: date
           nullable: true
+          description: ISO 8601 date (YYYY-MM-DD).
         startTime:
           type: string
           format: time
           nullable: true
+          description: Time in 24-hour HH:MM format.
         endTime:
           type: string
           format: time
           nullable: true
+          description: Time in 24-hour HH:MM format.
         name:
           type: string
           maxLength: 250
         description:
           type: string
+          description: Markdown-formatted text.
         color:
           enum:
           - '#ecce32'
@@ -1544,14 +1556,22 @@ components:
           maxLength: 250
         description:
           type: string
+          description: Markdown-formatted text.
         background:
           type: string
           nullable: true
           maxLength: 250
         layout:
+          enum:
+          - horizontal
+          - vertical
+          - null
           type: string
+          description: |-
+            * `horizontal` - horizontal
+            * `vertical` - vertical
+          x-spec-enum-id: dcb38317a1dd75c9
           nullable: true
-          maxLength: 250
         sequenceNo:
           type: integer
           maximum: 2147483647
@@ -1636,19 +1656,23 @@ components:
           type: string
           format: date
           nullable: true
+          description: ISO 8601 date (YYYY-MM-DD).
         startTime:
           type: string
           format: time
           nullable: true
+          description: Time in 24-hour HH:MM format.
         endTime:
           type: string
           format: time
           nullable: true
+          description: Time in 24-hour HH:MM format.
         name:
           type: string
           maxLength: 250
         description:
           type: string
+          description: Markdown-formatted text.
         color:
           enum:
           - '#ecce32'
@@ -1758,9 +1782,7 @@ components:
           readOnly: true
         email:
           type: string
-          format: email
           readOnly: true
-          title: Email address
         firstName:
           type: string
           readOnly: true
