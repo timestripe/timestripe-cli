@@ -16,10 +16,10 @@ const (
 	APIPath = "/api/v3"
 
 	// OAuthAuthorizePath is the path suffix for the OAuth authorization endpoint.
-	OAuthAuthorizePath = "/oauth/authorize"
+	OAuthAuthorizePath = "/oauth/authorize/"
 
 	// OAuthTokenPath is the path suffix for the OAuth token endpoint.
-	OAuthTokenPath = "/oauth/token"
+	OAuthTokenPath = "/oauth/token/"
 
 	// EnvBackend overrides the Timestripe site root when set.
 	EnvBackend = "TIMESTRIPE_BACKEND"
