@@ -25,8 +25,9 @@ func newAuthLoginCmd() *cobra.Command {
 	var token string
 	var scopes []string
 	cmd := &cobra.Command{
-		Use:   "login",
-		Short: "Authenticate the CLI (OAuth2 + PKCE, or personal token via --token)",
+		Use:     "login",
+		Aliases: []string{"signin"},
+		Short:   "Authenticate the CLI (OAuth2 + PKCE, or personal token via --token)",
 		Long: strings.TrimSpace(`
 Authenticate the CLI against the Timestripe API.
 
@@ -64,8 +65,9 @@ scripting and CI).
 
 func newAuthLogoutCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "logout",
-		Short: "Remove stored credentials",
+		Use:     "logout",
+		Aliases: []string{"signout"},
+		Short:   "Remove stored credentials",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			err := auth.DefaultStore().Delete()
 			if err != nil && !errors.Is(err, auth.ErrNotFound) {

@@ -50,6 +50,16 @@ func Execute() error {
 		newVersionCmd(),
 	)
 
+	for _, c := range []*cobra.Command{
+		newAuthLoginCmd(),
+		newAuthLogoutCmd(),
+		newAuthWhoamiCmd(),
+		newAuthStatusCmd(),
+	} {
+		c.Hidden = true
+		root.AddCommand(c)
+	}
+
 	return root.Execute()
 }
 

@@ -61,6 +61,9 @@ Supported formats (mutually exclusive): `--json`, `--yaml`, `--markdown`,
 
 ```
 timestripe auth         login | logout | whoami | status
+                        (login alias: signin; logout alias: signout;
+                         all four also available as top-level commands,
+                         e.g. `timestripe login`, `timestripe whoami`)
 timestripe spaces       list | get <id> | create | update <id> | delete <id>
 timestripe boards       list | get <id> | create | update <id> | delete <id>
 timestripe buckets      list | get <id> | create | update <id> | delete <id>
