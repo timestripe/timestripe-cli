@@ -1,6 +1,6 @@
 ---
 name: timestripe
-description: Use this skill whenever the user wants to interact with Timestripe — reading or modifying their spaces, boards, buckets, goals, memberships, or user profile — via the `timestripe` CLI. Trigger on mentions of "timestripe", "my goals", "my spaces", horizons ("day/week/month/quarter/year/decade/life"), or when the user asks to list, create, update, complete, or delete goals or related entities. Also use to authenticate the CLI or inspect API configuration. Skip for unrelated project management tools.
+description: Use this skill whenever the user wants to interact with Timestripe — reading or modifying their spaces, boards, buckets, goals (also called tasks, todos, or items), memberships, or user profile — via the `timestripe` CLI. Trigger on mentions of "timestripe", "my goals", "my tasks", "my todos", "my items", "my spaces", horizons ("day/week/month/quarter/year/decade/life"), or when the user asks to list, create, update, complete, or delete goals/tasks/todos/items or related entities. Also use to authenticate the CLI or inspect API configuration. Skip for unrelated project management tools.
 ---
 
 # Timestripe CLI
@@ -65,6 +65,8 @@ timestripe spaces       list | get <id> | create | update <id> | delete <id>
 timestripe boards       list | get <id> | create | update <id> | delete <id>
 timestripe buckets      list | get <id> | create | update <id> | delete <id>
 timestripe goals        list | get <id> | create | update <id> | delete <id>
+                        (aliases: tasks, todos, items — the resource's
+                         semantics are up to the user)
 timestripe memberships  list | get <id>                     (read-only)
 timestripe users        list | get <id> | me                (read-only)
 timestripe config       show
@@ -122,10 +124,11 @@ echo '{"spaceId":"...","name":"Ship v1","horizon":"week"}' | \
 - **Space** — top-level container.
 - **Board** — belongs to a space (`spaceId`), optional `layout`.
 - **Bucket** — belongs to a board (`boardId`), ordered via `sequenceNo`.
-- **Goal** — belongs to a space (`spaceId`) and optionally a bucket
-  (`bucketId`). Has a `horizon` of `day | week | month | quarter | year |
-  decade | life`, an optional `date` (ISO `YYYY-MM-DD`), a `checked` boolean,
-  and a `color` from a fixed palette.
+- **Goal** (also addressable as `tasks`, `todos`, or `items` — the exact
+  semantics are up to the user) — belongs to a space (`spaceId`) and
+  optionally a bucket (`bucketId`). Has a `horizon` of `day | week | month |
+  quarter | year | decade | life`, an optional `date` (ISO `YYYY-MM-DD`), a
+  `checked` boolean, and a `color` from a fixed palette.
 - **Membership** — links a user to a space with a `role` of
   `OWNER | ADMIN | EDITOR | VIEWER`.
 
