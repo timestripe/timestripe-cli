@@ -109,7 +109,7 @@ func addBoardFields(cmd *cobra.Command, f *boardFields) {
 	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
 	cmd.Flags().StringVar(&f.name, "name", "", "board name")
 	cmd.Flags().StringVar(&f.spaceRef, "space", "", "parent space (ID or name)")
-	cmd.Flags().StringVar(&f.description, "description", "", "board description")
+	cmd.Flags().StringVar(&f.description, "description", "", "board description (Markdown)")
 	cmd.Flags().StringVar(&f.background, "background", "", "background (URL or token)")
 	cmd.Flags().StringVar(&f.layout, "layout", "", "board layout")
 	cmd.Flags().BoolVar(&f.archived, "archived", false, "whether the board is archived")

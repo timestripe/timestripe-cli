@@ -160,7 +160,7 @@ func addGoalFields(cmd *cobra.Command, f *goalFields) {
 	cmd.Flags().StringVar(&f.bucketRef, "bucket", "", "parent bucket (ID or name)")
 	cmd.Flags().StringVar(&f.assigneeRef, "assignee", "", "assignee (user ID, email, or full name)")
 	cmd.Flags().StringVar(&f.parentRef, "parent", "", "parent goal (ID or name)")
-	cmd.Flags().StringVar(&f.description, "description", "", "goal description")
+	cmd.Flags().StringVar(&f.description, "description", "", "goal description (Markdown)")
 	cmd.Flags().StringVar(&f.horizon, "horizon", "", "horizon: day|week|month|quarter|year|decade|life")
 	cmd.Flags().StringVar(&f.color, "color", "", "palette color (e.g. #ecce32)")
 	cmd.Flags().StringVar(&f.date, "date", "", "ISO date (YYYY-MM-DD)")

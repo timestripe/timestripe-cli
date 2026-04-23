@@ -125,13 +125,15 @@ echo '{"spaceId":"...","name":"Ship v1","horizon":"week"}' | \
 ## Data model cheatsheet
 
 - **Space** — top-level container.
-- **Board** — belongs to a space (`spaceId`), optional `layout`.
+- **Board** — belongs to a space (`spaceId`), optional `layout`. `description`
+  is Markdown.
 - **Bucket** — belongs to a board (`boardId`), ordered via `sequenceNo`.
 - **Goal** (also addressable as `tasks`, `todos`, or `items` — the exact
   semantics are up to the user) — belongs to a space (`spaceId`) and
   optionally a bucket (`bucketId`). Has a `horizon` of `day | week | month |
   quarter | year | decade | life`, an optional `date` (ISO `YYYY-MM-DD`), a
-  `checked` boolean, and a `color` from a fixed palette.
+  `checked` boolean, and a `color` from a fixed palette. `description` is
+  Markdown.
 - **Membership** — links a user to a space with a `role` of
   `OWNER | ADMIN | EDITOR | VIEWER`.
 
