@@ -60,8 +60,11 @@ func resolveSpaceRef(ctx context.Context, c *api.ClientWithResponses, value stri
 	return resolveRef(ctx, value,
 		func(ctx context.Context, id string) (*api.Space, error) {
 			resp, err := c.SpacesRetrieveWithResponse(ctx, id)
-			if err != nil || resp.JSON200 == nil {
-				return nil, errOrStatus(err, resp.StatusCode(), resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			if resp.JSON200 == nil {
+				return nil, apiError(resp.StatusCode(), resp.Body)
 			}
 			return resp.JSON200, nil
 		},
@@ -91,8 +94,11 @@ func resolveBoardRef(ctx context.Context, c *api.ClientWithResponses, value stri
 	return resolveRef(ctx, value,
 		func(ctx context.Context, id string) (*api.Board, error) {
 			resp, err := c.BoardsRetrieveWithResponse(ctx, id)
-			if err != nil || resp.JSON200 == nil {
-				return nil, errOrStatus(err, resp.StatusCode(), resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			if resp.JSON200 == nil {
+				return nil, apiError(resp.StatusCode(), resp.Body)
 			}
 			return resp.JSON200, nil
 		},
@@ -122,8 +128,11 @@ func resolveBucketRef(ctx context.Context, c *api.ClientWithResponses, value str
 	return resolveRef(ctx, value,
 		func(ctx context.Context, id string) (*api.Bucket, error) {
 			resp, err := c.BucketsRetrieveWithResponse(ctx, id)
-			if err != nil || resp.JSON200 == nil {
-				return nil, errOrStatus(err, resp.StatusCode(), resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			if resp.JSON200 == nil {
+				return nil, apiError(resp.StatusCode(), resp.Body)
 			}
 			return resp.JSON200, nil
 		},
@@ -153,8 +162,11 @@ func resolveGoalRef(ctx context.Context, c *api.ClientWithResponses, value strin
 	return resolveRef(ctx, value,
 		func(ctx context.Context, id string) (*api.Goal, error) {
 			resp, err := c.GoalsRetrieveWithResponse(ctx, id)
-			if err != nil || resp.JSON200 == nil {
-				return nil, errOrStatus(err, resp.StatusCode(), resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			if resp.JSON200 == nil {
+				return nil, apiError(resp.StatusCode(), resp.Body)
 			}
 			return resp.JSON200, nil
 		},
@@ -185,8 +197,11 @@ func resolveUserRef(ctx context.Context, c *api.ClientWithResponses, value strin
 	return resolveRef(ctx, value,
 		func(ctx context.Context, id string) (*api.User, error) {
 			resp, err := c.UsersRetrieveWithResponse(ctx, id)
-			if err != nil || resp.JSON200 == nil {
-				return nil, errOrStatus(err, resp.StatusCode(), resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			if resp.JSON200 == nil {
+				return nil, apiError(resp.StatusCode(), resp.Body)
 			}
 			return resp.JSON200, nil
 		},
@@ -226,11 +241,3 @@ func resolveUserRef(ctx context.Context, c *api.ClientWithResponses, value strin
 	)
 }
 
-// errOrStatus funnels transport errors and non-2xx responses into a single
-// value; callers use it to decide whether to fall back to a name lookup.
-func errOrStatus(err error, status int, body []byte) error {
-	if err != nil {
-		return err
-	}
-	return apiError(status, body)
-}
