@@ -66,6 +66,10 @@ OAuth authentication with your browser:
 
 `timestripe auth login`
 
+Request the read-only scope (write operations will fail):
+
+`timestripe auth login --read-only`
+
 Skip the browser by using a personal api key (manage keys in [Settings](https://timestripe.com/settings/#api-keys)):
 
 `timestripe auth login --token <your-api-key>`

@@ -54,6 +54,9 @@ timestripe auth login --token <API_KEY>
 
 # Or OAuth2 + PKCE (opens a browser; fixed loopback on 127.0.0.1:53682)
 timestripe auth login
+
+# Add --read-only to request the read_only scope (write commands will fail)
+timestripe auth login --read-only
 ```
 
 Alternatively, pass the token through the environment without persisting it:

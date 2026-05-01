@@ -24,6 +24,7 @@ func newAuthCmd() *cobra.Command {
 func newAuthLoginCmd() *cobra.Command {
 	var token string
 	var scopes []string
+	var readOnly bool
 	cmd := &cobra.Command{
 		Use:     "login",
 		Aliases: []string{"signin"},
@@ -33,6 +34,8 @@ Authenticate the CLI against the Timestripe API.
 
 With no flags, the browser is opened to complete an OAuth2 authorization-code
 + PKCE flow. A loopback HTTP server on 127.0.0.1 receives the callback.
+
+Use --read-only to request the read_only scope (write operations will fail).
 
 Use --token <api-key> to store a personal bearer token instead (useful for
 scripting and CI).
@@ -48,6 +51,9 @@ scripting and CI).
 				fmt.Fprintln(cmd.OutOrStdout(), "Saved personal token.")
 				return nil
 			}
+			if readOnly {
+				scopes = []string{"read_only"}
+			}
 			creds, err := auth.LoginPKCE(cmd.Context(), scopes, userAgent())
 			if err != nil {
 				return err
@@ -61,7 +67,11 @@ scripting and CI).
 		},
 	}
 	cmd.Flags().StringVar(&token, "token", "", "use a personal API token instead of OAuth")
+	cmd.Flags().BoolVar(&readOnly, "read-only", false, "request the read_only OAuth scope (no write access)")
 	cmd.Flags().StringSliceVar(&scopes, "scope", []string{"read_write"}, "OAuth scopes to request")
+	cmd.MarkFlagsMutuallyExclusive("read-only", "scope")
+	cmd.MarkFlagsMutuallyExclusive("read-only", "token")
+	cmd.MarkFlagsMutuallyExclusive("scope", "token")
 	return cmd
 }
 
