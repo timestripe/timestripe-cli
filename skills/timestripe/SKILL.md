@@ -9,6 +9,35 @@ description: Use this skill whenever the user wants to interact with Timestripe 
 designed to be pipe-friendly and predictable so that agents and scripts can
 drive it without parsing human-formatted output.
 
+## Before doing anything: install
+
+Check whether the CLI is available:
+
+```bash
+command -v timestripe >/dev/null || echo "timestripe not installed"
+```
+
+If missing, install one of these ways. Prefer Homebrew on macOS and Linux:
+
+```bash
+brew install timestripe/tap/timestripe-cli
+```
+
+If Go is available:
+
+```bash
+go install github.com/timestripe/timestripe-cli/cmd/timestripe@latest
+```
+
+Otherwise grab a pre-built binary (macOS / Linux, amd64 / arm64) from
+https://github.com/timestripe/timestripe-cli/releases and place it on `PATH`.
+
+Verify the install:
+
+```bash
+timestripe version
+```
+
 ## Before doing anything: authenticate
 
 The CLI requires credentials. Check first:
