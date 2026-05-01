@@ -193,5 +193,3 @@ including pagination and format flags. Shell completion is available via
 - Do not hand-assemble URLs against the API — use the CLI.
 - Do not store API tokens in shell history; prefer `TIMESTRIPE_TOKEN` in an
   env file or `timestripe auth login --token` (persisted to keychain).
-- Do not attempt webhook management, space cloning, or a `goals complete`
-  action through the CLI — they are not wired up.

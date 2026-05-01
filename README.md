@@ -66,7 +66,7 @@ OAuth authentication with your browser:
 
 `timestripe auth login`
 
-Skip the browser by using a personal api key (manage keys in [Settings](https://timestripe.com/settings/#api-key)):
+Skip the browser by using a personal api key (manage keys in [Settings](https://timestripe.com/settings/#api-keys)):
 
 `timestripe auth login --token <your-api-key>`
 
@@ -79,6 +79,14 @@ Related commands:
 - `timestripe auth whoami` — show the authenticated user
 - `timestripe auth status` — verify the stored token still works
 - `timestripe auth logout` — remove stored credentials
+
+
+## AI agents
+
+`timestripe` works with any AI agent that can run shell commands — `--json` output is structured, exit codes are stable, and a ready-made skill ships with the repo.
+
+- **Claude Code:** drop [`skills/timestripe/`](skills/timestripe) into `~/.claude/skills/` (global) or `<your-project>/.claude/skills/` (per-project). Claude loads it automatically when you mention goals, tasks, todos, spaces, or Timestripe.
+- **Other agents:** point the agent at [`skills/timestripe/SKILL.md`](skills/timestripe/SKILL.md). It documents the command surface, JSON envelope, server-side filters, and common recipes.
 
 
 ## Commands
