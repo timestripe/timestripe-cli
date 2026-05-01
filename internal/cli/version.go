@@ -16,12 +16,17 @@ var (
 // userAgent is the HTTP User-Agent sent on requests to Timestripe services.
 func userAgent() string { return "timestripe-cli/" + version }
 
+// versionString is the human-readable version line shared by `version` and `--version`.
+func versionString() string {
+	return fmt.Sprintf("timestripe %s (%s, built %s)\n", version, commit, date)
+}
+
 func newVersionCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "version",
 		Short: "Print the CLI version",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			_, err := fmt.Fprintf(cmd.OutOrStdout(), "timestripe %s (%s, built %s)\n", version, commit, date)
+			_, err := fmt.Fprint(cmd.OutOrStdout(), versionString())
 			return err
 		},
 	}

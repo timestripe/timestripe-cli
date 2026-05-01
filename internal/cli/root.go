@@ -25,9 +25,14 @@ func Execute() error {
 		Use:           "timestripe",
 		Short:         "Timestripe command-line interface",
 		Long:          "timestripe is the official command-line client for the Timestripe API.",
+		Version:       versionString(),
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}
+	root.SetVersionTemplate("{{.Version}}")
+	// Pre-register --version without a shorthand so Cobra does not auto-bind -v,
+	// which we want to reserve for a future --verbose flag.
+	root.Flags().Bool("version", false, "version for timestripe")
 
 	pf := root.PersistentFlags()
 	pf.BoolVar(&outputFlags.JSON, "json", false, "output JSON")
