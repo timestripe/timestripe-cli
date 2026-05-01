@@ -64,7 +64,7 @@ release:
   prerelease: auto
 
 brews:
-  - name: timestripe
+  - name: timestripe-cli
     repository:
       owner: timestripe
       name: homebrew-tap
