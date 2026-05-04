@@ -2,12 +2,16 @@ openapi: 3.0.3
 info:
   title: Timestripe API
   version: v3
+  description: "\nTimestripe is a unique planner with flexible time frames that allows\
+    \ you to think strategically,\nhave a clear vision, and focus on things that are\
+    \ really important to you.\n\nYou can manage API keys in [Settings](/settings/#api-keys).\n\
+    \nTo register an OAuth Client, contact us: help@timestripe.com\n\n[Open Timestripe\
+    \ →](/)\n\n[Get Timestripe CLI →](https://github.com/timestripe/timestripe-cli)\n\
+    \    "
 paths:
   /boards/:
     get:
       operationId: boardsList
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - name: archived
         in: query
@@ -53,9 +57,9 @@ paths:
         schema:
           type: string
       tags:
-      - boards
+      - Boards
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -66,10 +70,8 @@ paths:
           description: ''
     post:
       operationId: boardsCreate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       tags:
-      - boards
+      - Boards
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -83,7 +85,7 @@ paths:
               $ref: '#/components/schemas/Board'
         required: true
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '201':
@@ -95,8 +97,6 @@ paths:
   /boards/{id}/:
     get:
       operationId: boardsRetrieve
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -104,9 +104,9 @@ paths:
           type: string
         required: true
       tags:
-      - boards
+      - Boards
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -117,8 +117,6 @@ paths:
           description: ''
     put:
       operationId: boardsUpdate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -126,7 +124,7 @@ paths:
           type: string
         required: true
       tags:
-      - boards
+      - Boards
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -140,7 +138,7 @@ paths:
               $ref: '#/components/schemas/Board'
         required: true
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -151,8 +149,6 @@ paths:
           description: ''
     patch:
       operationId: boardsPartialUpdate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -160,7 +156,7 @@ paths:
           type: string
         required: true
       tags:
-      - boards
+      - Boards
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -173,7 +169,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBoard'
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -184,8 +180,6 @@ paths:
           description: ''
     delete:
       operationId: boardsDestroy
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -193,9 +187,9 @@ paths:
           type: string
         required: true
       tags:
-      - boards
+      - Boards
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '204':
@@ -203,8 +197,6 @@ paths:
   /buckets/:
     get:
       operationId: bucketsList
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - name: boardId
         in: query
@@ -244,9 +236,9 @@ paths:
           - -name
           - -sequenceNo
       tags:
-      - buckets
+      - Buckets
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -257,10 +249,8 @@ paths:
           description: ''
     post:
       operationId: bucketsCreate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -274,7 +264,7 @@ paths:
               $ref: '#/components/schemas/Bucket'
         required: true
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '201':
@@ -286,8 +276,6 @@ paths:
   /buckets/{id}/:
     get:
       operationId: bucketsRetrieve
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -295,9 +283,9 @@ paths:
           type: string
         required: true
       tags:
-      - buckets
+      - Buckets
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -308,8 +296,6 @@ paths:
           description: ''
     put:
       operationId: bucketsUpdate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -317,7 +303,7 @@ paths:
           type: string
         required: true
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -331,7 +317,7 @@ paths:
               $ref: '#/components/schemas/Bucket'
         required: true
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -342,8 +328,6 @@ paths:
           description: ''
     patch:
       operationId: bucketsPartialUpdate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -351,7 +335,7 @@ paths:
           type: string
         required: true
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -364,7 +348,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBucket'
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -375,8 +359,6 @@ paths:
           description: ''
     delete:
       operationId: bucketsDestroy
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -384,9 +366,9 @@ paths:
           type: string
         required: true
       tags:
-      - buckets
+      - Buckets
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '204':
@@ -394,8 +376,6 @@ paths:
   /goals/:
     get:
       operationId: goalsList
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - name: assigneeId
         in: query
@@ -522,9 +502,9 @@ paths:
           type: string
           format: date-time
       tags:
-      - goals
+      - Goals
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -535,10 +515,8 @@ paths:
           description: ''
     post:
       operationId: goalsCreate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       tags:
-      - goals
+      - Goals
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -552,7 +530,7 @@ paths:
               $ref: '#/components/schemas/Goal'
         required: true
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '201':
@@ -564,8 +542,6 @@ paths:
   /goals/{id}/:
     get:
       operationId: goalsRetrieve
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -573,9 +549,9 @@ paths:
           type: string
         required: true
       tags:
-      - goals
+      - Goals
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -586,8 +562,6 @@ paths:
           description: ''
     put:
       operationId: goalsUpdate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -595,7 +569,7 @@ paths:
           type: string
         required: true
       tags:
-      - goals
+      - Goals
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -609,7 +583,7 @@ paths:
               $ref: '#/components/schemas/Goal'
         required: true
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -620,8 +594,6 @@ paths:
           description: ''
     patch:
       operationId: goalsPartialUpdate
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -629,7 +601,7 @@ paths:
           type: string
         required: true
       tags:
-      - goals
+      - Goals
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -642,7 +614,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedGoal'
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -653,8 +625,6 @@ paths:
           description: ''
     delete:
       operationId: goalsDestroy
-      description: Wraps write actions in a TrackEvents context so signal-based event
-        logging fires.
       parameters:
       - in: path
         name: id
@@ -662,13 +632,43 @@ paths:
           type: string
         required: true
       tags:
-      - goals
+      - Goals
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '204':
           description: No response body
+  /goals/{id}/attachments/:
+    post:
+      operationId: goalsAttachmentsCreate
+      description: Uploaded file is appended to the goal’s description as an inline
+        image or link.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Goals
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '201':
+          description: Created
   /memberships/:
     get:
       operationId: membershipsList
@@ -698,9 +698,9 @@ paths:
         schema:
           type: string
       tags:
-      - memberships
+      - Memberships
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -719,9 +719,9 @@ paths:
           type: string
         required: true
       tags:
-      - memberships
+      - Memberships
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -753,9 +753,9 @@ paths:
         schema:
           type: string
       tags:
-      - spaces
+      - Spaces
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -767,7 +767,7 @@ paths:
     post:
       operationId: spacesCreate
       tags:
-      - spaces
+      - Spaces
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -780,7 +780,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Space'
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '201':
@@ -799,9 +799,9 @@ paths:
           type: string
         required: true
       tags:
-      - spaces
+      - Spaces
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -819,7 +819,7 @@ paths:
           type: string
         required: true
       tags:
-      - spaces
+      - Spaces
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -832,7 +832,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Space'
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -850,7 +850,7 @@ paths:
           type: string
         required: true
       tags:
-      - spaces
+      - Spaces
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -863,7 +863,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedSpace'
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -881,46 +881,13 @@ paths:
           type: string
         required: true
       tags:
-      - spaces
+      - Spaces
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '204':
           description: No response body
-  /spaces/{id}/clone/:
-    post:
-      operationId: spacesCloneCreate
-      summary: spacesClone
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - spaces
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Space'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Space'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Space'
-      security:
-      - Bearer: []
-      - OAuth2: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Space'
-          description: ''
   /users/:
     get:
       operationId: usersList
@@ -950,9 +917,9 @@ paths:
         schema:
           type: string
       tags:
-      - users
+      - Users
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -971,9 +938,9 @@ paths:
           type: string
         required: true
       tags:
-      - users
+      - Users
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -986,9 +953,9 @@ paths:
     get:
       operationId: usersMeRetrieve
       tags:
-      - users
+      - Users
       security:
-      - Bearer: []
+      - API Key: []
       - OAuth2: []
       responses:
         '200':
@@ -997,160 +964,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
-  /webhooks/:
-    get:
-      operationId: webhooksList
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      tags:
-      - webhooks
-      security:
-      - Bearer: []
-      - OAuth2: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedWebhookList'
-          description: ''
-    post:
-      operationId: webhooksCreate
-      tags:
-      - webhooks
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Webhook'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Webhook'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Webhook'
-        required: true
-      security:
-      - Bearer: []
-      - OAuth2: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Webhook'
-          description: ''
-  /webhooks/{id}/:
-    get:
-      operationId: webhooksRetrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - webhooks
-      security:
-      - Bearer: []
-      - OAuth2: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Webhook'
-          description: ''
-    put:
-      operationId: webhooksUpdate
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - webhooks
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Webhook'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Webhook'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Webhook'
-        required: true
-      security:
-      - Bearer: []
-      - OAuth2: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Webhook'
-          description: ''
-    patch:
-      operationId: webhooksPartialUpdate
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - webhooks
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedWebhook'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedWebhook'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedWebhook'
-      security:
-      - Bearer: []
-      - OAuth2: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Webhook'
-          description: ''
-    delete:
-      operationId: webhooksDestroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - webhooks
-      security:
-      - Bearer: []
-      - OAuth2: []
-      responses:
-        '204':
-          description: No response body
 components:
   schemas:
     Board:
@@ -1520,29 +1333,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/User'
-    PaginatedWebhookList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Webhook'
     PatchedBoard:
       type: object
       properties:
@@ -1718,41 +1508,6 @@ components:
         url:
           type: string
           readOnly: true
-    PatchedWebhook:
-      type: object
-      properties:
-        id:
-          type: string
-          readOnly: true
-        space:
-          type: string
-          nullable: true
-        url:
-          type: string
-          maxLength: 250
-        enabled:
-          type: boolean
-        lastSuccessDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        lastFailureDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        nextRetryDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        failuresStreak:
-          type: integer
-          readOnly: true
-        retriesLeft:
-          type: integer
-          readOnly: true
     Space:
       type: object
       properties:
@@ -1808,56 +1563,10 @@ components:
       - lastName
       - timezone
       - url
-    Webhook:
-      type: object
-      properties:
-        id:
-          type: string
-          readOnly: true
-        space:
-          type: string
-          nullable: true
-        url:
-          type: string
-          maxLength: 250
-        enabled:
-          type: boolean
-        lastSuccessDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        lastFailureDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        nextRetryDatetime:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        failuresStreak:
-          type: integer
-          readOnly: true
-        retriesLeft:
-          type: integer
-          readOnly: true
-      required:
-      - failuresStreak
-      - id
-      - lastFailureDatetime
-      - lastSuccessDatetime
-      - nextRetryDatetime
-      - retriesLeft
-      - space
-      - url
   securitySchemes:
-    Bearer:
-      type: apiKey
-      name: Authorization
-      in: header
-      description: 'Format: Bearer <user api key>'
+    API Key:
+      type: http
+      scheme: bearer
     OAuth2:
       type: oauth2
       description: OAuth2 bearer token in the Authorization header.
@@ -1869,4 +1578,4 @@ components:
             read_only: Read-only access
             read_write: Read and write access
 servers:
-- url: https://timestripe.com/api/v3/
+- url: /api/v3/

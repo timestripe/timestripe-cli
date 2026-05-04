@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	BearerScopes = "Bearer.Scopes"
-	OAuth2Scopes = "OAuth2.Scopes"
+	API_KeyScopes = "API_Key.Scopes"
+	OAuth2Scopes  = "OAuth2.Scopes"
 )
 
 // Defines values for BoardLayout.
@@ -338,14 +338,6 @@ type PaginatedUserList struct {
 	Results  []User  `json:"results"`
 }
 
-// PaginatedWebhookList defines model for PaginatedWebhookList.
-type PaginatedWebhookList struct {
-	Count    int       `json:"count"`
-	Next     *string   `json:"next"`
-	Previous *string   `json:"previous"`
-	Results  []Webhook `json:"results"`
-}
-
 // PatchedBoard defines model for PatchedBoard.
 type PatchedBoard struct {
 	Archived        *bool      `json:"archived,omitempty"`
@@ -449,19 +441,6 @@ type PatchedSpace struct {
 	Url        *string      `json:"url,omitempty"`
 }
 
-// PatchedWebhook defines model for PatchedWebhook.
-type PatchedWebhook struct {
-	Enabled             *bool      `json:"enabled,omitempty"`
-	FailuresStreak      *int       `json:"failuresStreak,omitempty"`
-	Id                  *string    `json:"id,omitempty"`
-	LastFailureDatetime *time.Time `json:"lastFailureDatetime"`
-	LastSuccessDatetime *time.Time `json:"lastSuccessDatetime"`
-	NextRetryDatetime   *time.Time `json:"nextRetryDatetime"`
-	RetriesLeft         *int       `json:"retriesLeft,omitempty"`
-	Space               *string    `json:"space"`
-	Url                 *string    `json:"url,omitempty"`
-}
-
 // Space defines model for Space.
 type Space struct {
 	Id         *string      `json:"id,omitempty"`
@@ -479,19 +458,6 @@ type User struct {
 	LastName  *string `json:"lastName,omitempty"`
 	Timezone  *string `json:"timezone"`
 	Url       *string `json:"url,omitempty"`
-}
-
-// Webhook defines model for Webhook.
-type Webhook struct {
-	Enabled             *bool      `json:"enabled,omitempty"`
-	FailuresStreak      *int       `json:"failuresStreak,omitempty"`
-	Id                  *string    `json:"id,omitempty"`
-	LastFailureDatetime *time.Time `json:"lastFailureDatetime"`
-	LastSuccessDatetime *time.Time `json:"lastSuccessDatetime"`
-	NextRetryDatetime   *time.Time `json:"nextRetryDatetime"`
-	RetriesLeft         *int       `json:"retriesLeft,omitempty"`
-	Space               *string    `json:"space"`
-	Url                 string     `json:"url"`
 }
 
 // BoardsListParams defines parameters for BoardsList.
@@ -593,6 +559,11 @@ type GoalsListParamsHorizon string
 // GoalsListParamsSort defines parameters for GoalsList.
 type GoalsListParamsSort string
 
+// GoalsAttachmentsCreateMultipartBody defines parameters for GoalsAttachmentsCreate.
+type GoalsAttachmentsCreateMultipartBody struct {
+	File openapi_types.File `json:"file"`
+}
+
 // MembershipsListParams defines parameters for MembershipsList.
 type MembershipsListParams struct {
 	// Limit Number of results to return per page.
@@ -633,15 +604,6 @@ type UsersListParams struct {
 
 	// Search Case-insensitive token search over: first_name, last_name, email.
 	Search *string `form:"search,omitempty" json:"search,omitempty"`
-}
-
-// WebhooksListParams defines parameters for WebhooksList.
-type WebhooksListParams struct {
-	// Limit Number of results to return per page.
-	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// Offset The initial index from which to return the results.
-	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
 }
 
 // BoardsCreateJSONRequestBody defines body for BoardsCreate for application/json ContentType.
@@ -725,6 +687,9 @@ type GoalsUpdateFormdataRequestBody = Goal
 // GoalsUpdateMultipartRequestBody defines body for GoalsUpdate for multipart/form-data ContentType.
 type GoalsUpdateMultipartRequestBody = Goal
 
+// GoalsAttachmentsCreateMultipartRequestBody defines body for GoalsAttachmentsCreate for multipart/form-data ContentType.
+type GoalsAttachmentsCreateMultipartRequestBody GoalsAttachmentsCreateMultipartBody
+
 // SpacesCreateJSONRequestBody defines body for SpacesCreate for application/json ContentType.
 type SpacesCreateJSONRequestBody = Space
 
@@ -751,42 +716,6 @@ type SpacesUpdateFormdataRequestBody = Space
 
 // SpacesUpdateMultipartRequestBody defines body for SpacesUpdate for multipart/form-data ContentType.
 type SpacesUpdateMultipartRequestBody = Space
-
-// SpacesCloneCreateJSONRequestBody defines body for SpacesCloneCreate for application/json ContentType.
-type SpacesCloneCreateJSONRequestBody = Space
-
-// SpacesCloneCreateFormdataRequestBody defines body for SpacesCloneCreate for application/x-www-form-urlencoded ContentType.
-type SpacesCloneCreateFormdataRequestBody = Space
-
-// SpacesCloneCreateMultipartRequestBody defines body for SpacesCloneCreate for multipart/form-data ContentType.
-type SpacesCloneCreateMultipartRequestBody = Space
-
-// WebhooksCreateJSONRequestBody defines body for WebhooksCreate for application/json ContentType.
-type WebhooksCreateJSONRequestBody = Webhook
-
-// WebhooksCreateFormdataRequestBody defines body for WebhooksCreate for application/x-www-form-urlencoded ContentType.
-type WebhooksCreateFormdataRequestBody = Webhook
-
-// WebhooksCreateMultipartRequestBody defines body for WebhooksCreate for multipart/form-data ContentType.
-type WebhooksCreateMultipartRequestBody = Webhook
-
-// WebhooksPartialUpdateJSONRequestBody defines body for WebhooksPartialUpdate for application/json ContentType.
-type WebhooksPartialUpdateJSONRequestBody = PatchedWebhook
-
-// WebhooksPartialUpdateFormdataRequestBody defines body for WebhooksPartialUpdate for application/x-www-form-urlencoded ContentType.
-type WebhooksPartialUpdateFormdataRequestBody = PatchedWebhook
-
-// WebhooksPartialUpdateMultipartRequestBody defines body for WebhooksPartialUpdate for multipart/form-data ContentType.
-type WebhooksPartialUpdateMultipartRequestBody = PatchedWebhook
-
-// WebhooksUpdateJSONRequestBody defines body for WebhooksUpdate for application/json ContentType.
-type WebhooksUpdateJSONRequestBody = Webhook
-
-// WebhooksUpdateFormdataRequestBody defines body for WebhooksUpdate for application/x-www-form-urlencoded ContentType.
-type WebhooksUpdateFormdataRequestBody = Webhook
-
-// WebhooksUpdateMultipartRequestBody defines body for WebhooksUpdate for multipart/form-data ContentType.
-type WebhooksUpdateMultipartRequestBody = Webhook
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
@@ -951,6 +880,9 @@ type ClientInterface interface {
 
 	GoalsUpdateWithFormdataBody(ctx context.Context, id string, body GoalsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GoalsAttachmentsCreateWithBody request with any body
+	GoalsAttachmentsCreateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// MembershipsList request
 	MembershipsList(ctx context.Context, params *MembershipsListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -987,13 +919,6 @@ type ClientInterface interface {
 
 	SpacesUpdateWithFormdataBody(ctx context.Context, id string, body SpacesUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// SpacesCloneCreateWithBody request with any body
-	SpacesCloneCreateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	SpacesCloneCreate(ctx context.Context, id string, body SpacesCloneCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	SpacesCloneCreateWithFormdataBody(ctx context.Context, id string, body SpacesCloneCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UsersList request
 	UsersList(ctx context.Context, params *UsersListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -1002,36 +927,6 @@ type ClientInterface interface {
 
 	// UsersRetrieve request
 	UsersRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// WebhooksList request
-	WebhooksList(ctx context.Context, params *WebhooksListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// WebhooksCreateWithBody request with any body
-	WebhooksCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	WebhooksCreate(ctx context.Context, body WebhooksCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	WebhooksCreateWithFormdataBody(ctx context.Context, body WebhooksCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// WebhooksDestroy request
-	WebhooksDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// WebhooksRetrieve request
-	WebhooksRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// WebhooksPartialUpdateWithBody request with any body
-	WebhooksPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	WebhooksPartialUpdate(ctx context.Context, id string, body WebhooksPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	WebhooksPartialUpdateWithFormdataBody(ctx context.Context, id string, body WebhooksPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// WebhooksUpdateWithBody request with any body
-	WebhooksUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	WebhooksUpdate(ctx context.Context, id string, body WebhooksUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	WebhooksUpdateWithFormdataBody(ctx context.Context, id string, body WebhooksUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 func (c *Client) BoardsList(ctx context.Context, params *BoardsListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -1466,6 +1361,18 @@ func (c *Client) GoalsUpdateWithFormdataBody(ctx context.Context, id string, bod
 	return c.Client.Do(req)
 }
 
+func (c *Client) GoalsAttachmentsCreateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGoalsAttachmentsCreateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) MembershipsList(ctx context.Context, params *MembershipsListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewMembershipsListRequest(c.Server, params)
 	if err != nil {
@@ -1634,42 +1541,6 @@ func (c *Client) SpacesUpdateWithFormdataBody(ctx context.Context, id string, bo
 	return c.Client.Do(req)
 }
 
-func (c *Client) SpacesCloneCreateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewSpacesCloneCreateRequestWithBody(c.Server, id, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) SpacesCloneCreate(ctx context.Context, id string, body SpacesCloneCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewSpacesCloneCreateRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) SpacesCloneCreateWithFormdataBody(ctx context.Context, id string, body SpacesCloneCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewSpacesCloneCreateRequestWithFormdataBody(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 func (c *Client) UsersList(ctx context.Context, params *UsersListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUsersListRequest(c.Server, params)
 	if err != nil {
@@ -1696,150 +1567,6 @@ func (c *Client) UsersMeRetrieve(ctx context.Context, reqEditors ...RequestEdito
 
 func (c *Client) UsersRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUsersRetrieveRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksList(ctx context.Context, params *WebhooksListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksListRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksCreateRequestWithBody(c.Server, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksCreate(ctx context.Context, body WebhooksCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksCreateRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksCreateWithFormdataBody(ctx context.Context, body WebhooksCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksCreateRequestWithFormdataBody(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksDestroyRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksRetrieveRequest(c.Server, id)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksPartialUpdateRequestWithBody(c.Server, id, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksPartialUpdate(ctx context.Context, id string, body WebhooksPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksPartialUpdateRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksPartialUpdateWithFormdataBody(ctx context.Context, id string, body WebhooksPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksPartialUpdateRequestWithFormdataBody(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksUpdateRequestWithBody(c.Server, id, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksUpdate(ctx context.Context, id string, body WebhooksUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksUpdateRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) WebhooksUpdateWithFormdataBody(ctx context.Context, id string, body WebhooksUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewWebhooksUpdateRequestWithFormdataBody(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -3054,6 +2781,42 @@ func NewGoalsUpdateRequestWithBody(server string, id string, contentType string,
 	return req, nil
 }
 
+// NewGoalsAttachmentsCreateRequestWithBody generates requests for GoalsAttachmentsCreate with any type of body
+func NewGoalsAttachmentsCreateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/goals/%s/attachments/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 // NewMembershipsListRequest generates requests for MembershipsList
 func NewMembershipsListRequest(server string, params *MembershipsListParams) (*http.Request, error) {
 	var err error
@@ -3501,64 +3264,6 @@ func NewSpacesUpdateRequestWithBody(server string, id string, contentType string
 	return req, nil
 }
 
-// NewSpacesCloneCreateRequest calls the generic SpacesCloneCreate builder with application/json body
-func NewSpacesCloneCreateRequest(server string, id string, body SpacesCloneCreateJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewSpacesCloneCreateRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewSpacesCloneCreateRequestWithFormdataBody calls the generic SpacesCloneCreate builder with application/x-www-form-urlencoded body
-func NewSpacesCloneCreateRequestWithFormdataBody(server string, id string, body SpacesCloneCreateFormdataRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	bodyStr, err := runtime.MarshalForm(body, nil)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = strings.NewReader(bodyStr.Encode())
-	return NewSpacesCloneCreateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
-}
-
-// NewSpacesCloneCreateRequestWithBody generates requests for SpacesCloneCreate with any type of body
-func NewSpacesCloneCreateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/spaces/%s/clone/", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 // NewUsersListRequest generates requests for UsersList
 func NewUsersListRequest(server string, params *UsersListParams) (*http.Request, error) {
 	var err error
@@ -3717,306 +3422,6 @@ func NewUsersRetrieveRequest(server string, id string) (*http.Request, error) {
 	return req, nil
 }
 
-// NewWebhooksListRequest generates requests for WebhooksList
-func NewWebhooksListRequest(server string, params *WebhooksListParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/webhooks/")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		queryValues := queryURL.Query()
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.Offset != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		queryURL.RawQuery = queryValues.Encode()
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewWebhooksCreateRequest calls the generic WebhooksCreate builder with application/json body
-func NewWebhooksCreateRequest(server string, body WebhooksCreateJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewWebhooksCreateRequestWithBody(server, "application/json", bodyReader)
-}
-
-// NewWebhooksCreateRequestWithFormdataBody calls the generic WebhooksCreate builder with application/x-www-form-urlencoded body
-func NewWebhooksCreateRequestWithFormdataBody(server string, body WebhooksCreateFormdataRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	bodyStr, err := runtime.MarshalForm(body, nil)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = strings.NewReader(bodyStr.Encode())
-	return NewWebhooksCreateRequestWithBody(server, "application/x-www-form-urlencoded", bodyReader)
-}
-
-// NewWebhooksCreateRequestWithBody generates requests for WebhooksCreate with any type of body
-func NewWebhooksCreateRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/webhooks/")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("POST", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewWebhooksDestroyRequest generates requests for WebhooksDestroy
-func NewWebhooksDestroyRequest(server string, id string) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/webhooks/%s/", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewWebhooksRetrieveRequest generates requests for WebhooksRetrieve
-func NewWebhooksRetrieveRequest(server string, id string) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/webhooks/%s/", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
-}
-
-// NewWebhooksPartialUpdateRequest calls the generic WebhooksPartialUpdate builder with application/json body
-func NewWebhooksPartialUpdateRequest(server string, id string, body WebhooksPartialUpdateJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewWebhooksPartialUpdateRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewWebhooksPartialUpdateRequestWithFormdataBody calls the generic WebhooksPartialUpdate builder with application/x-www-form-urlencoded body
-func NewWebhooksPartialUpdateRequestWithFormdataBody(server string, id string, body WebhooksPartialUpdateFormdataRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	bodyStr, err := runtime.MarshalForm(body, nil)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = strings.NewReader(bodyStr.Encode())
-	return NewWebhooksPartialUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
-}
-
-// NewWebhooksPartialUpdateRequestWithBody generates requests for WebhooksPartialUpdate with any type of body
-func NewWebhooksPartialUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/webhooks/%s/", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PATCH", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewWebhooksUpdateRequest calls the generic WebhooksUpdate builder with application/json body
-func NewWebhooksUpdateRequest(server string, id string, body WebhooksUpdateJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewWebhooksUpdateRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewWebhooksUpdateRequestWithFormdataBody calls the generic WebhooksUpdate builder with application/x-www-form-urlencoded body
-func NewWebhooksUpdateRequestWithFormdataBody(server string, id string, body WebhooksUpdateFormdataRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	bodyStr, err := runtime.MarshalForm(body, nil)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = strings.NewReader(bodyStr.Encode())
-	return NewWebhooksUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
-}
-
-// NewWebhooksUpdateRequestWithBody generates requests for WebhooksUpdate with any type of body
-func NewWebhooksUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/webhooks/%s/", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("PUT", queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
 func (c *Client) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
 	for _, r := range c.RequestEditors {
 		if err := r(ctx, req); err != nil {
@@ -4150,6 +3555,9 @@ type ClientWithResponsesInterface interface {
 
 	GoalsUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body GoalsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*GoalsUpdateResponse, error)
 
+	// GoalsAttachmentsCreateWithBodyWithResponse request with any body
+	GoalsAttachmentsCreateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*GoalsAttachmentsCreateResponse, error)
+
 	// MembershipsListWithResponse request
 	MembershipsListWithResponse(ctx context.Context, params *MembershipsListParams, reqEditors ...RequestEditorFn) (*MembershipsListResponse, error)
 
@@ -4186,13 +3594,6 @@ type ClientWithResponsesInterface interface {
 
 	SpacesUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body SpacesUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*SpacesUpdateResponse, error)
 
-	// SpacesCloneCreateWithBodyWithResponse request with any body
-	SpacesCloneCreateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SpacesCloneCreateResponse, error)
-
-	SpacesCloneCreateWithResponse(ctx context.Context, id string, body SpacesCloneCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*SpacesCloneCreateResponse, error)
-
-	SpacesCloneCreateWithFormdataBodyWithResponse(ctx context.Context, id string, body SpacesCloneCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*SpacesCloneCreateResponse, error)
-
 	// UsersListWithResponse request
 	UsersListWithResponse(ctx context.Context, params *UsersListParams, reqEditors ...RequestEditorFn) (*UsersListResponse, error)
 
@@ -4201,36 +3602,6 @@ type ClientWithResponsesInterface interface {
 
 	// UsersRetrieveWithResponse request
 	UsersRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*UsersRetrieveResponse, error)
-
-	// WebhooksListWithResponse request
-	WebhooksListWithResponse(ctx context.Context, params *WebhooksListParams, reqEditors ...RequestEditorFn) (*WebhooksListResponse, error)
-
-	// WebhooksCreateWithBodyWithResponse request with any body
-	WebhooksCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*WebhooksCreateResponse, error)
-
-	WebhooksCreateWithResponse(ctx context.Context, body WebhooksCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*WebhooksCreateResponse, error)
-
-	WebhooksCreateWithFormdataBodyWithResponse(ctx context.Context, body WebhooksCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*WebhooksCreateResponse, error)
-
-	// WebhooksDestroyWithResponse request
-	WebhooksDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*WebhooksDestroyResponse, error)
-
-	// WebhooksRetrieveWithResponse request
-	WebhooksRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*WebhooksRetrieveResponse, error)
-
-	// WebhooksPartialUpdateWithBodyWithResponse request with any body
-	WebhooksPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*WebhooksPartialUpdateResponse, error)
-
-	WebhooksPartialUpdateWithResponse(ctx context.Context, id string, body WebhooksPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*WebhooksPartialUpdateResponse, error)
-
-	WebhooksPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body WebhooksPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*WebhooksPartialUpdateResponse, error)
-
-	// WebhooksUpdateWithBodyWithResponse request with any body
-	WebhooksUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*WebhooksUpdateResponse, error)
-
-	WebhooksUpdateWithResponse(ctx context.Context, id string, body WebhooksUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*WebhooksUpdateResponse, error)
-
-	WebhooksUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body WebhooksUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*WebhooksUpdateResponse, error)
 }
 
 type BoardsListResponse struct {
@@ -4626,6 +3997,27 @@ func (r GoalsUpdateResponse) StatusCode() int {
 	return 0
 }
 
+type GoalsAttachmentsCreateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// Status returns HTTPResponse.Status
+func (r GoalsAttachmentsCreateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GoalsAttachmentsCreateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
 type MembershipsListResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -4801,28 +4193,6 @@ func (r SpacesUpdateResponse) StatusCode() int {
 	return 0
 }
 
-type SpacesCloneCreateResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *Space
-}
-
-// Status returns HTTPResponse.Status
-func (r SpacesCloneCreateResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r SpacesCloneCreateResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
 type UsersListResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -4883,137 +4253,6 @@ func (r UsersRetrieveResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r UsersRetrieveResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type WebhooksListResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *PaginatedWebhookList
-}
-
-// Status returns HTTPResponse.Status
-func (r WebhooksListResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r WebhooksListResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type WebhooksCreateResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON201      *Webhook
-}
-
-// Status returns HTTPResponse.Status
-func (r WebhooksCreateResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r WebhooksCreateResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type WebhooksDestroyResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-}
-
-// Status returns HTTPResponse.Status
-func (r WebhooksDestroyResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r WebhooksDestroyResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type WebhooksRetrieveResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *Webhook
-}
-
-// Status returns HTTPResponse.Status
-func (r WebhooksRetrieveResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r WebhooksRetrieveResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type WebhooksPartialUpdateResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *Webhook
-}
-
-// Status returns HTTPResponse.Status
-func (r WebhooksPartialUpdateResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r WebhooksPartialUpdateResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-type WebhooksUpdateResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *Webhook
-}
-
-// Status returns HTTPResponse.Status
-func (r WebhooksUpdateResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r WebhooksUpdateResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -5326,6 +4565,15 @@ func (c *ClientWithResponses) GoalsUpdateWithFormdataBodyWithResponse(ctx contex
 	return ParseGoalsUpdateResponse(rsp)
 }
 
+// GoalsAttachmentsCreateWithBodyWithResponse request with arbitrary body returning *GoalsAttachmentsCreateResponse
+func (c *ClientWithResponses) GoalsAttachmentsCreateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*GoalsAttachmentsCreateResponse, error) {
+	rsp, err := c.GoalsAttachmentsCreateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGoalsAttachmentsCreateResponse(rsp)
+}
+
 // MembershipsListWithResponse request returning *MembershipsListResponse
 func (c *ClientWithResponses) MembershipsListWithResponse(ctx context.Context, params *MembershipsListParams, reqEditors ...RequestEditorFn) (*MembershipsListResponse, error) {
 	rsp, err := c.MembershipsList(ctx, params, reqEditors...)
@@ -5446,31 +4694,6 @@ func (c *ClientWithResponses) SpacesUpdateWithFormdataBodyWithResponse(ctx conte
 	return ParseSpacesUpdateResponse(rsp)
 }
 
-// SpacesCloneCreateWithBodyWithResponse request with arbitrary body returning *SpacesCloneCreateResponse
-func (c *ClientWithResponses) SpacesCloneCreateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SpacesCloneCreateResponse, error) {
-	rsp, err := c.SpacesCloneCreateWithBody(ctx, id, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseSpacesCloneCreateResponse(rsp)
-}
-
-func (c *ClientWithResponses) SpacesCloneCreateWithResponse(ctx context.Context, id string, body SpacesCloneCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*SpacesCloneCreateResponse, error) {
-	rsp, err := c.SpacesCloneCreate(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseSpacesCloneCreateResponse(rsp)
-}
-
-func (c *ClientWithResponses) SpacesCloneCreateWithFormdataBodyWithResponse(ctx context.Context, id string, body SpacesCloneCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*SpacesCloneCreateResponse, error) {
-	rsp, err := c.SpacesCloneCreateWithFormdataBody(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseSpacesCloneCreateResponse(rsp)
-}
-
 // UsersListWithResponse request returning *UsersListResponse
 func (c *ClientWithResponses) UsersListWithResponse(ctx context.Context, params *UsersListParams, reqEditors ...RequestEditorFn) (*UsersListResponse, error) {
 	rsp, err := c.UsersList(ctx, params, reqEditors...)
@@ -5496,108 +4719,6 @@ func (c *ClientWithResponses) UsersRetrieveWithResponse(ctx context.Context, id 
 		return nil, err
 	}
 	return ParseUsersRetrieveResponse(rsp)
-}
-
-// WebhooksListWithResponse request returning *WebhooksListResponse
-func (c *ClientWithResponses) WebhooksListWithResponse(ctx context.Context, params *WebhooksListParams, reqEditors ...RequestEditorFn) (*WebhooksListResponse, error) {
-	rsp, err := c.WebhooksList(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksListResponse(rsp)
-}
-
-// WebhooksCreateWithBodyWithResponse request with arbitrary body returning *WebhooksCreateResponse
-func (c *ClientWithResponses) WebhooksCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*WebhooksCreateResponse, error) {
-	rsp, err := c.WebhooksCreateWithBody(ctx, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksCreateResponse(rsp)
-}
-
-func (c *ClientWithResponses) WebhooksCreateWithResponse(ctx context.Context, body WebhooksCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*WebhooksCreateResponse, error) {
-	rsp, err := c.WebhooksCreate(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksCreateResponse(rsp)
-}
-
-func (c *ClientWithResponses) WebhooksCreateWithFormdataBodyWithResponse(ctx context.Context, body WebhooksCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*WebhooksCreateResponse, error) {
-	rsp, err := c.WebhooksCreateWithFormdataBody(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksCreateResponse(rsp)
-}
-
-// WebhooksDestroyWithResponse request returning *WebhooksDestroyResponse
-func (c *ClientWithResponses) WebhooksDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*WebhooksDestroyResponse, error) {
-	rsp, err := c.WebhooksDestroy(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksDestroyResponse(rsp)
-}
-
-// WebhooksRetrieveWithResponse request returning *WebhooksRetrieveResponse
-func (c *ClientWithResponses) WebhooksRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*WebhooksRetrieveResponse, error) {
-	rsp, err := c.WebhooksRetrieve(ctx, id, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksRetrieveResponse(rsp)
-}
-
-// WebhooksPartialUpdateWithBodyWithResponse request with arbitrary body returning *WebhooksPartialUpdateResponse
-func (c *ClientWithResponses) WebhooksPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*WebhooksPartialUpdateResponse, error) {
-	rsp, err := c.WebhooksPartialUpdateWithBody(ctx, id, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksPartialUpdateResponse(rsp)
-}
-
-func (c *ClientWithResponses) WebhooksPartialUpdateWithResponse(ctx context.Context, id string, body WebhooksPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*WebhooksPartialUpdateResponse, error) {
-	rsp, err := c.WebhooksPartialUpdate(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksPartialUpdateResponse(rsp)
-}
-
-func (c *ClientWithResponses) WebhooksPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body WebhooksPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*WebhooksPartialUpdateResponse, error) {
-	rsp, err := c.WebhooksPartialUpdateWithFormdataBody(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksPartialUpdateResponse(rsp)
-}
-
-// WebhooksUpdateWithBodyWithResponse request with arbitrary body returning *WebhooksUpdateResponse
-func (c *ClientWithResponses) WebhooksUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*WebhooksUpdateResponse, error) {
-	rsp, err := c.WebhooksUpdateWithBody(ctx, id, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksUpdateResponse(rsp)
-}
-
-func (c *ClientWithResponses) WebhooksUpdateWithResponse(ctx context.Context, id string, body WebhooksUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*WebhooksUpdateResponse, error) {
-	rsp, err := c.WebhooksUpdate(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksUpdateResponse(rsp)
-}
-
-func (c *ClientWithResponses) WebhooksUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body WebhooksUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*WebhooksUpdateResponse, error) {
-	rsp, err := c.WebhooksUpdateWithFormdataBody(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseWebhooksUpdateResponse(rsp)
 }
 
 // ParseBoardsListResponse parses an HTTP response from a BoardsListWithResponse call
@@ -6038,6 +5159,22 @@ func ParseGoalsUpdateResponse(rsp *http.Response) (*GoalsUpdateResponse, error) 
 	return response, nil
 }
 
+// ParseGoalsAttachmentsCreateResponse parses an HTTP response from a GoalsAttachmentsCreateWithResponse call
+func ParseGoalsAttachmentsCreateResponse(rsp *http.Response) (*GoalsAttachmentsCreateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GoalsAttachmentsCreateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
 // ParseMembershipsListResponse parses an HTTP response from a MembershipsListWithResponse call
 func ParseMembershipsListResponse(rsp *http.Response) (*MembershipsListResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -6236,32 +5373,6 @@ func ParseSpacesUpdateResponse(rsp *http.Response) (*SpacesUpdateResponse, error
 	return response, nil
 }
 
-// ParseSpacesCloneCreateResponse parses an HTTP response from a SpacesCloneCreateWithResponse call
-func ParseSpacesCloneCreateResponse(rsp *http.Response) (*SpacesCloneCreateResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &SpacesCloneCreateResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Space
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseUsersListResponse parses an HTTP response from a UsersListWithResponse call
 func ParseUsersListResponse(rsp *http.Response) (*UsersListResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -6330,152 +5441,6 @@ func ParseUsersRetrieveResponse(rsp *http.Response) (*UsersRetrieveResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest User
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseWebhooksListResponse parses an HTTP response from a WebhooksListWithResponse call
-func ParseWebhooksListResponse(rsp *http.Response) (*WebhooksListResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &WebhooksListResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PaginatedWebhookList
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseWebhooksCreateResponse parses an HTTP response from a WebhooksCreateWithResponse call
-func ParseWebhooksCreateResponse(rsp *http.Response) (*WebhooksCreateResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &WebhooksCreateResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest Webhook
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseWebhooksDestroyResponse parses an HTTP response from a WebhooksDestroyWithResponse call
-func ParseWebhooksDestroyResponse(rsp *http.Response) (*WebhooksDestroyResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &WebhooksDestroyResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	return response, nil
-}
-
-// ParseWebhooksRetrieveResponse parses an HTTP response from a WebhooksRetrieveWithResponse call
-func ParseWebhooksRetrieveResponse(rsp *http.Response) (*WebhooksRetrieveResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &WebhooksRetrieveResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Webhook
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseWebhooksPartialUpdateResponse parses an HTTP response from a WebhooksPartialUpdateWithResponse call
-func ParseWebhooksPartialUpdateResponse(rsp *http.Response) (*WebhooksPartialUpdateResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &WebhooksPartialUpdateResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Webhook
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseWebhooksUpdateResponse parses an HTTP response from a WebhooksUpdateWithResponse call
-func ParseWebhooksUpdateResponse(rsp *http.Response) (*WebhooksUpdateResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &WebhooksUpdateResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Webhook
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

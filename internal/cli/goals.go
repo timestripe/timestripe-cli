@@ -23,6 +23,7 @@ func newGoalsCmd() *cobra.Command {
 		newGoalsCreateCmd(),
 		newGoalsUpdateCmd(),
 		newGoalsDeleteCmd(),
+		newGoalsAttachCmd(),
 	)
 	return cmd
 }
@@ -280,6 +281,36 @@ func newGoalsUpdateCmd() *cobra.Command {
 	}
 	addGoalFields(cmd, &f)
 	return cmd
+}
+
+func newGoalsAttachCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "attach <id> <file>",
+		Short: "Upload a file and append it to the goal's description",
+		Long: "Upload a file as an attachment on a goal. The file is appended " +
+			"to the goal's description as an inline image or link. Use \"-\" " +
+			"for <file> to read from stdin.",
+		Args: cobra.ExactArgs(2),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			client, err := newAPIClient(cmd.Context())
+			if err != nil {
+				return err
+			}
+			ct, r, err := encodeMultipartFile(cmd, "file", args[1])
+			if err != nil {
+				return err
+			}
+			resp, err := client.GoalsAttachmentsCreateWithBodyWithResponse(cmd.Context(), args[0], ct, r)
+			if err != nil {
+				return err
+			}
+			if resp.StatusCode() < 200 || resp.StatusCode() >= 300 {
+				return apiError(resp.StatusCode(), resp.Body)
+			}
+			fmt.Fprintf(cmd.OutOrStdout(), "Attached %s to goal %s\n", args[1], args[0])
+			return nil
+		},
+	}
 }
 
 func newGoalsDeleteCmd() *cobra.Command {

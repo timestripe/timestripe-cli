@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"mime/multipart"
 	"os"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 )
@@ -55,4 +57,35 @@ func encodeJSONBody(body map[string]any) (string, io.Reader, error) {
 		return "", nil, fmt.Errorf("encode body: %w", err)
 	}
 	return "application/json", bytes.NewReader(b), nil
+}
+
+// encodeMultipartFile builds a multipart/form-data body with a single file
+// field. path may be "-" to read from stdin (filename defaults to "stdin").
+func encodeMultipartFile(cmd *cobra.Command, field, path string) (string, io.Reader, error) {
+	var src io.Reader
+	name := filepath.Base(path)
+	if path == "-" {
+		src = cmd.InOrStdin()
+		name = "stdin"
+	} else {
+		f, err := os.Open(path)
+		if err != nil {
+			return "", nil, fmt.Errorf("open %s: %w", path, err)
+		}
+		defer f.Close()
+		src = f
+	}
+	var buf bytes.Buffer
+	w := multipart.NewWriter(&buf)
+	fw, err := w.CreateFormFile(field, name)
+	if err != nil {
+		return "", nil, err
+	}
+	if _, err := io.Copy(fw, src); err != nil {
+		return "", nil, err
+	}
+	if err := w.Close(); err != nil {
+		return "", nil, err
+	}
+	return w.FormDataContentType(), &buf, nil
 }

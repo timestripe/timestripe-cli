@@ -100,6 +100,7 @@ timestripe spaces       list | get <id> | create | update <id> | delete <id>
 timestripe boards       list | get <id> | create | update <id> | delete <id>
 timestripe buckets      list | get <id> | create | update <id> | delete <id>
 timestripe goals        list | get <id> | create | update <id> | delete <id>
+                        | attach <id> <file>
                         (aliases: tasks, todos, items — the resource's
                          semantics are up to the user)
 timestripe memberships  list | get <id>                     (read-only)
@@ -205,6 +206,9 @@ EOF
 
 # Mark a goal as checked (PATCH)
 echo '{"checked": true}' | timestripe goals update gl_xyz --file -
+
+# Attach a file to a goal (appended inline to its description)
+timestripe goals attach gl_xyz ./screenshot.png
 
 # Delete a bucket
 timestripe buckets delete bkt_xyz
