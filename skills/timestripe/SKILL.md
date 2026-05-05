@@ -1,6 +1,6 @@
 ---
 name: timestripe
-description: Use this skill whenever the user wants to interact with Timestripe — reading or modifying their spaces, boards, buckets, goals (also called tasks, todos, or items), memberships, or user profile — via the `timestripe` CLI. Trigger on mentions of "timestripe", "my goals", "my tasks", "my todos", "my items", "my spaces", horizons ("day/week/month/quarter/year/decade/life"), or when the user asks to list, create, update, complete, or delete goals/tasks/todos/items or related entities. Also use to authenticate the CLI or inspect API configuration. Skip for unrelated project management tools.
+description: Use this skill whenever the user wants to interact with Timestripe — reading or modifying their spaces, boards, buckets, goals (also called tasks, todos, or items), comments, events (activity), folders, memberships, or user profile — via the `timestripe` CLI. Trigger on mentions of "timestripe", "my goals", "my tasks", "my todos", "my items", "my spaces", "comments", "activity"/"events", "folders", horizons ("day/week/month/quarter/year/decade/life"), or when the user asks to list, create, update, complete, or delete goals/tasks/todos/items or related entities. Also use to authenticate the CLI or inspect API configuration. Skip for unrelated project management tools.
 ---
 
 # Timestripe CLI
@@ -103,6 +103,11 @@ timestripe goals        list | get <id> | create | update <id> | delete <id>
                         | attach <id> <file>
                         (aliases: tasks, todos, items — the resource's
                          semantics are up to the user)
+timestripe comments     list | get <id> | create | update <id> | delete <id>
+timestripe events       list | get <id>                     (read-only)
+timestripe folders      list | get <id> | create | update <id> | delete <id>
+                        | goals list | goals get <id>
+                        | goals add | goals update <id> | goals remove <id>
 timestripe memberships  list | get <id>                     (read-only)
 timestripe users        list | get <id> | me                (read-only)
 timestripe config       show
@@ -132,6 +137,12 @@ with `jq` — they are cheaper and correct across all pages.
 - `goals list`: `--space-id`, `--bucket-id`, `--assignee-id`, `--parent-id`,
   `--checked`, `--color`, `--horizon` (repeatable), `--date-from`, `--date-to`,
   `--updated-since`, `--search`, `--sort`
+- `comments list`: `--goal-id`, `--space-id`, `--user-id`,
+  `--created-from`, `--created-to`, `--modified-from`, `--modified-to`, `--sort`
+- `events list`: `--from`, `--to`, `--goal-id`, `--space-id`, `--user-id`,
+  `--type` (e.g. `GOAL_CREATED`, `COMMENT_CREATED`, `BOARD_MODIFIED`), `--sort`
+- `folders list`: `--space-id`, `--user-id`, `--is-private`, `--sort`
+- `folders goals list`: `--folder-id`, `--goal-id`, `--sort`
 - `memberships list`: `--space-id`, `--user-id`
 - `users list`: `--email`, `--search`
 
@@ -167,6 +178,23 @@ echo '{"spaceId":"...","name":"Ship v1","horizon":"week"}' | \
   quarter | year | decade | life`, an optional `date` (ISO `YYYY-MM-DD`), a
   `checked` boolean, and a `color` from a fixed palette. `description` is
   Markdown.
+- **Comment** — Markdown text attached to a goal. Has `goalId`, `description`
+  (Markdown), `userId` (author, set by the server), and create/modify
+  timestamps.
+- **Event** — server-emitted activity record. Read-only. `type` is one of
+  `GOAL_CREATED | GOAL_DELETED | GOAL_DONE | GOAL_MODIFIED | GOAL_ASSIGNED |
+  GOAL_RESCHEDULED | USER_CREATED | SPACE_CREATED | SPACE_CREATED_BY_CLONING |
+  SPACE_USED_FOR_CLONING | COMMENT_CREATED | COMMENT_DELETED |
+  COMMENT_MODIFIED | MENTION_CREATED | MEMBERSHIP_CREATED |
+  MEMBERSHIP_DELETED | BOARD_CREATED | BOARD_MODIFIED | BOARD_DELETED |
+  BUCKET_CREATED | BUCKET_MODIFIED | BUCKET_DELETED |
+  CLIMB_SUBSCRIPTION_CREATED | CLIMB_SUBSCRIPTION_DELETED`. Carries the
+  acting `userId` and any related `goalId` / `boardId` / `bucketId` /
+  `commentId` / `spaceId` / `otherUserId` plus their denormalized names.
+- **Folder** — a per-user grouping of goals inside a space. Has `spaceId`,
+  `name`, `sequenceNo`, `isPrivate`, and a nullable `userId` (null = shared).
+- **FolderGoal** — pivot row that places a goal into a folder with a
+  `sequenceNo`. Manage via `timestripe folders goals add | remove | update`.
 - **Membership** — links a user to a space with a `role` of
   `OWNER | ADMIN | EDITOR | VIEWER`.
 

@@ -30,6 +30,34 @@ const (
 	BoardLayoutVertical    BoardLayout = "vertical"
 )
 
+// Defines values for EventType.
+const (
+	EventTypeBOARDCREATED             EventType = "BOARD_CREATED"
+	EventTypeBOARDDELETED             EventType = "BOARD_DELETED"
+	EventTypeBOARDMODIFIED            EventType = "BOARD_MODIFIED"
+	EventTypeBUCKETCREATED            EventType = "BUCKET_CREATED"
+	EventTypeBUCKETDELETED            EventType = "BUCKET_DELETED"
+	EventTypeBUCKETMODIFIED           EventType = "BUCKET_MODIFIED"
+	EventTypeCLIMBSUBSCRIPTIONCREATED EventType = "CLIMB_SUBSCRIPTION_CREATED"
+	EventTypeCLIMBSUBSCRIPTIONDELETED EventType = "CLIMB_SUBSCRIPTION_DELETED"
+	EventTypeCOMMENTCREATED           EventType = "COMMENT_CREATED"
+	EventTypeCOMMENTDELETED           EventType = "COMMENT_DELETED"
+	EventTypeCOMMENTMODIFIED          EventType = "COMMENT_MODIFIED"
+	EventTypeGOALASSIGNED             EventType = "GOAL_ASSIGNED"
+	EventTypeGOALCREATED              EventType = "GOAL_CREATED"
+	EventTypeGOALDELETED              EventType = "GOAL_DELETED"
+	EventTypeGOALDONE                 EventType = "GOAL_DONE"
+	EventTypeGOALMODIFIED             EventType = "GOAL_MODIFIED"
+	EventTypeGOALRESCHEDULED          EventType = "GOAL_RESCHEDULED"
+	EventTypeMEMBERSHIPCREATED        EventType = "MEMBERSHIP_CREATED"
+	EventTypeMEMBERSHIPDELETED        EventType = "MEMBERSHIP_DELETED"
+	EventTypeMENTIONCREATED           EventType = "MENTION_CREATED"
+	EventTypeSPACECREATED             EventType = "SPACE_CREATED"
+	EventTypeSPACECREATEDBYCLONING    EventType = "SPACE_CREATED_BY_CLONING"
+	EventTypeSPACEUSEDFORCLONING      EventType = "SPACE_USED_FOR_CLONING"
+	EventTypeUSERCREATED              EventType = "USER_CREATED"
+)
+
 // Defines values for GoalColor.
 const (
 	GoalColorHash278dea  GoalColor = "#278dea"
@@ -119,6 +147,66 @@ const (
 	BucketsListParamsSortSequenceNo           BucketsListParamsSort = "sequenceNo"
 )
 
+// Defines values for CommentsListParamsSort.
+const (
+	CommentsListParamsSortCreatedDatetime       CommentsListParamsSort = "createdDatetime"
+	CommentsListParamsSortMinusCreatedDatetime  CommentsListParamsSort = "-createdDatetime"
+	CommentsListParamsSortMinusModifiedDatetime CommentsListParamsSort = "-modifiedDatetime"
+	CommentsListParamsSortModifiedDatetime      CommentsListParamsSort = "modifiedDatetime"
+)
+
+// Defines values for EventsListParamsSort.
+const (
+	Datetime      EventsListParamsSort = "datetime"
+	MinusDatetime EventsListParamsSort = "-datetime"
+)
+
+// Defines values for EventsListParamsType.
+const (
+	EventsListParamsTypeBOARDCREATED             EventsListParamsType = "BOARD_CREATED"
+	EventsListParamsTypeBOARDDELETED             EventsListParamsType = "BOARD_DELETED"
+	EventsListParamsTypeBOARDMODIFIED            EventsListParamsType = "BOARD_MODIFIED"
+	EventsListParamsTypeBUCKETCREATED            EventsListParamsType = "BUCKET_CREATED"
+	EventsListParamsTypeBUCKETDELETED            EventsListParamsType = "BUCKET_DELETED"
+	EventsListParamsTypeBUCKETMODIFIED           EventsListParamsType = "BUCKET_MODIFIED"
+	EventsListParamsTypeCLIMBSUBSCRIPTIONCREATED EventsListParamsType = "CLIMB_SUBSCRIPTION_CREATED"
+	EventsListParamsTypeCLIMBSUBSCRIPTIONDELETED EventsListParamsType = "CLIMB_SUBSCRIPTION_DELETED"
+	EventsListParamsTypeCOMMENTCREATED           EventsListParamsType = "COMMENT_CREATED"
+	EventsListParamsTypeCOMMENTDELETED           EventsListParamsType = "COMMENT_DELETED"
+	EventsListParamsTypeCOMMENTMODIFIED          EventsListParamsType = "COMMENT_MODIFIED"
+	EventsListParamsTypeGOALASSIGNED             EventsListParamsType = "GOAL_ASSIGNED"
+	EventsListParamsTypeGOALCREATED              EventsListParamsType = "GOAL_CREATED"
+	EventsListParamsTypeGOALDELETED              EventsListParamsType = "GOAL_DELETED"
+	EventsListParamsTypeGOALDONE                 EventsListParamsType = "GOAL_DONE"
+	EventsListParamsTypeGOALMODIFIED             EventsListParamsType = "GOAL_MODIFIED"
+	EventsListParamsTypeGOALRESCHEDULED          EventsListParamsType = "GOAL_RESCHEDULED"
+	EventsListParamsTypeMEMBERSHIPCREATED        EventsListParamsType = "MEMBERSHIP_CREATED"
+	EventsListParamsTypeMEMBERSHIPDELETED        EventsListParamsType = "MEMBERSHIP_DELETED"
+	EventsListParamsTypeMENTIONCREATED           EventsListParamsType = "MENTION_CREATED"
+	EventsListParamsTypeSPACECREATED             EventsListParamsType = "SPACE_CREATED"
+	EventsListParamsTypeSPACECREATEDBYCLONING    EventsListParamsType = "SPACE_CREATED_BY_CLONING"
+	EventsListParamsTypeSPACEUSEDFORCLONING      EventsListParamsType = "SPACE_USED_FOR_CLONING"
+	EventsListParamsTypeUSERCREATED              EventsListParamsType = "USER_CREATED"
+)
+
+// Defines values for FolderGoalsListParamsSort.
+const (
+	FolderGoalsListParamsSortCreatedDatetime      FolderGoalsListParamsSort = "createdDatetime"
+	FolderGoalsListParamsSortMinusCreatedDatetime FolderGoalsListParamsSort = "-createdDatetime"
+	FolderGoalsListParamsSortMinusSequenceNo      FolderGoalsListParamsSort = "-sequenceNo"
+	FolderGoalsListParamsSortSequenceNo           FolderGoalsListParamsSort = "sequenceNo"
+)
+
+// Defines values for FoldersListParamsSort.
+const (
+	FoldersListParamsSortCreatedDatetime      FoldersListParamsSort = "createdDatetime"
+	FoldersListParamsSortMinusCreatedDatetime FoldersListParamsSort = "-createdDatetime"
+	FoldersListParamsSortMinusName            FoldersListParamsSort = "-name"
+	FoldersListParamsSortMinusSequenceNo      FoldersListParamsSort = "-sequenceNo"
+	FoldersListParamsSortName                 FoldersListParamsSort = "name"
+	FoldersListParamsSortSequenceNo           FoldersListParamsSort = "sequenceNo"
+)
+
 // Defines values for GoalsListParamsColor.
 const (
 	Hash278dea GoalsListParamsColor = "#278dea"
@@ -142,20 +230,20 @@ const (
 
 // Defines values for GoalsListParamsSort.
 const (
-	Assignee              GoalsListParamsSort = "assignee"
-	Checked               GoalsListParamsSort = "checked"
-	CreatedDatetime       GoalsListParamsSort = "createdDatetime"
-	Date                  GoalsListParamsSort = "date"
-	Horizon               GoalsListParamsSort = "horizon"
-	MinusAssignee         GoalsListParamsSort = "-assignee"
-	MinusChecked          GoalsListParamsSort = "-checked"
-	MinusCreatedDatetime  GoalsListParamsSort = "-createdDatetime"
-	MinusDate             GoalsListParamsSort = "-date"
-	MinusHorizon          GoalsListParamsSort = "-horizon"
-	MinusModifiedDatetime GoalsListParamsSort = "-modifiedDatetime"
-	MinusName             GoalsListParamsSort = "-name"
-	ModifiedDatetime      GoalsListParamsSort = "modifiedDatetime"
-	Name                  GoalsListParamsSort = "name"
+	GoalsListParamsSortAssignee              GoalsListParamsSort = "assignee"
+	GoalsListParamsSortChecked               GoalsListParamsSort = "checked"
+	GoalsListParamsSortCreatedDatetime       GoalsListParamsSort = "createdDatetime"
+	GoalsListParamsSortDate                  GoalsListParamsSort = "date"
+	GoalsListParamsSortHorizon               GoalsListParamsSort = "horizon"
+	GoalsListParamsSortMinusAssignee         GoalsListParamsSort = "-assignee"
+	GoalsListParamsSortMinusChecked          GoalsListParamsSort = "-checked"
+	GoalsListParamsSortMinusCreatedDatetime  GoalsListParamsSort = "-createdDatetime"
+	GoalsListParamsSortMinusDate             GoalsListParamsSort = "-date"
+	GoalsListParamsSortMinusHorizon          GoalsListParamsSort = "-horizon"
+	GoalsListParamsSortMinusModifiedDatetime GoalsListParamsSort = "-modifiedDatetime"
+	GoalsListParamsSortMinusName             GoalsListParamsSort = "-name"
+	GoalsListParamsSortModifiedDatetime      GoalsListParamsSort = "modifiedDatetime"
+	GoalsListParamsSortName                  GoalsListParamsSort = "name"
 )
 
 // Board defines model for Board.
@@ -192,6 +280,111 @@ type Bucket struct {
 	SequenceNo      *int       `json:"sequenceNo,omitempty"`
 	ShowEmoji       *bool      `json:"showEmoji,omitempty"`
 	Url             *string    `json:"url,omitempty"`
+}
+
+// Comment defines model for Comment.
+type Comment struct {
+	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
+
+	// Description Markdown-formatted text.
+	Description      string     `json:"description"`
+	GoalId           string     `json:"goalId"`
+	Id               *string    `json:"id,omitempty"`
+	ModifiedDatetime *time.Time `json:"modifiedDatetime,omitempty"`
+	Url              *string    `json:"url,omitempty"`
+	UserId           *string    `json:"userId,omitempty"`
+}
+
+// Event defines model for Event.
+type Event struct {
+	BoardId       *string    `json:"boardId,omitempty"`
+	BoardName     *string    `json:"boardName"`
+	BucketId      *string    `json:"bucketId,omitempty"`
+	BucketName    *string    `json:"bucketName"`
+	CommentId     *string    `json:"commentId,omitempty"`
+	Datetime      *time.Time `json:"datetime,omitempty"`
+	GoalColor     *string    `json:"goalColor,omitempty"`
+	GoalId        *string    `json:"goalId,omitempty"`
+	GoalName      *string    `json:"goalName,omitempty"`
+	Id            *string    `json:"id,omitempty"`
+	OtherUserId   *string    `json:"otherUserId,omitempty"`
+	OtherUserName *string    `json:"otherUserName"`
+	SpaceId       *string    `json:"spaceId,omitempty"`
+	SpaceName     *string    `json:"spaceName"`
+
+	// Type * `GOAL_CREATED` - Goal Created
+	// * `GOAL_DELETED` - Goal Deleted
+	// * `GOAL_DONE` - Goal Done
+	// * `GOAL_MODIFIED` - Goal Modified
+	// * `GOAL_ASSIGNED` - Goal Assigned
+	// * `GOAL_RESCHEDULED` - Goal Rescheduled
+	// * `USER_CREATED` - User Created
+	// * `SPACE_CREATED` - Space Created
+	// * `SPACE_CREATED_BY_CLONING` - Space Created By Cloning
+	// * `SPACE_USED_FOR_CLONING` - Space Used For Cloning
+	// * `COMMENT_CREATED` - Comment Created
+	// * `COMMENT_DELETED` - Comment Deleted
+	// * `COMMENT_MODIFIED` - Comment Modified
+	// * `MENTION_CREATED` - Mention Created
+	// * `MEMBERSHIP_CREATED` - Membership Created
+	// * `MEMBERSHIP_DELETED` - Membership Deleted
+	// * `BOARD_CREATED` - Board Created
+	// * `BOARD_MODIFIED` - Board Modified
+	// * `BOARD_DELETED` - Board Deleted
+	// * `BUCKET_CREATED` - Bucket Created
+	// * `BUCKET_MODIFIED` - Bucket Modified
+	// * `BUCKET_DELETED` - Bucket Deleted
+	// * `CLIMB_SUBSCRIPTION_CREATED` - Climb Subscription Created
+	// * `CLIMB_SUBSCRIPTION_DELETED` - Climb Subscription Deleted
+	Type     EventType `json:"type"`
+	UserId   *string   `json:"userId,omitempty"`
+	UserName *string   `json:"userName"`
+}
+
+// EventType * `GOAL_CREATED` - Goal Created
+// * `GOAL_DELETED` - Goal Deleted
+// * `GOAL_DONE` - Goal Done
+// * `GOAL_MODIFIED` - Goal Modified
+// * `GOAL_ASSIGNED` - Goal Assigned
+// * `GOAL_RESCHEDULED` - Goal Rescheduled
+// * `USER_CREATED` - User Created
+// * `SPACE_CREATED` - Space Created
+// * `SPACE_CREATED_BY_CLONING` - Space Created By Cloning
+// * `SPACE_USED_FOR_CLONING` - Space Used For Cloning
+// * `COMMENT_CREATED` - Comment Created
+// * `COMMENT_DELETED` - Comment Deleted
+// * `COMMENT_MODIFIED` - Comment Modified
+// * `MENTION_CREATED` - Mention Created
+// * `MEMBERSHIP_CREATED` - Membership Created
+// * `MEMBERSHIP_DELETED` - Membership Deleted
+// * `BOARD_CREATED` - Board Created
+// * `BOARD_MODIFIED` - Board Modified
+// * `BOARD_DELETED` - Board Deleted
+// * `BUCKET_CREATED` - Bucket Created
+// * `BUCKET_MODIFIED` - Bucket Modified
+// * `BUCKET_DELETED` - Bucket Deleted
+// * `CLIMB_SUBSCRIPTION_CREATED` - Climb Subscription Created
+// * `CLIMB_SUBSCRIPTION_DELETED` - Climb Subscription Deleted
+type EventType string
+
+// Folder defines model for Folder.
+type Folder struct {
+	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
+	Id              *string    `json:"id,omitempty"`
+	IsPrivate       *bool      `json:"isPrivate,omitempty"`
+	Name            *string    `json:"name,omitempty"`
+	SequenceNo      *int       `json:"sequenceNo,omitempty"`
+	SpaceId         string     `json:"spaceId"`
+	UserId          *string    `json:"userId"`
+}
+
+// FolderGoal defines model for FolderGoal.
+type FolderGoal struct {
+	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
+	FolderId        string     `json:"folderId"`
+	GoalId          string     `json:"goalId"`
+	Id              *string    `json:"id,omitempty"`
+	SequenceNo      *int       `json:"sequenceNo,omitempty"`
 }
 
 // Goal defines model for Goal.
@@ -306,6 +499,38 @@ type PaginatedBucketList struct {
 	Results  []Bucket `json:"results"`
 }
 
+// PaginatedCommentList defines model for PaginatedCommentList.
+type PaginatedCommentList struct {
+	Count    int       `json:"count"`
+	Next     *string   `json:"next"`
+	Previous *string   `json:"previous"`
+	Results  []Comment `json:"results"`
+}
+
+// PaginatedEventList defines model for PaginatedEventList.
+type PaginatedEventList struct {
+	Count    int     `json:"count"`
+	Next     *string `json:"next"`
+	Previous *string `json:"previous"`
+	Results  []Event `json:"results"`
+}
+
+// PaginatedFolderGoalList defines model for PaginatedFolderGoalList.
+type PaginatedFolderGoalList struct {
+	Count    int          `json:"count"`
+	Next     *string      `json:"next"`
+	Previous *string      `json:"previous"`
+	Results  []FolderGoal `json:"results"`
+}
+
+// PaginatedFolderList defines model for PaginatedFolderList.
+type PaginatedFolderList struct {
+	Count    int      `json:"count"`
+	Next     *string  `json:"next"`
+	Previous *string  `json:"previous"`
+	Results  []Folder `json:"results"`
+}
+
 // PaginatedGoalList defines model for PaginatedGoalList.
 type PaginatedGoalList struct {
 	Count    int     `json:"count"`
@@ -374,6 +599,39 @@ type PatchedBucket struct {
 	Url             *string    `json:"url,omitempty"`
 }
 
+// PatchedComment defines model for PatchedComment.
+type PatchedComment struct {
+	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
+
+	// Description Markdown-formatted text.
+	Description      *string    `json:"description,omitempty"`
+	GoalId           *string    `json:"goalId,omitempty"`
+	Id               *string    `json:"id,omitempty"`
+	ModifiedDatetime *time.Time `json:"modifiedDatetime,omitempty"`
+	Url              *string    `json:"url,omitempty"`
+	UserId           *string    `json:"userId,omitempty"`
+}
+
+// PatchedFolder defines model for PatchedFolder.
+type PatchedFolder struct {
+	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
+	Id              *string    `json:"id,omitempty"`
+	IsPrivate       *bool      `json:"isPrivate,omitempty"`
+	Name            *string    `json:"name,omitempty"`
+	SequenceNo      *int       `json:"sequenceNo,omitempty"`
+	SpaceId         *string    `json:"spaceId,omitempty"`
+	UserId          *string    `json:"userId"`
+}
+
+// PatchedFolderGoal defines model for PatchedFolderGoal.
+type PatchedFolderGoal struct {
+	CreatedDatetime *time.Time `json:"createdDatetime,omitempty"`
+	FolderId        *string    `json:"folderId,omitempty"`
+	GoalId          *string    `json:"goalId,omitempty"`
+	Id              *string    `json:"id,omitempty"`
+	SequenceNo      *int       `json:"sequenceNo,omitempty"`
+}
+
 // PatchedGoal defines model for PatchedGoal.
 type PatchedGoal struct {
 	AssigneeId *string `json:"assigneeId"`
@@ -436,6 +694,7 @@ type PatchedGoalHorizon string
 // PatchedSpace defines model for PatchedSpace.
 type PatchedSpace struct {
 	Id         *string      `json:"id,omitempty"`
+	Image      *string      `json:"image,omitempty"`
 	MagicLinks *[]MagicLink `json:"magicLinks,omitempty"`
 	Name       *string      `json:"name,omitempty"`
 	Url        *string      `json:"url,omitempty"`
@@ -444,6 +703,7 @@ type PatchedSpace struct {
 // Space defines model for Space.
 type Space struct {
 	Id         *string      `json:"id,omitempty"`
+	Image      *string      `json:"image,omitempty"`
 	MagicLinks *[]MagicLink `json:"magicLinks,omitempty"`
 	Name       *string      `json:"name,omitempty"`
 	Url        *string      `json:"url,omitempty"`
@@ -504,6 +764,123 @@ type BucketsListParams struct {
 
 // BucketsListParamsSort defines parameters for BucketsList.
 type BucketsListParamsSort string
+
+// CommentsListParams defines parameters for CommentsList.
+type CommentsListParams struct {
+	// CreatedFrom Inclusive lower bound (>=) on created_datetime. ISO 8601 datetime.
+	CreatedFrom *time.Time `form:"createdFrom,omitempty" json:"createdFrom,omitempty"`
+
+	// CreatedTo Exclusive upper bound (<) on created_datetime. ISO 8601 datetime.
+	CreatedTo *time.Time `form:"createdTo,omitempty" json:"createdTo,omitempty"`
+
+	// GoalId Filter by goal code.
+	GoalId *string `form:"goalId,omitempty" json:"goalId,omitempty"`
+
+	// Limit Number of results to return per page.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// ModifiedFrom Inclusive lower bound (>=) on modified_datetime. ISO 8601 datetime.
+	ModifiedFrom *time.Time `form:"modifiedFrom,omitempty" json:"modifiedFrom,omitempty"`
+
+	// ModifiedTo Exclusive upper bound (<) on modified_datetime. ISO 8601 datetime.
+	ModifiedTo *time.Time `form:"modifiedTo,omitempty" json:"modifiedTo,omitempty"`
+
+	// Offset The initial index from which to return the results.
+	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+	Sort *CommentsListParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// SpaceId Filter by goal__space code.
+	SpaceId *string `form:"spaceId,omitempty" json:"spaceId,omitempty"`
+
+	// UserId Filter by user code.
+	UserId *string `form:"userId,omitempty" json:"userId,omitempty"`
+}
+
+// CommentsListParamsSort defines parameters for CommentsList.
+type CommentsListParamsSort string
+
+// EventsListParams defines parameters for EventsList.
+type EventsListParams struct {
+	// From Inclusive lower bound (>=) on datetime. ISO 8601 datetime.
+	From *time.Time `form:"from,omitempty" json:"from,omitempty"`
+
+	// GoalId Filter by goal code.
+	GoalId *string `form:"goalId,omitempty" json:"goalId,omitempty"`
+
+	// Limit Number of results to return per page.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset The initial index from which to return the results.
+	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+	Sort *EventsListParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// SpaceId Filter by space code.
+	SpaceId *string `form:"spaceId,omitempty" json:"spaceId,omitempty"`
+
+	// To Exclusive upper bound (<) on datetime. ISO 8601 datetime.
+	To *time.Time `form:"to,omitempty" json:"to,omitempty"`
+
+	// Type Filter by type.
+	Type *EventsListParamsType `form:"type,omitempty" json:"type,omitempty"`
+
+	// UserId Filter by user code.
+	UserId *string `form:"userId,omitempty" json:"userId,omitempty"`
+}
+
+// EventsListParamsSort defines parameters for EventsList.
+type EventsListParamsSort string
+
+// EventsListParamsType defines parameters for EventsList.
+type EventsListParamsType string
+
+// FolderGoalsListParams defines parameters for FolderGoalsList.
+type FolderGoalsListParams struct {
+	// FolderId Filter by folder code.
+	FolderId *string `form:"folderId,omitempty" json:"folderId,omitempty"`
+
+	// GoalId Filter by goal code.
+	GoalId *string `form:"goalId,omitempty" json:"goalId,omitempty"`
+
+	// Limit Number of results to return per page.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset The initial index from which to return the results.
+	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+	Sort *FolderGoalsListParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+}
+
+// FolderGoalsListParamsSort defines parameters for FolderGoalsList.
+type FolderGoalsListParamsSort string
+
+// FoldersListParams defines parameters for FoldersList.
+type FoldersListParams struct {
+	// IsPrivate Filter by is_private. Accepts `true` or `false`.
+	IsPrivate *bool `form:"isPrivate,omitempty" json:"isPrivate,omitempty"`
+
+	// Limit Number of results to return per page.
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Offset The initial index from which to return the results.
+	Offset *int `form:"offset,omitempty" json:"offset,omitempty"`
+
+	// Sort Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+	Sort *FoldersListParamsSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// SpaceId Filter by space code.
+	SpaceId *string `form:"spaceId,omitempty" json:"spaceId,omitempty"`
+
+	// UserId Filter by user code. Pass `null` to match items where this field is unset.
+	UserId *string `form:"userId,omitempty" json:"userId,omitempty"`
+}
+
+// FoldersListParamsSort defines parameters for FoldersList.
+type FoldersListParamsSort string
 
 // GoalsListParams defines parameters for GoalsList.
 type GoalsListParams struct {
@@ -659,6 +1036,87 @@ type BucketsUpdateFormdataRequestBody = Bucket
 
 // BucketsUpdateMultipartRequestBody defines body for BucketsUpdate for multipart/form-data ContentType.
 type BucketsUpdateMultipartRequestBody = Bucket
+
+// CommentsCreateJSONRequestBody defines body for CommentsCreate for application/json ContentType.
+type CommentsCreateJSONRequestBody = Comment
+
+// CommentsCreateFormdataRequestBody defines body for CommentsCreate for application/x-www-form-urlencoded ContentType.
+type CommentsCreateFormdataRequestBody = Comment
+
+// CommentsCreateMultipartRequestBody defines body for CommentsCreate for multipart/form-data ContentType.
+type CommentsCreateMultipartRequestBody = Comment
+
+// CommentsPartialUpdateJSONRequestBody defines body for CommentsPartialUpdate for application/json ContentType.
+type CommentsPartialUpdateJSONRequestBody = PatchedComment
+
+// CommentsPartialUpdateFormdataRequestBody defines body for CommentsPartialUpdate for application/x-www-form-urlencoded ContentType.
+type CommentsPartialUpdateFormdataRequestBody = PatchedComment
+
+// CommentsPartialUpdateMultipartRequestBody defines body for CommentsPartialUpdate for multipart/form-data ContentType.
+type CommentsPartialUpdateMultipartRequestBody = PatchedComment
+
+// CommentsUpdateJSONRequestBody defines body for CommentsUpdate for application/json ContentType.
+type CommentsUpdateJSONRequestBody = Comment
+
+// CommentsUpdateFormdataRequestBody defines body for CommentsUpdate for application/x-www-form-urlencoded ContentType.
+type CommentsUpdateFormdataRequestBody = Comment
+
+// CommentsUpdateMultipartRequestBody defines body for CommentsUpdate for multipart/form-data ContentType.
+type CommentsUpdateMultipartRequestBody = Comment
+
+// FolderGoalsCreateJSONRequestBody defines body for FolderGoalsCreate for application/json ContentType.
+type FolderGoalsCreateJSONRequestBody = FolderGoal
+
+// FolderGoalsCreateFormdataRequestBody defines body for FolderGoalsCreate for application/x-www-form-urlencoded ContentType.
+type FolderGoalsCreateFormdataRequestBody = FolderGoal
+
+// FolderGoalsCreateMultipartRequestBody defines body for FolderGoalsCreate for multipart/form-data ContentType.
+type FolderGoalsCreateMultipartRequestBody = FolderGoal
+
+// FolderGoalsPartialUpdateJSONRequestBody defines body for FolderGoalsPartialUpdate for application/json ContentType.
+type FolderGoalsPartialUpdateJSONRequestBody = PatchedFolderGoal
+
+// FolderGoalsPartialUpdateFormdataRequestBody defines body for FolderGoalsPartialUpdate for application/x-www-form-urlencoded ContentType.
+type FolderGoalsPartialUpdateFormdataRequestBody = PatchedFolderGoal
+
+// FolderGoalsPartialUpdateMultipartRequestBody defines body for FolderGoalsPartialUpdate for multipart/form-data ContentType.
+type FolderGoalsPartialUpdateMultipartRequestBody = PatchedFolderGoal
+
+// FolderGoalsUpdateJSONRequestBody defines body for FolderGoalsUpdate for application/json ContentType.
+type FolderGoalsUpdateJSONRequestBody = FolderGoal
+
+// FolderGoalsUpdateFormdataRequestBody defines body for FolderGoalsUpdate for application/x-www-form-urlencoded ContentType.
+type FolderGoalsUpdateFormdataRequestBody = FolderGoal
+
+// FolderGoalsUpdateMultipartRequestBody defines body for FolderGoalsUpdate for multipart/form-data ContentType.
+type FolderGoalsUpdateMultipartRequestBody = FolderGoal
+
+// FoldersCreateJSONRequestBody defines body for FoldersCreate for application/json ContentType.
+type FoldersCreateJSONRequestBody = Folder
+
+// FoldersCreateFormdataRequestBody defines body for FoldersCreate for application/x-www-form-urlencoded ContentType.
+type FoldersCreateFormdataRequestBody = Folder
+
+// FoldersCreateMultipartRequestBody defines body for FoldersCreate for multipart/form-data ContentType.
+type FoldersCreateMultipartRequestBody = Folder
+
+// FoldersPartialUpdateJSONRequestBody defines body for FoldersPartialUpdate for application/json ContentType.
+type FoldersPartialUpdateJSONRequestBody = PatchedFolder
+
+// FoldersPartialUpdateFormdataRequestBody defines body for FoldersPartialUpdate for application/x-www-form-urlencoded ContentType.
+type FoldersPartialUpdateFormdataRequestBody = PatchedFolder
+
+// FoldersPartialUpdateMultipartRequestBody defines body for FoldersPartialUpdate for multipart/form-data ContentType.
+type FoldersPartialUpdateMultipartRequestBody = PatchedFolder
+
+// FoldersUpdateJSONRequestBody defines body for FoldersUpdate for application/json ContentType.
+type FoldersUpdateJSONRequestBody = Folder
+
+// FoldersUpdateFormdataRequestBody defines body for FoldersUpdate for application/x-www-form-urlencoded ContentType.
+type FoldersUpdateFormdataRequestBody = Folder
+
+// FoldersUpdateMultipartRequestBody defines body for FoldersUpdate for multipart/form-data ContentType.
+type FoldersUpdateMultipartRequestBody = Folder
 
 // GoalsCreateJSONRequestBody defines body for GoalsCreate for application/json ContentType.
 type GoalsCreateJSONRequestBody = Goal
@@ -849,6 +1307,102 @@ type ClientInterface interface {
 	BucketsUpdate(ctx context.Context, id string, body BucketsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	BucketsUpdateWithFormdataBody(ctx context.Context, id string, body BucketsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CommentsList request
+	CommentsList(ctx context.Context, params *CommentsListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CommentsCreateWithBody request with any body
+	CommentsCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CommentsCreate(ctx context.Context, body CommentsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CommentsCreateWithFormdataBody(ctx context.Context, body CommentsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CommentsDestroy request
+	CommentsDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CommentsRetrieve request
+	CommentsRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CommentsPartialUpdateWithBody request with any body
+	CommentsPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CommentsPartialUpdate(ctx context.Context, id string, body CommentsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CommentsPartialUpdateWithFormdataBody(ctx context.Context, id string, body CommentsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CommentsUpdateWithBody request with any body
+	CommentsUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CommentsUpdate(ctx context.Context, id string, body CommentsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CommentsUpdateWithFormdataBody(ctx context.Context, id string, body CommentsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// EventsList request
+	EventsList(ctx context.Context, params *EventsListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// EventsRetrieve request
+	EventsRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FolderGoalsList request
+	FolderGoalsList(ctx context.Context, params *FolderGoalsListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FolderGoalsCreateWithBody request with any body
+	FolderGoalsCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FolderGoalsCreate(ctx context.Context, body FolderGoalsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FolderGoalsCreateWithFormdataBody(ctx context.Context, body FolderGoalsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FolderGoalsDestroy request
+	FolderGoalsDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FolderGoalsRetrieve request
+	FolderGoalsRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FolderGoalsPartialUpdateWithBody request with any body
+	FolderGoalsPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FolderGoalsPartialUpdate(ctx context.Context, id string, body FolderGoalsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FolderGoalsPartialUpdateWithFormdataBody(ctx context.Context, id string, body FolderGoalsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FolderGoalsUpdateWithBody request with any body
+	FolderGoalsUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FolderGoalsUpdate(ctx context.Context, id string, body FolderGoalsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FolderGoalsUpdateWithFormdataBody(ctx context.Context, id string, body FolderGoalsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FoldersList request
+	FoldersList(ctx context.Context, params *FoldersListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FoldersCreateWithBody request with any body
+	FoldersCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FoldersCreate(ctx context.Context, body FoldersCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FoldersCreateWithFormdataBody(ctx context.Context, body FoldersCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FoldersDestroy request
+	FoldersDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FoldersRetrieve request
+	FoldersRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FoldersPartialUpdateWithBody request with any body
+	FoldersPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FoldersPartialUpdate(ctx context.Context, id string, body FoldersPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FoldersPartialUpdateWithFormdataBody(ctx context.Context, id string, body FoldersPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FoldersUpdateWithBody request with any body
+	FoldersUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FoldersUpdate(ctx context.Context, id string, body FoldersUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	FoldersUpdateWithFormdataBody(ctx context.Context, id string, body FoldersUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GoalsList request
 	GoalsList(ctx context.Context, params *GoalsListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1207,6 +1761,462 @@ func (c *Client) BucketsUpdate(ctx context.Context, id string, body BucketsUpdat
 
 func (c *Client) BucketsUpdateWithFormdataBody(ctx context.Context, id string, body BucketsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewBucketsUpdateRequestWithFormdataBody(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsList(ctx context.Context, params *CommentsListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsListRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsCreateRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsCreate(ctx context.Context, body CommentsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsCreateRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsCreateWithFormdataBody(ctx context.Context, body CommentsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsCreateRequestWithFormdataBody(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsDestroyRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsRetrieveRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsPartialUpdateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsPartialUpdate(ctx context.Context, id string, body CommentsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsPartialUpdateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsPartialUpdateWithFormdataBody(ctx context.Context, id string, body CommentsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsPartialUpdateRequestWithFormdataBody(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsUpdateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsUpdate(ctx context.Context, id string, body CommentsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsUpdateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CommentsUpdateWithFormdataBody(ctx context.Context, id string, body CommentsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCommentsUpdateRequestWithFormdataBody(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) EventsList(ctx context.Context, params *EventsListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewEventsListRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) EventsRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewEventsRetrieveRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsList(ctx context.Context, params *FolderGoalsListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsListRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsCreateRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsCreate(ctx context.Context, body FolderGoalsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsCreateRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsCreateWithFormdataBody(ctx context.Context, body FolderGoalsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsCreateRequestWithFormdataBody(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsDestroyRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsRetrieveRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsPartialUpdateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsPartialUpdate(ctx context.Context, id string, body FolderGoalsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsPartialUpdateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsPartialUpdateWithFormdataBody(ctx context.Context, id string, body FolderGoalsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsPartialUpdateRequestWithFormdataBody(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsUpdateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsUpdate(ctx context.Context, id string, body FolderGoalsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsUpdateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FolderGoalsUpdateWithFormdataBody(ctx context.Context, id string, body FolderGoalsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFolderGoalsUpdateRequestWithFormdataBody(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersList(ctx context.Context, params *FoldersListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersListRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersCreateWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersCreateRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersCreate(ctx context.Context, body FoldersCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersCreateRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersCreateWithFormdataBody(ctx context.Context, body FoldersCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersCreateRequestWithFormdataBody(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersDestroy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersDestroyRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersRetrieve(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersRetrieveRequest(c.Server, id)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersPartialUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersPartialUpdateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersPartialUpdate(ctx context.Context, id string, body FoldersPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersPartialUpdateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersPartialUpdateWithFormdataBody(ctx context.Context, id string, body FoldersPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersPartialUpdateRequestWithFormdataBody(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersUpdateWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersUpdateRequestWithBody(c.Server, id, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersUpdate(ctx context.Context, id string, body FoldersUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersUpdateRequest(c.Server, id, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) FoldersUpdateWithFormdataBody(ctx context.Context, id string, body FoldersUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFoldersUpdateRequestWithFormdataBody(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -2270,6 +3280,1357 @@ func NewBucketsUpdateRequestWithBody(server string, id string, contentType strin
 	}
 
 	operationPath := fmt.Sprintf("/buckets/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCommentsListRequest generates requests for CommentsList
+func NewCommentsListRequest(server string, params *CommentsListParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/comments/")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.CreatedFrom != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "createdFrom", runtime.ParamLocationQuery, *params.CreatedFrom); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedTo != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "createdTo", runtime.ParamLocationQuery, *params.CreatedTo); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.GoalId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "goalId", runtime.ParamLocationQuery, *params.GoalId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ModifiedFrom != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "modifiedFrom", runtime.ParamLocationQuery, *params.ModifiedFrom); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ModifiedTo != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "modifiedTo", runtime.ParamLocationQuery, *params.ModifiedTo); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SpaceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "spaceId", runtime.ParamLocationQuery, *params.SpaceId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UserId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "userId", runtime.ParamLocationQuery, *params.UserId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCommentsCreateRequest calls the generic CommentsCreate builder with application/json body
+func NewCommentsCreateRequest(server string, body CommentsCreateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCommentsCreateRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCommentsCreateRequestWithFormdataBody calls the generic CommentsCreate builder with application/x-www-form-urlencoded body
+func NewCommentsCreateRequestWithFormdataBody(server string, body CommentsCreateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewCommentsCreateRequestWithBody(server, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewCommentsCreateRequestWithBody generates requests for CommentsCreate with any type of body
+func NewCommentsCreateRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/comments/")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCommentsDestroyRequest generates requests for CommentsDestroy
+func NewCommentsDestroyRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/comments/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCommentsRetrieveRequest generates requests for CommentsRetrieve
+func NewCommentsRetrieveRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/comments/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCommentsPartialUpdateRequest calls the generic CommentsPartialUpdate builder with application/json body
+func NewCommentsPartialUpdateRequest(server string, id string, body CommentsPartialUpdateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCommentsPartialUpdateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCommentsPartialUpdateRequestWithFormdataBody calls the generic CommentsPartialUpdate builder with application/x-www-form-urlencoded body
+func NewCommentsPartialUpdateRequestWithFormdataBody(server string, id string, body CommentsPartialUpdateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewCommentsPartialUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewCommentsPartialUpdateRequestWithBody generates requests for CommentsPartialUpdate with any type of body
+func NewCommentsPartialUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/comments/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCommentsUpdateRequest calls the generic CommentsUpdate builder with application/json body
+func NewCommentsUpdateRequest(server string, id string, body CommentsUpdateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCommentsUpdateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewCommentsUpdateRequestWithFormdataBody calls the generic CommentsUpdate builder with application/x-www-form-urlencoded body
+func NewCommentsUpdateRequestWithFormdataBody(server string, id string, body CommentsUpdateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewCommentsUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewCommentsUpdateRequestWithBody generates requests for CommentsUpdate with any type of body
+func NewCommentsUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/comments/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewEventsListRequest generates requests for EventsList
+func NewEventsListRequest(server string, params *EventsListParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/events/")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "from", runtime.ParamLocationQuery, *params.From); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.GoalId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "goalId", runtime.ParamLocationQuery, *params.GoalId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SpaceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "spaceId", runtime.ParamLocationQuery, *params.SpaceId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "to", runtime.ParamLocationQuery, *params.To); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Type != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "type", runtime.ParamLocationQuery, *params.Type); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UserId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "userId", runtime.ParamLocationQuery, *params.UserId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewEventsRetrieveRequest generates requests for EventsRetrieve
+func NewEventsRetrieveRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/events/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFolderGoalsListRequest generates requests for FolderGoalsList
+func NewFolderGoalsListRequest(server string, params *FolderGoalsListParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folder-goals/")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.FolderId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "folderId", runtime.ParamLocationQuery, *params.FolderId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.GoalId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "goalId", runtime.ParamLocationQuery, *params.GoalId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFolderGoalsCreateRequest calls the generic FolderGoalsCreate builder with application/json body
+func NewFolderGoalsCreateRequest(server string, body FolderGoalsCreateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewFolderGoalsCreateRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewFolderGoalsCreateRequestWithFormdataBody calls the generic FolderGoalsCreate builder with application/x-www-form-urlencoded body
+func NewFolderGoalsCreateRequestWithFormdataBody(server string, body FolderGoalsCreateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewFolderGoalsCreateRequestWithBody(server, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewFolderGoalsCreateRequestWithBody generates requests for FolderGoalsCreate with any type of body
+func NewFolderGoalsCreateRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folder-goals/")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewFolderGoalsDestroyRequest generates requests for FolderGoalsDestroy
+func NewFolderGoalsDestroyRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folder-goals/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFolderGoalsRetrieveRequest generates requests for FolderGoalsRetrieve
+func NewFolderGoalsRetrieveRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folder-goals/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFolderGoalsPartialUpdateRequest calls the generic FolderGoalsPartialUpdate builder with application/json body
+func NewFolderGoalsPartialUpdateRequest(server string, id string, body FolderGoalsPartialUpdateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewFolderGoalsPartialUpdateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewFolderGoalsPartialUpdateRequestWithFormdataBody calls the generic FolderGoalsPartialUpdate builder with application/x-www-form-urlencoded body
+func NewFolderGoalsPartialUpdateRequestWithFormdataBody(server string, id string, body FolderGoalsPartialUpdateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewFolderGoalsPartialUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewFolderGoalsPartialUpdateRequestWithBody generates requests for FolderGoalsPartialUpdate with any type of body
+func NewFolderGoalsPartialUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folder-goals/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewFolderGoalsUpdateRequest calls the generic FolderGoalsUpdate builder with application/json body
+func NewFolderGoalsUpdateRequest(server string, id string, body FolderGoalsUpdateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewFolderGoalsUpdateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewFolderGoalsUpdateRequestWithFormdataBody calls the generic FolderGoalsUpdate builder with application/x-www-form-urlencoded body
+func NewFolderGoalsUpdateRequestWithFormdataBody(server string, id string, body FolderGoalsUpdateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewFolderGoalsUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewFolderGoalsUpdateRequestWithBody generates requests for FolderGoalsUpdate with any type of body
+func NewFolderGoalsUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folder-goals/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PUT", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewFoldersListRequest generates requests for FoldersList
+func NewFoldersListRequest(server string, params *FoldersListParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folders/")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		queryValues := queryURL.Query()
+
+		if params.IsPrivate != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "isPrivate", runtime.ParamLocationQuery, *params.IsPrivate); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "limit", runtime.ParamLocationQuery, *params.Limit); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Offset != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "sort", runtime.ParamLocationQuery, *params.Sort); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SpaceId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "spaceId", runtime.ParamLocationQuery, *params.SpaceId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UserId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "userId", runtime.ParamLocationQuery, *params.UserId); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		queryURL.RawQuery = queryValues.Encode()
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFoldersCreateRequest calls the generic FoldersCreate builder with application/json body
+func NewFoldersCreateRequest(server string, body FoldersCreateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewFoldersCreateRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewFoldersCreateRequestWithFormdataBody calls the generic FoldersCreate builder with application/x-www-form-urlencoded body
+func NewFoldersCreateRequestWithFormdataBody(server string, body FoldersCreateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewFoldersCreateRequestWithBody(server, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewFoldersCreateRequestWithBody generates requests for FoldersCreate with any type of body
+func NewFoldersCreateRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folders/")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewFoldersDestroyRequest generates requests for FoldersDestroy
+func NewFoldersDestroyRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folders/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("DELETE", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFoldersRetrieveRequest generates requests for FoldersRetrieve
+func NewFoldersRetrieveRequest(server string, id string) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folders/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("GET", queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFoldersPartialUpdateRequest calls the generic FoldersPartialUpdate builder with application/json body
+func NewFoldersPartialUpdateRequest(server string, id string, body FoldersPartialUpdateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewFoldersPartialUpdateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewFoldersPartialUpdateRequestWithFormdataBody calls the generic FoldersPartialUpdate builder with application/x-www-form-urlencoded body
+func NewFoldersPartialUpdateRequestWithFormdataBody(server string, id string, body FoldersPartialUpdateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewFoldersPartialUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewFoldersPartialUpdateRequestWithBody generates requests for FoldersPartialUpdate with any type of body
+func NewFoldersPartialUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folders/%s/", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("PATCH", queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewFoldersUpdateRequest calls the generic FoldersUpdate builder with application/json body
+func NewFoldersUpdateRequest(server string, id string, body FoldersUpdateJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewFoldersUpdateRequestWithBody(server, id, "application/json", bodyReader)
+}
+
+// NewFoldersUpdateRequestWithFormdataBody calls the generic FoldersUpdate builder with application/x-www-form-urlencoded body
+func NewFoldersUpdateRequestWithFormdataBody(server string, id string, body FoldersUpdateFormdataRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	bodyStr, err := runtime.MarshalForm(body, nil)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = strings.NewReader(bodyStr.Encode())
+	return NewFoldersUpdateRequestWithBody(server, id, "application/x-www-form-urlencoded", bodyReader)
+}
+
+// NewFoldersUpdateRequestWithBody generates requests for FoldersUpdate with any type of body
+func NewFoldersUpdateRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithLocation("simple", false, "id", runtime.ParamLocationPath, id)
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/folders/%s/", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -3525,6 +5886,102 @@ type ClientWithResponsesInterface interface {
 
 	BucketsUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body BucketsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*BucketsUpdateResponse, error)
 
+	// CommentsListWithResponse request
+	CommentsListWithResponse(ctx context.Context, params *CommentsListParams, reqEditors ...RequestEditorFn) (*CommentsListResponse, error)
+
+	// CommentsCreateWithBodyWithResponse request with any body
+	CommentsCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CommentsCreateResponse, error)
+
+	CommentsCreateWithResponse(ctx context.Context, body CommentsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*CommentsCreateResponse, error)
+
+	CommentsCreateWithFormdataBodyWithResponse(ctx context.Context, body CommentsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*CommentsCreateResponse, error)
+
+	// CommentsDestroyWithResponse request
+	CommentsDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*CommentsDestroyResponse, error)
+
+	// CommentsRetrieveWithResponse request
+	CommentsRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*CommentsRetrieveResponse, error)
+
+	// CommentsPartialUpdateWithBodyWithResponse request with any body
+	CommentsPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CommentsPartialUpdateResponse, error)
+
+	CommentsPartialUpdateWithResponse(ctx context.Context, id string, body CommentsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*CommentsPartialUpdateResponse, error)
+
+	CommentsPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body CommentsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*CommentsPartialUpdateResponse, error)
+
+	// CommentsUpdateWithBodyWithResponse request with any body
+	CommentsUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CommentsUpdateResponse, error)
+
+	CommentsUpdateWithResponse(ctx context.Context, id string, body CommentsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*CommentsUpdateResponse, error)
+
+	CommentsUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body CommentsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*CommentsUpdateResponse, error)
+
+	// EventsListWithResponse request
+	EventsListWithResponse(ctx context.Context, params *EventsListParams, reqEditors ...RequestEditorFn) (*EventsListResponse, error)
+
+	// EventsRetrieveWithResponse request
+	EventsRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*EventsRetrieveResponse, error)
+
+	// FolderGoalsListWithResponse request
+	FolderGoalsListWithResponse(ctx context.Context, params *FolderGoalsListParams, reqEditors ...RequestEditorFn) (*FolderGoalsListResponse, error)
+
+	// FolderGoalsCreateWithBodyWithResponse request with any body
+	FolderGoalsCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FolderGoalsCreateResponse, error)
+
+	FolderGoalsCreateWithResponse(ctx context.Context, body FolderGoalsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsCreateResponse, error)
+
+	FolderGoalsCreateWithFormdataBodyWithResponse(ctx context.Context, body FolderGoalsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsCreateResponse, error)
+
+	// FolderGoalsDestroyWithResponse request
+	FolderGoalsDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FolderGoalsDestroyResponse, error)
+
+	// FolderGoalsRetrieveWithResponse request
+	FolderGoalsRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FolderGoalsRetrieveResponse, error)
+
+	// FolderGoalsPartialUpdateWithBodyWithResponse request with any body
+	FolderGoalsPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FolderGoalsPartialUpdateResponse, error)
+
+	FolderGoalsPartialUpdateWithResponse(ctx context.Context, id string, body FolderGoalsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsPartialUpdateResponse, error)
+
+	FolderGoalsPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FolderGoalsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsPartialUpdateResponse, error)
+
+	// FolderGoalsUpdateWithBodyWithResponse request with any body
+	FolderGoalsUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FolderGoalsUpdateResponse, error)
+
+	FolderGoalsUpdateWithResponse(ctx context.Context, id string, body FolderGoalsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsUpdateResponse, error)
+
+	FolderGoalsUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FolderGoalsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsUpdateResponse, error)
+
+	// FoldersListWithResponse request
+	FoldersListWithResponse(ctx context.Context, params *FoldersListParams, reqEditors ...RequestEditorFn) (*FoldersListResponse, error)
+
+	// FoldersCreateWithBodyWithResponse request with any body
+	FoldersCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FoldersCreateResponse, error)
+
+	FoldersCreateWithResponse(ctx context.Context, body FoldersCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*FoldersCreateResponse, error)
+
+	FoldersCreateWithFormdataBodyWithResponse(ctx context.Context, body FoldersCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FoldersCreateResponse, error)
+
+	// FoldersDestroyWithResponse request
+	FoldersDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FoldersDestroyResponse, error)
+
+	// FoldersRetrieveWithResponse request
+	FoldersRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FoldersRetrieveResponse, error)
+
+	// FoldersPartialUpdateWithBodyWithResponse request with any body
+	FoldersPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FoldersPartialUpdateResponse, error)
+
+	FoldersPartialUpdateWithResponse(ctx context.Context, id string, body FoldersPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FoldersPartialUpdateResponse, error)
+
+	FoldersPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FoldersPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FoldersPartialUpdateResponse, error)
+
+	// FoldersUpdateWithBodyWithResponse request with any body
+	FoldersUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FoldersUpdateResponse, error)
+
+	FoldersUpdateWithResponse(ctx context.Context, id string, body FoldersUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FoldersUpdateResponse, error)
+
+	FoldersUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FoldersUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FoldersUpdateResponse, error)
+
 	// GoalsListWithResponse request
 	GoalsListWithResponse(ctx context.Context, params *GoalsListParams, reqEditors ...RequestEditorFn) (*GoalsListResponse, error)
 
@@ -3860,6 +6317,443 @@ func (r BucketsUpdateResponse) Status() string {
 
 // StatusCode returns HTTPResponse.StatusCode
 func (r BucketsUpdateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CommentsListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PaginatedCommentList
+}
+
+// Status returns HTTPResponse.Status
+func (r CommentsListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CommentsListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CommentsCreateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *Comment
+}
+
+// Status returns HTTPResponse.Status
+func (r CommentsCreateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CommentsCreateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CommentsDestroyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// Status returns HTTPResponse.Status
+func (r CommentsDestroyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CommentsDestroyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CommentsRetrieveResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Comment
+}
+
+// Status returns HTTPResponse.Status
+func (r CommentsRetrieveResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CommentsRetrieveResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CommentsPartialUpdateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Comment
+}
+
+// Status returns HTTPResponse.Status
+func (r CommentsPartialUpdateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CommentsPartialUpdateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type CommentsUpdateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Comment
+}
+
+// Status returns HTTPResponse.Status
+func (r CommentsUpdateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CommentsUpdateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type EventsListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PaginatedEventList
+}
+
+// Status returns HTTPResponse.Status
+func (r EventsListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r EventsListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type EventsRetrieveResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Event
+}
+
+// Status returns HTTPResponse.Status
+func (r EventsRetrieveResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r EventsRetrieveResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FolderGoalsListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PaginatedFolderGoalList
+}
+
+// Status returns HTTPResponse.Status
+func (r FolderGoalsListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FolderGoalsListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FolderGoalsCreateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *FolderGoal
+}
+
+// Status returns HTTPResponse.Status
+func (r FolderGoalsCreateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FolderGoalsCreateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FolderGoalsDestroyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// Status returns HTTPResponse.Status
+func (r FolderGoalsDestroyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FolderGoalsDestroyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FolderGoalsRetrieveResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *FolderGoal
+}
+
+// Status returns HTTPResponse.Status
+func (r FolderGoalsRetrieveResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FolderGoalsRetrieveResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FolderGoalsPartialUpdateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *FolderGoal
+}
+
+// Status returns HTTPResponse.Status
+func (r FolderGoalsPartialUpdateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FolderGoalsPartialUpdateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FolderGoalsUpdateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *FolderGoal
+}
+
+// Status returns HTTPResponse.Status
+func (r FolderGoalsUpdateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FolderGoalsUpdateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FoldersListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PaginatedFolderList
+}
+
+// Status returns HTTPResponse.Status
+func (r FoldersListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FoldersListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FoldersCreateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON201      *Folder
+}
+
+// Status returns HTTPResponse.Status
+func (r FoldersCreateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FoldersCreateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FoldersDestroyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// Status returns HTTPResponse.Status
+func (r FoldersDestroyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FoldersDestroyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FoldersRetrieveResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Folder
+}
+
+// Status returns HTTPResponse.Status
+func (r FoldersRetrieveResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FoldersRetrieveResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FoldersPartialUpdateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Folder
+}
+
+// Status returns HTTPResponse.Status
+func (r FoldersPartialUpdateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FoldersPartialUpdateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+type FoldersUpdateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *Folder
+}
+
+// Status returns HTTPResponse.Status
+func (r FoldersUpdateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FoldersUpdateResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -4463,6 +7357,330 @@ func (c *ClientWithResponses) BucketsUpdateWithFormdataBodyWithResponse(ctx cont
 	return ParseBucketsUpdateResponse(rsp)
 }
 
+// CommentsListWithResponse request returning *CommentsListResponse
+func (c *ClientWithResponses) CommentsListWithResponse(ctx context.Context, params *CommentsListParams, reqEditors ...RequestEditorFn) (*CommentsListResponse, error) {
+	rsp, err := c.CommentsList(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsListResponse(rsp)
+}
+
+// CommentsCreateWithBodyWithResponse request with arbitrary body returning *CommentsCreateResponse
+func (c *ClientWithResponses) CommentsCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CommentsCreateResponse, error) {
+	rsp, err := c.CommentsCreateWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsCreateResponse(rsp)
+}
+
+func (c *ClientWithResponses) CommentsCreateWithResponse(ctx context.Context, body CommentsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*CommentsCreateResponse, error) {
+	rsp, err := c.CommentsCreate(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsCreateResponse(rsp)
+}
+
+func (c *ClientWithResponses) CommentsCreateWithFormdataBodyWithResponse(ctx context.Context, body CommentsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*CommentsCreateResponse, error) {
+	rsp, err := c.CommentsCreateWithFormdataBody(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsCreateResponse(rsp)
+}
+
+// CommentsDestroyWithResponse request returning *CommentsDestroyResponse
+func (c *ClientWithResponses) CommentsDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*CommentsDestroyResponse, error) {
+	rsp, err := c.CommentsDestroy(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsDestroyResponse(rsp)
+}
+
+// CommentsRetrieveWithResponse request returning *CommentsRetrieveResponse
+func (c *ClientWithResponses) CommentsRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*CommentsRetrieveResponse, error) {
+	rsp, err := c.CommentsRetrieve(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsRetrieveResponse(rsp)
+}
+
+// CommentsPartialUpdateWithBodyWithResponse request with arbitrary body returning *CommentsPartialUpdateResponse
+func (c *ClientWithResponses) CommentsPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CommentsPartialUpdateResponse, error) {
+	rsp, err := c.CommentsPartialUpdateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsPartialUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) CommentsPartialUpdateWithResponse(ctx context.Context, id string, body CommentsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*CommentsPartialUpdateResponse, error) {
+	rsp, err := c.CommentsPartialUpdate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsPartialUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) CommentsPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body CommentsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*CommentsPartialUpdateResponse, error) {
+	rsp, err := c.CommentsPartialUpdateWithFormdataBody(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsPartialUpdateResponse(rsp)
+}
+
+// CommentsUpdateWithBodyWithResponse request with arbitrary body returning *CommentsUpdateResponse
+func (c *ClientWithResponses) CommentsUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CommentsUpdateResponse, error) {
+	rsp, err := c.CommentsUpdateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) CommentsUpdateWithResponse(ctx context.Context, id string, body CommentsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*CommentsUpdateResponse, error) {
+	rsp, err := c.CommentsUpdate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) CommentsUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body CommentsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*CommentsUpdateResponse, error) {
+	rsp, err := c.CommentsUpdateWithFormdataBody(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCommentsUpdateResponse(rsp)
+}
+
+// EventsListWithResponse request returning *EventsListResponse
+func (c *ClientWithResponses) EventsListWithResponse(ctx context.Context, params *EventsListParams, reqEditors ...RequestEditorFn) (*EventsListResponse, error) {
+	rsp, err := c.EventsList(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseEventsListResponse(rsp)
+}
+
+// EventsRetrieveWithResponse request returning *EventsRetrieveResponse
+func (c *ClientWithResponses) EventsRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*EventsRetrieveResponse, error) {
+	rsp, err := c.EventsRetrieve(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseEventsRetrieveResponse(rsp)
+}
+
+// FolderGoalsListWithResponse request returning *FolderGoalsListResponse
+func (c *ClientWithResponses) FolderGoalsListWithResponse(ctx context.Context, params *FolderGoalsListParams, reqEditors ...RequestEditorFn) (*FolderGoalsListResponse, error) {
+	rsp, err := c.FolderGoalsList(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsListResponse(rsp)
+}
+
+// FolderGoalsCreateWithBodyWithResponse request with arbitrary body returning *FolderGoalsCreateResponse
+func (c *ClientWithResponses) FolderGoalsCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FolderGoalsCreateResponse, error) {
+	rsp, err := c.FolderGoalsCreateWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsCreateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FolderGoalsCreateWithResponse(ctx context.Context, body FolderGoalsCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsCreateResponse, error) {
+	rsp, err := c.FolderGoalsCreate(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsCreateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FolderGoalsCreateWithFormdataBodyWithResponse(ctx context.Context, body FolderGoalsCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsCreateResponse, error) {
+	rsp, err := c.FolderGoalsCreateWithFormdataBody(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsCreateResponse(rsp)
+}
+
+// FolderGoalsDestroyWithResponse request returning *FolderGoalsDestroyResponse
+func (c *ClientWithResponses) FolderGoalsDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FolderGoalsDestroyResponse, error) {
+	rsp, err := c.FolderGoalsDestroy(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsDestroyResponse(rsp)
+}
+
+// FolderGoalsRetrieveWithResponse request returning *FolderGoalsRetrieveResponse
+func (c *ClientWithResponses) FolderGoalsRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FolderGoalsRetrieveResponse, error) {
+	rsp, err := c.FolderGoalsRetrieve(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsRetrieveResponse(rsp)
+}
+
+// FolderGoalsPartialUpdateWithBodyWithResponse request with arbitrary body returning *FolderGoalsPartialUpdateResponse
+func (c *ClientWithResponses) FolderGoalsPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FolderGoalsPartialUpdateResponse, error) {
+	rsp, err := c.FolderGoalsPartialUpdateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsPartialUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FolderGoalsPartialUpdateWithResponse(ctx context.Context, id string, body FolderGoalsPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsPartialUpdateResponse, error) {
+	rsp, err := c.FolderGoalsPartialUpdate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsPartialUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FolderGoalsPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FolderGoalsPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsPartialUpdateResponse, error) {
+	rsp, err := c.FolderGoalsPartialUpdateWithFormdataBody(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsPartialUpdateResponse(rsp)
+}
+
+// FolderGoalsUpdateWithBodyWithResponse request with arbitrary body returning *FolderGoalsUpdateResponse
+func (c *ClientWithResponses) FolderGoalsUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FolderGoalsUpdateResponse, error) {
+	rsp, err := c.FolderGoalsUpdateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FolderGoalsUpdateWithResponse(ctx context.Context, id string, body FolderGoalsUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsUpdateResponse, error) {
+	rsp, err := c.FolderGoalsUpdate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FolderGoalsUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FolderGoalsUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FolderGoalsUpdateResponse, error) {
+	rsp, err := c.FolderGoalsUpdateWithFormdataBody(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFolderGoalsUpdateResponse(rsp)
+}
+
+// FoldersListWithResponse request returning *FoldersListResponse
+func (c *ClientWithResponses) FoldersListWithResponse(ctx context.Context, params *FoldersListParams, reqEditors ...RequestEditorFn) (*FoldersListResponse, error) {
+	rsp, err := c.FoldersList(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersListResponse(rsp)
+}
+
+// FoldersCreateWithBodyWithResponse request with arbitrary body returning *FoldersCreateResponse
+func (c *ClientWithResponses) FoldersCreateWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FoldersCreateResponse, error) {
+	rsp, err := c.FoldersCreateWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersCreateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FoldersCreateWithResponse(ctx context.Context, body FoldersCreateJSONRequestBody, reqEditors ...RequestEditorFn) (*FoldersCreateResponse, error) {
+	rsp, err := c.FoldersCreate(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersCreateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FoldersCreateWithFormdataBodyWithResponse(ctx context.Context, body FoldersCreateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FoldersCreateResponse, error) {
+	rsp, err := c.FoldersCreateWithFormdataBody(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersCreateResponse(rsp)
+}
+
+// FoldersDestroyWithResponse request returning *FoldersDestroyResponse
+func (c *ClientWithResponses) FoldersDestroyWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FoldersDestroyResponse, error) {
+	rsp, err := c.FoldersDestroy(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersDestroyResponse(rsp)
+}
+
+// FoldersRetrieveWithResponse request returning *FoldersRetrieveResponse
+func (c *ClientWithResponses) FoldersRetrieveWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*FoldersRetrieveResponse, error) {
+	rsp, err := c.FoldersRetrieve(ctx, id, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersRetrieveResponse(rsp)
+}
+
+// FoldersPartialUpdateWithBodyWithResponse request with arbitrary body returning *FoldersPartialUpdateResponse
+func (c *ClientWithResponses) FoldersPartialUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FoldersPartialUpdateResponse, error) {
+	rsp, err := c.FoldersPartialUpdateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersPartialUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FoldersPartialUpdateWithResponse(ctx context.Context, id string, body FoldersPartialUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FoldersPartialUpdateResponse, error) {
+	rsp, err := c.FoldersPartialUpdate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersPartialUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FoldersPartialUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FoldersPartialUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FoldersPartialUpdateResponse, error) {
+	rsp, err := c.FoldersPartialUpdateWithFormdataBody(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersPartialUpdateResponse(rsp)
+}
+
+// FoldersUpdateWithBodyWithResponse request with arbitrary body returning *FoldersUpdateResponse
+func (c *ClientWithResponses) FoldersUpdateWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*FoldersUpdateResponse, error) {
+	rsp, err := c.FoldersUpdateWithBody(ctx, id, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FoldersUpdateWithResponse(ctx context.Context, id string, body FoldersUpdateJSONRequestBody, reqEditors ...RequestEditorFn) (*FoldersUpdateResponse, error) {
+	rsp, err := c.FoldersUpdate(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersUpdateResponse(rsp)
+}
+
+func (c *ClientWithResponses) FoldersUpdateWithFormdataBodyWithResponse(ctx context.Context, id string, body FoldersUpdateFormdataRequestBody, reqEditors ...RequestEditorFn) (*FoldersUpdateResponse, error) {
+	rsp, err := c.FoldersUpdateWithFormdataBody(ctx, id, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFoldersUpdateResponse(rsp)
+}
+
 // GoalsListWithResponse request returning *GoalsListResponse
 func (c *ClientWithResponses) GoalsListWithResponse(ctx context.Context, params *GoalsListParams, reqEditors ...RequestEditorFn) (*GoalsListResponse, error) {
 	rsp, err := c.GoalsList(ctx, params, reqEditors...)
@@ -5003,6 +8221,496 @@ func ParseBucketsUpdateResponse(rsp *http.Response) (*BucketsUpdateResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest Bucket
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCommentsListResponse parses an HTTP response from a CommentsListWithResponse call
+func ParseCommentsListResponse(rsp *http.Response) (*CommentsListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CommentsListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PaginatedCommentList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCommentsCreateResponse parses an HTTP response from a CommentsCreateWithResponse call
+func ParseCommentsCreateResponse(rsp *http.Response) (*CommentsCreateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CommentsCreateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Comment
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCommentsDestroyResponse parses an HTTP response from a CommentsDestroyWithResponse call
+func ParseCommentsDestroyResponse(rsp *http.Response) (*CommentsDestroyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CommentsDestroyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseCommentsRetrieveResponse parses an HTTP response from a CommentsRetrieveWithResponse call
+func ParseCommentsRetrieveResponse(rsp *http.Response) (*CommentsRetrieveResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CommentsRetrieveResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Comment
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCommentsPartialUpdateResponse parses an HTTP response from a CommentsPartialUpdateWithResponse call
+func ParseCommentsPartialUpdateResponse(rsp *http.Response) (*CommentsPartialUpdateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CommentsPartialUpdateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Comment
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCommentsUpdateResponse parses an HTTP response from a CommentsUpdateWithResponse call
+func ParseCommentsUpdateResponse(rsp *http.Response) (*CommentsUpdateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CommentsUpdateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Comment
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseEventsListResponse parses an HTTP response from a EventsListWithResponse call
+func ParseEventsListResponse(rsp *http.Response) (*EventsListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &EventsListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PaginatedEventList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseEventsRetrieveResponse parses an HTTP response from a EventsRetrieveWithResponse call
+func ParseEventsRetrieveResponse(rsp *http.Response) (*EventsRetrieveResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &EventsRetrieveResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Event
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFolderGoalsListResponse parses an HTTP response from a FolderGoalsListWithResponse call
+func ParseFolderGoalsListResponse(rsp *http.Response) (*FolderGoalsListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FolderGoalsListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PaginatedFolderGoalList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFolderGoalsCreateResponse parses an HTTP response from a FolderGoalsCreateWithResponse call
+func ParseFolderGoalsCreateResponse(rsp *http.Response) (*FolderGoalsCreateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FolderGoalsCreateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest FolderGoal
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFolderGoalsDestroyResponse parses an HTTP response from a FolderGoalsDestroyWithResponse call
+func ParseFolderGoalsDestroyResponse(rsp *http.Response) (*FolderGoalsDestroyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FolderGoalsDestroyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseFolderGoalsRetrieveResponse parses an HTTP response from a FolderGoalsRetrieveWithResponse call
+func ParseFolderGoalsRetrieveResponse(rsp *http.Response) (*FolderGoalsRetrieveResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FolderGoalsRetrieveResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FolderGoal
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFolderGoalsPartialUpdateResponse parses an HTTP response from a FolderGoalsPartialUpdateWithResponse call
+func ParseFolderGoalsPartialUpdateResponse(rsp *http.Response) (*FolderGoalsPartialUpdateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FolderGoalsPartialUpdateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FolderGoal
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFolderGoalsUpdateResponse parses an HTTP response from a FolderGoalsUpdateWithResponse call
+func ParseFolderGoalsUpdateResponse(rsp *http.Response) (*FolderGoalsUpdateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FolderGoalsUpdateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FolderGoal
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFoldersListResponse parses an HTTP response from a FoldersListWithResponse call
+func ParseFoldersListResponse(rsp *http.Response) (*FoldersListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FoldersListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PaginatedFolderList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFoldersCreateResponse parses an HTTP response from a FoldersCreateWithResponse call
+func ParseFoldersCreateResponse(rsp *http.Response) (*FoldersCreateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FoldersCreateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Folder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFoldersDestroyResponse parses an HTTP response from a FoldersDestroyWithResponse call
+func ParseFoldersDestroyResponse(rsp *http.Response) (*FoldersDestroyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FoldersDestroyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseFoldersRetrieveResponse parses an HTTP response from a FoldersRetrieveWithResponse call
+func ParseFoldersRetrieveResponse(rsp *http.Response) (*FoldersRetrieveResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FoldersRetrieveResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Folder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFoldersPartialUpdateResponse parses an HTTP response from a FoldersPartialUpdateWithResponse call
+func ParseFoldersPartialUpdateResponse(rsp *http.Response) (*FoldersPartialUpdateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FoldersPartialUpdateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Folder
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFoldersUpdateResponse parses an HTTP response from a FoldersUpdateWithResponse call
+func ParseFoldersUpdateResponse(rsp *http.Response) (*FoldersUpdateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FoldersUpdateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Folder
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

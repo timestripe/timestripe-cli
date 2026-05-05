@@ -192,6 +192,40 @@ func resolveGoalRef(ctx context.Context, c *api.ClientWithResponses, value strin
 	)
 }
 
+func resolveFolderRef(ctx context.Context, c *api.ClientWithResponses, value string) (string, error) {
+	return resolveRef(ctx, value,
+		func(ctx context.Context, id string) (*api.Folder, error) {
+			resp, err := c.FoldersRetrieveWithResponse(ctx, id)
+			if err != nil {
+				return nil, err
+			}
+			if resp.JSON200 == nil {
+				return nil, apiError(resp.StatusCode(), resp.Body)
+			}
+			return resp.JSON200, nil
+		},
+		func(ctx context.Context) ([]api.Folder, error) {
+			env, err := pagination.Fetch[api.Folder](ctx, func(ctx context.Context, limit, offset int) (*pagination.Page[api.Folder], error) {
+				resp, err := c.FoldersListWithResponse(ctx, &api.FoldersListParams{Limit: &limit, Offset: &offset})
+				if err != nil {
+					return nil, err
+				}
+				if resp.JSON200 == nil {
+					return nil, apiError(resp.StatusCode(), resp.Body)
+				}
+				return &pagination.Page[api.Folder]{Count: resp.JSON200.Count, Next: resp.JSON200.Next, Previous: resp.JSON200.Previous, Results: resp.JSON200.Results}, nil
+			}, pagination.Options{All: true})
+			if err != nil {
+				return nil, err
+			}
+			return env.Items, nil
+		},
+		func(f api.Folder) string { return ptrStr(f.Id) },
+		func(f api.Folder) string { return ptrStr(f.Name) },
+		"folder",
+	)
+}
+
 // resolveUserRef matches against email, then "First Last" full name.
 func resolveUserRef(ctx context.Context, c *api.ClientWithResponses, value string) (string, error) {
 	return resolveRef(ctx, value,

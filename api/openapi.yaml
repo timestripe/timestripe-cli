@@ -373,6 +373,701 @@ paths:
       responses:
         '204':
           description: No response body
+  /comments/:
+    get:
+      operationId: commentsList
+      parameters:
+      - name: createdFrom
+        in: query
+        required: false
+        description: Inclusive lower bound (>=) on created_datetime. ISO 8601 datetime.
+        schema:
+          type: string
+          format: date-time
+      - name: createdTo
+        in: query
+        required: false
+        description: Exclusive upper bound (<) on created_datetime. ISO 8601 datetime.
+        schema:
+          type: string
+          format: date-time
+      - name: goalId
+        in: query
+        required: false
+        description: Filter by goal code.
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: modifiedFrom
+        in: query
+        required: false
+        description: Inclusive lower bound (>=) on modified_datetime. ISO 8601 datetime.
+        schema:
+          type: string
+          format: date-time
+      - name: modifiedTo
+        in: query
+        required: false
+        description: Exclusive upper bound (<) on modified_datetime. ISO 8601 datetime.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        required: false
+        description: Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+        schema:
+          type: string
+          enum:
+          - createdDatetime
+          - modifiedDatetime
+          - -createdDatetime
+          - -modifiedDatetime
+      - name: spaceId
+        in: query
+        required: false
+        description: Filter by goal__space code.
+        schema:
+          type: string
+      - name: userId
+        in: query
+        required: false
+        description: Filter by user code.
+        schema:
+          type: string
+      tags:
+      - Comments
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCommentList'
+          description: ''
+    post:
+      operationId: commentsCreate
+      tags:
+      - Comments
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+  /comments/{id}/:
+    get:
+      operationId: commentsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Comments
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+    put:
+      operationId: commentsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Comments
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Comment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+    patch:
+      operationId: commentsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Comments
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedComment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedComment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedComment'
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+    delete:
+      operationId: commentsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Comments
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
+  /events/:
+    get:
+      operationId: eventsList
+      parameters:
+      - name: from
+        in: query
+        required: false
+        description: Inclusive lower bound (>=) on datetime. ISO 8601 datetime.
+        schema:
+          type: string
+          format: date-time
+      - name: goalId
+        in: query
+        required: false
+        description: Filter by goal code.
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        required: false
+        description: Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+        schema:
+          type: string
+          enum:
+          - datetime
+          - -datetime
+      - name: spaceId
+        in: query
+        required: false
+        description: Filter by space code.
+        schema:
+          type: string
+      - name: to
+        in: query
+        required: false
+        description: Exclusive upper bound (<) on datetime. ISO 8601 datetime.
+        schema:
+          type: string
+          format: date-time
+      - name: type
+        in: query
+        required: false
+        description: Filter by type.
+        schema:
+          type: string
+          enum:
+          - BOARD_CREATED
+          - BOARD_DELETED
+          - BOARD_MODIFIED
+          - BUCKET_CREATED
+          - BUCKET_DELETED
+          - BUCKET_MODIFIED
+          - CLIMB_SUBSCRIPTION_CREATED
+          - CLIMB_SUBSCRIPTION_DELETED
+          - COMMENT_CREATED
+          - COMMENT_DELETED
+          - COMMENT_MODIFIED
+          - GOAL_ASSIGNED
+          - GOAL_CREATED
+          - GOAL_DELETED
+          - GOAL_DONE
+          - GOAL_MODIFIED
+          - GOAL_RESCHEDULED
+          - MEMBERSHIP_CREATED
+          - MEMBERSHIP_DELETED
+          - MENTION_CREATED
+          - SPACE_CREATED
+          - SPACE_CREATED_BY_CLONING
+          - SPACE_USED_FOR_CLONING
+          - USER_CREATED
+      - name: userId
+        in: query
+        required: false
+        description: Filter by user code.
+        schema:
+          type: string
+      tags:
+      - Events
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventList'
+          description: ''
+  /events/{id}/:
+    get:
+      operationId: eventsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Events
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+          description: ''
+  /folder-goals/:
+    get:
+      operationId: folderGoalsList
+      parameters:
+      - name: folderId
+        in: query
+        required: false
+        description: Filter by folder code.
+        schema:
+          type: string
+      - name: goalId
+        in: query
+        required: false
+        description: Filter by goal code.
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        required: false
+        description: Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+        schema:
+          type: string
+          enum:
+          - createdDatetime
+          - sequenceNo
+          - -createdDatetime
+          - -sequenceNo
+      tags:
+      - Folder-Goals
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFolderGoalList'
+          description: ''
+    post:
+      operationId: folderGoalsCreate
+      tags:
+      - Folder-Goals
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FolderGoal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FolderGoal'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderGoal'
+        required: true
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderGoal'
+          description: ''
+  /folder-goals/{id}/:
+    get:
+      operationId: folderGoalsRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folder-Goals
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderGoal'
+          description: ''
+    put:
+      operationId: folderGoalsUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folder-Goals
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FolderGoal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FolderGoal'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderGoal'
+        required: true
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderGoal'
+          description: ''
+    patch:
+      operationId: folderGoalsPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folder-Goals
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFolderGoal'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFolderGoal'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFolderGoal'
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderGoal'
+          description: ''
+    delete:
+      operationId: folderGoalsDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folder-Goals
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
+  /folders/:
+    get:
+      operationId: foldersList
+      parameters:
+      - name: isPrivate
+        in: query
+        required: false
+        description: Filter by is_private. Accepts `true` or `false`.
+        schema:
+          type: boolean
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: sort
+        in: query
+        required: false
+        description: Sort order. Prefix with `-` for descending (e.g. `-createdDatetime`).
+        schema:
+          type: string
+          enum:
+          - createdDatetime
+          - name
+          - sequenceNo
+          - -createdDatetime
+          - -name
+          - -sequenceNo
+      - name: spaceId
+        in: query
+        required: false
+        description: Filter by space code.
+        schema:
+          type: string
+      - name: userId
+        in: query
+        required: false
+        description: Filter by user code. Pass `null` to match items where this field
+          is unset.
+        schema:
+          type: string
+      tags:
+      - Folders
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFolderList'
+          description: ''
+    post:
+      operationId: foldersCreate
+      tags:
+      - Folders
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Folder'
+        required: true
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+  /folders/{id}/:
+    get:
+      operationId: foldersRetrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+    put:
+      operationId: foldersUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Folder'
+        required: true
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+    patch:
+      operationId: foldersPartialUpdate
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFolder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFolder'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFolder'
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+    delete:
+      operationId: foldersDestroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      security:
+      - API Key: []
+      - OAuth2: []
+      responses:
+        '204':
+          description: No response body
   /goals/:
     get:
       operationId: goalsList
@@ -1047,6 +1742,215 @@ components:
       - createdDatetime
       - id
       - url
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        goalId:
+          type: string
+        userId:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          description: Markdown-formatted text.
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        modifiedDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+      required:
+      - createdDatetime
+      - description
+      - goalId
+      - id
+      - modifiedDatetime
+      - url
+      - userId
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        datetime:
+          type: string
+          format: date-time
+          readOnly: true
+        type:
+          enum:
+          - GOAL_CREATED
+          - GOAL_DELETED
+          - GOAL_DONE
+          - GOAL_MODIFIED
+          - GOAL_ASSIGNED
+          - GOAL_RESCHEDULED
+          - USER_CREATED
+          - SPACE_CREATED
+          - SPACE_CREATED_BY_CLONING
+          - SPACE_USED_FOR_CLONING
+          - COMMENT_CREATED
+          - COMMENT_DELETED
+          - COMMENT_MODIFIED
+          - MENTION_CREATED
+          - MEMBERSHIP_CREATED
+          - MEMBERSHIP_DELETED
+          - BOARD_CREATED
+          - BOARD_MODIFIED
+          - BOARD_DELETED
+          - BUCKET_CREATED
+          - BUCKET_MODIFIED
+          - BUCKET_DELETED
+          - CLIMB_SUBSCRIPTION_CREATED
+          - CLIMB_SUBSCRIPTION_DELETED
+          type: string
+          description: |-
+            * `GOAL_CREATED` - Goal Created
+            * `GOAL_DELETED` - Goal Deleted
+            * `GOAL_DONE` - Goal Done
+            * `GOAL_MODIFIED` - Goal Modified
+            * `GOAL_ASSIGNED` - Goal Assigned
+            * `GOAL_RESCHEDULED` - Goal Rescheduled
+            * `USER_CREATED` - User Created
+            * `SPACE_CREATED` - Space Created
+            * `SPACE_CREATED_BY_CLONING` - Space Created By Cloning
+            * `SPACE_USED_FOR_CLONING` - Space Used For Cloning
+            * `COMMENT_CREATED` - Comment Created
+            * `COMMENT_DELETED` - Comment Deleted
+            * `COMMENT_MODIFIED` - Comment Modified
+            * `MENTION_CREATED` - Mention Created
+            * `MEMBERSHIP_CREATED` - Membership Created
+            * `MEMBERSHIP_DELETED` - Membership Deleted
+            * `BOARD_CREATED` - Board Created
+            * `BOARD_MODIFIED` - Board Modified
+            * `BOARD_DELETED` - Board Deleted
+            * `BUCKET_CREATED` - Bucket Created
+            * `BUCKET_MODIFIED` - Bucket Modified
+            * `BUCKET_DELETED` - Bucket Deleted
+            * `CLIMB_SUBSCRIPTION_CREATED` - Climb Subscription Created
+            * `CLIMB_SUBSCRIPTION_DELETED` - Climb Subscription Deleted
+          x-spec-enum-id: 164adb0c560f8c40
+        userId:
+          type: string
+          readOnly: true
+        userName:
+          type: string
+          nullable: true
+          maxLength: 250
+        spaceId:
+          type: string
+          readOnly: true
+        spaceName:
+          type: string
+          nullable: true
+          maxLength: 250
+        goalId:
+          type: string
+          readOnly: true
+        goalName:
+          type: string
+          readOnly: true
+        goalColor:
+          type: string
+          readOnly: true
+        otherUserId:
+          type: string
+          readOnly: true
+        otherUserName:
+          type: string
+          nullable: true
+          maxLength: 250
+        commentId:
+          type: string
+          readOnly: true
+        boardId:
+          type: string
+          readOnly: true
+        boardName:
+          type: string
+          nullable: true
+          maxLength: 250
+        bucketId:
+          type: string
+          readOnly: true
+        bucketName:
+          type: string
+          nullable: true
+          maxLength: 250
+      required:
+      - boardId
+      - bucketId
+      - commentId
+      - datetime
+      - goalColor
+      - goalId
+      - goalName
+      - id
+      - otherUserId
+      - spaceId
+      - type
+      - userId
+    Folder:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        spaceId:
+          type: string
+        userId:
+          type: string
+          readOnly: true
+          nullable: true
+        name:
+          type: string
+          maxLength: 250
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        isPrivate:
+          type: boolean
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - createdDatetime
+      - id
+      - spaceId
+      - userId
+    FolderGoal:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        folderId:
+          type: string
+        goalId:
+          type: string
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - createdDatetime
+      - folderId
+      - goalId
+      - id
     Goal:
       type: object
       properties:
@@ -1241,6 +2145,98 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Bucket'
+    PaginatedCommentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+    PaginatedEventList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+    PaginatedFolderGoalList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FolderGoal'
+    PaginatedFolderList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Folder'
     PaginatedGoalList:
       type: object
       required:
@@ -1404,6 +2400,74 @@ components:
         url:
           type: string
           readOnly: true
+    PatchedComment:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        goalId:
+          type: string
+        userId:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          description: Markdown-formatted text.
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        modifiedDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+    PatchedFolder:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        spaceId:
+          type: string
+        userId:
+          type: string
+          readOnly: true
+          nullable: true
+        name:
+          type: string
+          maxLength: 250
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        isPrivate:
+          type: boolean
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedFolderGoal:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        folderId:
+          type: string
+        goalId:
+          type: string
+        sequenceNo:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        createdDatetime:
+          type: string
+          format: date-time
+          readOnly: true
     PatchedGoal:
       type: object
       properties:
@@ -1500,6 +2564,9 @@ components:
         name:
           type: string
           maxLength: 250
+        image:
+          type: string
+          readOnly: true
         magicLinks:
           type: array
           items:
@@ -1517,6 +2584,9 @@ components:
         name:
           type: string
           maxLength: 250
+        image:
+          type: string
+          readOnly: true
         magicLinks:
           type: array
           items:
@@ -1527,6 +2597,7 @@ components:
           readOnly: true
       required:
       - id
+      - image
       - magicLinks
       - url
     User:

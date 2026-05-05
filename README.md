@@ -102,6 +102,9 @@ Related commands:
 | `boards` | Manage boards |
 | `buckets` | Manage buckets |
 | `goals` | Manage goals |
+| `comments` | Manage goal comments |
+| `events` | Inspect activity events (read-only) |
+| `folders` | Manage folders and which goals belong to them |
 | `memberships` | Manage workspace memberships |
 | `users` | Look up users |
 | `config` | Show resolved configuration |
