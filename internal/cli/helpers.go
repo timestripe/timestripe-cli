@@ -99,14 +99,17 @@ func dateFlag(cmd *cobra.Command, name, v string) (*openapi_types.Date, error) {
 	return &openapi_types.Date{Time: t}, nil
 }
 
-// timeFlag parses v as RFC3339 when the named flag was set.
+// timeFlag parses v as RFC3339, falling back to YYYY-MM-DD (midnight local time)
+// when the named flag was set.
 func timeFlag(cmd *cobra.Command, name, v string) (*time.Time, error) {
 	if !cmd.Flags().Changed(name) {
 		return nil, nil
 	}
-	t, err := time.Parse(time.RFC3339, v)
-	if err != nil {
-		return nil, fmt.Errorf("--%s: %w (expected RFC3339, e.g. 2006-01-02T15:04:05Z)", name, err)
+	if t, err := time.Parse(time.RFC3339, v); err == nil {
+		return &t, nil
 	}
-	return &t, nil
+	if t, err := time.ParseInLocation("2006-01-02", v, time.Local); err == nil {
+		return &t, nil
+	}
+	return nil, fmt.Errorf("--%s: %q is not a valid date or datetime (expected YYYY-MM-DD or RFC3339, e.g. 2026-05-01 or 2026-05-01T00:00:00Z)", name, v)
 }

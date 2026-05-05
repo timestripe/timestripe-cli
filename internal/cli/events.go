@@ -79,8 +79,8 @@ func newEventsListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
-	cmd.Flags().StringVar(&from, "from", "", "inclusive lower bound on datetime (RFC3339)")
-	cmd.Flags().StringVar(&to, "to", "", "exclusive upper bound on datetime (RFC3339)")
+	cmd.Flags().StringVar(&from, "from", "", "inclusive lower bound on datetime (YYYY-MM-DD or RFC3339)")
+	cmd.Flags().StringVar(&to, "to", "", "exclusive upper bound on datetime (YYYY-MM-DD or RFC3339)")
 	cmd.Flags().StringVar(&goalID, "goal-id", "", "filter by goal ID")
 	cmd.Flags().StringVar(&spaceID, "space-id", "", "filter by space ID")
 	cmd.Flags().StringVar(&userID, "user-id", "", "filter by acting user ID")

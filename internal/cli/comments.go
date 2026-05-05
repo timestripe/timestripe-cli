@@ -93,10 +93,10 @@ func newCommentsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&goalID, "goal-id", "", "filter by goal ID")
 	cmd.Flags().StringVar(&spaceID, "space-id", "", "filter by space ID (via the comment's goal)")
 	cmd.Flags().StringVar(&userID, "user-id", "", "filter by author user ID")
-	cmd.Flags().StringVar(&createdFrom, "created-from", "", "inclusive lower bound on createdDatetime (RFC3339)")
-	cmd.Flags().StringVar(&createdTo, "created-to", "", "exclusive upper bound on createdDatetime (RFC3339)")
-	cmd.Flags().StringVar(&modifiedFrom, "modified-from", "", "inclusive lower bound on modifiedDatetime (RFC3339)")
-	cmd.Flags().StringVar(&modifiedTo, "modified-to", "", "exclusive upper bound on modifiedDatetime (RFC3339)")
+	cmd.Flags().StringVar(&createdFrom, "created-from", "", "inclusive lower bound on createdDatetime (YYYY-MM-DD or RFC3339)")
+	cmd.Flags().StringVar(&createdTo, "created-to", "", "exclusive upper bound on createdDatetime (YYYY-MM-DD or RFC3339)")
+	cmd.Flags().StringVar(&modifiedFrom, "modified-from", "", "inclusive lower bound on modifiedDatetime (YYYY-MM-DD or RFC3339)")
+	cmd.Flags().StringVar(&modifiedTo, "modified-to", "", "exclusive upper bound on modifiedDatetime (YYYY-MM-DD or RFC3339)")
 	cmd.Flags().StringVar(&sortFlag, "sort", "", "sort order; prefix with - for descending (e.g. -modifiedDatetime)")
 	return cmd
 }
