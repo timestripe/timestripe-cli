@@ -12,7 +12,7 @@ import (
 )
 
 func newFoldersCmd() *cobra.Command {
-	cmd := &cobra.Command{Use: "folders", Short: "Manage folders"}
+	cmd := &cobra.Command{Use: "folders", Aliases: []string{"folder"}, Short: "Manage folders"}
 	cmd.AddCommand(
 		newFoldersListCmd(),
 		newFoldersGetCmd(),
@@ -240,8 +240,9 @@ func (b *folderTabular) build() *output.Tabular {
 
 func newFolderGoalsCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "goals",
-		Short: "Manage which goals belong to folders",
+		Use:     "goals",
+		Aliases: []string{"goal", "tasks", "task", "todos", "todo", "items", "item"},
+		Short:   "Manage which goals belong to folders",
 	}
 	cmd.AddCommand(
 		newFolderGoalsListCmd(),

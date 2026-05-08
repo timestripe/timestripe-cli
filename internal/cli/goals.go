@@ -14,7 +14,7 @@ import (
 func newGoalsCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "goals",
-		Aliases: []string{"tasks", "todos", "items"},
+		Aliases: []string{"goal", "tasks", "task", "todos", "todo", "items", "item"},
 		Short:   "Manage goals (also: tasks, todos, items)",
 	}
 	cmd.AddCommand(

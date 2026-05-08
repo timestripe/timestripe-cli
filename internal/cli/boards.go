@@ -12,7 +12,7 @@ import (
 )
 
 func newBoardsCmd() *cobra.Command {
-	cmd := &cobra.Command{Use: "boards", Short: "Manage boards"}
+	cmd := &cobra.Command{Use: "boards", Aliases: []string{"board"}, Short: "Manage boards"}
 	cmd.AddCommand(
 		newBoardsListCmd(),
 		newBoardsGetCmd(),

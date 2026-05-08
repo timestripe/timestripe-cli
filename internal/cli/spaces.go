@@ -12,7 +12,7 @@ import (
 )
 
 func newSpacesCmd() *cobra.Command {
-	cmd := &cobra.Command{Use: "spaces", Short: "Manage spaces"}
+	cmd := &cobra.Command{Use: "spaces", Aliases: []string{"space"}, Short: "Manage spaces"}
 	cmd.AddCommand(
 		newSpacesListCmd(),
 		newSpacesGetCmd(),

@@ -12,7 +12,7 @@ import (
 )
 
 func newCommentsCmd() *cobra.Command {
-	cmd := &cobra.Command{Use: "comments", Short: "Manage comments"}
+	cmd := &cobra.Command{Use: "comments", Aliases: []string{"comment"}, Short: "Manage comments"}
 	cmd.AddCommand(
 		newCommentsListCmd(),
 		newCommentsGetCmd(),

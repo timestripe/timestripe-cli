@@ -11,7 +11,7 @@ import (
 )
 
 func newEventsCmd() *cobra.Command {
-	cmd := &cobra.Command{Use: "events", Short: "Inspect activity events (read-only)"}
+	cmd := &cobra.Command{Use: "events", Aliases: []string{"event"}, Short: "Inspect activity events (read-only)"}
 	cmd.AddCommand(newEventsListCmd(), newEventsGetCmd())
 	return cmd
 }

@@ -12,7 +12,7 @@ import (
 )
 
 func newBucketsCmd() *cobra.Command {
-	cmd := &cobra.Command{Use: "buckets", Short: "Manage buckets"}
+	cmd := &cobra.Command{Use: "buckets", Aliases: []string{"bucket"}, Short: "Manage buckets"}
 	cmd.AddCommand(
 		newBucketsListCmd(),
 		newBucketsGetCmd(),

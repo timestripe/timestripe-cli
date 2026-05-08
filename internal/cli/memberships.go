@@ -11,7 +11,7 @@ import (
 )
 
 func newMembershipsCmd() *cobra.Command {
-	cmd := &cobra.Command{Use: "memberships", Short: "Manage memberships (read-only)"}
+	cmd := &cobra.Command{Use: "memberships", Aliases: []string{"membership"}, Short: "Manage memberships (read-only)"}
 	cmd.AddCommand(newMembershipsListCmd(), newMembershipsGetCmd())
 	return cmd
 }
