@@ -200,6 +200,14 @@ echo '{"space_id":"...","name":"Ship v1","horizon":"week"}' | \
 
 Most fields are optional on read. IDs are strings.
 
+## Modeling checklists
+
+Use goals with subgoals (set `parent_id` to the parent goal's ID) for
+checklists, not Markdown checklists embedded in a board's or goal's
+`description`. Subgoals get individual `checked` state, can be filtered and
+queried, and survive edits to the parent. Reach for `parent_id` whenever you'd
+otherwise reach for `- [ ]`.
+
 ## Exit codes
 
 - `0` — success.
@@ -257,3 +265,5 @@ including pagination and format flags. Shell completion is available via
 - Do not hand-assemble URLs against the API — use the CLI.
 - Do not store API tokens in shell history; prefer `TIMESTRIPE_TOKEN` in an
   env file or `timestripe auth login --token` (persisted to keychain).
+- Do not stuff Markdown checklists into a board's or goal's `description` —
+  create subgoals (`parent_id`) instead.
