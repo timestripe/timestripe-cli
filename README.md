@@ -8,6 +8,10 @@
   The official command-line client for the <a href="https://timestripe.com">Timestripe</a>.
 </p>
 
+<p align="center">
+  <a href="https://skills.sh/timestripe/timestripe-cli"><img src="https://skills.sh/b/timestripe/timestripe-cli" alt="skills.sh" /></a>
+</p>
+
 ---
 
 ## Install
