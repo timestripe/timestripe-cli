@@ -178,7 +178,10 @@ echo '{"space_id":"...","name":"Ship v1","horizon":"week"}' | \
   optionally a bucket (`bucket_id`). Has a `horizon` of `day | week | month |
   quarter | year | decade | life`, an optional `date` (ISO `YYYY-MM-DD`), a
   `checked` boolean, and a `color` from a fixed palette. `description` is
-  Markdown.
+  Markdown. Ordering is per-context: `horizon_sequence_no`,
+  `bucket_sequence_no`, `subgoal_sequence_no` (within the parent goal), and
+  `assignee_sequence_no` (the Team section and Inbox) — settable on
+  `goals create | update` via the matching `--*-sequence-no` flags.
 - **Comment** — Markdown text attached to a goal. Has `goal_id`, `description`
   (Markdown), `user_id` (author, set by the server), and create/modify
   timestamps.

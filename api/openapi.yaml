@@ -2061,6 +2061,23 @@ components:
           nullable: true
         checked:
           type: boolean
+        horizon_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        bucket_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        subgoal_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        assignee_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Controls the goal's sort order in the Team section and Inbox.
         created_datetime:
           type: string
           format: date-time
@@ -2578,6 +2595,23 @@ components:
           nullable: true
         checked:
           type: boolean
+        horizon_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        bucket_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        subgoal_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        assignee_sequence_no:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Controls the goal's sort order in the Team section and Inbox.
         created_datetime:
           type: string
           format: date-time

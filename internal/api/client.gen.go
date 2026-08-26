@@ -390,8 +390,12 @@ type FolderGoal struct {
 // Goal defines model for Goal.
 type Goal struct {
 	AssigneeId *string `json:"assignee_id"`
-	BucketId   *string `json:"bucket_id"`
-	Checked    *bool   `json:"checked,omitempty"`
+
+	// AssigneeSequenceNo Controls the goal's sort order in the Team section and Inbox.
+	AssigneeSequenceNo *int    `json:"assignee_sequence_no,omitempty"`
+	BucketId           *string `json:"bucket_id"`
+	BucketSequenceNo   *int    `json:"bucket_sequence_no,omitempty"`
+	Checked            *bool   `json:"checked,omitempty"`
 
 	// Color * `#ecce32` - #ecce32
 	// * `#df496d` - #df496d
@@ -418,15 +422,17 @@ type Goal struct {
 	// * `year` - year
 	// * `decade` - decade
 	// * `life` - life
-	Horizon  *GoalHorizon `json:"horizon"`
-	Id       *string      `json:"id,omitempty"`
-	Name     *string      `json:"name,omitempty"`
-	ParentId *string      `json:"parent_id"`
-	SpaceId  string       `json:"space_id"`
+	Horizon           *GoalHorizon `json:"horizon"`
+	HorizonSequenceNo *int         `json:"horizon_sequence_no,omitempty"`
+	Id                *string      `json:"id,omitempty"`
+	Name              *string      `json:"name,omitempty"`
+	ParentId          *string      `json:"parent_id"`
+	SpaceId           string       `json:"space_id"`
 
 	// StartTime Time in 24-hour HH:MM format.
-	StartTime *string `json:"start_time"`
-	Url       *string `json:"url,omitempty"`
+	StartTime         *string `json:"start_time"`
+	SubgoalSequenceNo *int    `json:"subgoal_sequence_no,omitempty"`
+	Url               *string `json:"url,omitempty"`
 }
 
 // GoalColor * `#ecce32` - #ecce32
@@ -635,8 +641,12 @@ type PatchedFolderGoal struct {
 // PatchedGoal defines model for PatchedGoal.
 type PatchedGoal struct {
 	AssigneeId *string `json:"assignee_id"`
-	BucketId   *string `json:"bucket_id"`
-	Checked    *bool   `json:"checked,omitempty"`
+
+	// AssigneeSequenceNo Controls the goal's sort order in the Team section and Inbox.
+	AssigneeSequenceNo *int    `json:"assignee_sequence_no,omitempty"`
+	BucketId           *string `json:"bucket_id"`
+	BucketSequenceNo   *int    `json:"bucket_sequence_no,omitempty"`
+	Checked            *bool   `json:"checked,omitempty"`
 
 	// Color * `#ecce32` - #ecce32
 	// * `#df496d` - #df496d
@@ -663,15 +673,17 @@ type PatchedGoal struct {
 	// * `year` - year
 	// * `decade` - decade
 	// * `life` - life
-	Horizon  *PatchedGoalHorizon `json:"horizon"`
-	Id       *string             `json:"id,omitempty"`
-	Name     *string             `json:"name,omitempty"`
-	ParentId *string             `json:"parent_id"`
-	SpaceId  *string             `json:"space_id,omitempty"`
+	Horizon           *PatchedGoalHorizon `json:"horizon"`
+	HorizonSequenceNo *int                `json:"horizon_sequence_no,omitempty"`
+	Id                *string             `json:"id,omitempty"`
+	Name              *string             `json:"name,omitempty"`
+	ParentId          *string             `json:"parent_id"`
+	SpaceId           *string             `json:"space_id,omitempty"`
 
 	// StartTime Time in 24-hour HH:MM format.
-	StartTime *string `json:"start_time"`
-	Url       *string `json:"url,omitempty"`
+	StartTime         *string `json:"start_time"`
+	SubgoalSequenceNo *int    `json:"subgoal_sequence_no,omitempty"`
+	Url               *string `json:"url,omitempty"`
 }
 
 // PatchedGoalColor * `#ecce32` - #ecce32
