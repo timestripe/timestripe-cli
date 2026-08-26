@@ -30,11 +30,11 @@ func newGoalsCmd() *cobra.Command {
 
 func newGoalsListCmd() *cobra.Command {
 	var (
-		f                                                               listFlags
-		assigneeID, bucketID, parentID, spaceID                         string
-		color, search, sort, dateFrom, dateTo, updatedSince             string
-		checked                                                         bool
-		horizon                                                         []string
+		f                                                   listFlags
+		assigneeID, bucketID, parentID, spaceID             string
+		color, search, sort, dateFrom, dateTo, updatedSince string
+		checked                                             bool
+		horizon                                             []string
 	)
 	cmd := &cobra.Command{
 		Use:   "list",
@@ -152,6 +152,9 @@ type goalFields struct {
 	spaceRef, bucketRef, assigneeRef, parentRef           string
 	description, horizon, color, date, startTime, endTime string
 	checked                                               bool
+
+	horizonSequenceNo, bucketSequenceNo   int
+	subgoalSequenceNo, assigneeSequenceNo int
 }
 
 func addGoalFields(cmd *cobra.Command, f *goalFields) {
@@ -168,6 +171,10 @@ func addGoalFields(cmd *cobra.Command, f *goalFields) {
 	cmd.Flags().StringVar(&f.startTime, "start-time", "", "start time")
 	cmd.Flags().StringVar(&f.endTime, "end-time", "", "end time")
 	cmd.Flags().BoolVar(&f.checked, "checked", false, "whether the goal is checked/done")
+	cmd.Flags().IntVar(&f.horizonSequenceNo, "horizon-sequence-no", 0, "sort order within the horizon")
+	cmd.Flags().IntVar(&f.bucketSequenceNo, "bucket-sequence-no", 0, "sort order within the parent bucket")
+	cmd.Flags().IntVar(&f.subgoalSequenceNo, "subgoal-sequence-no", 0, "sort order among the parent goal's subgoals")
+	cmd.Flags().IntVar(&f.assigneeSequenceNo, "assignee-sequence-no", 0, "sort order in the Team section and Inbox")
 }
 
 func (f *goalFields) build(cmd *cobra.Command, client *api.ClientWithResponses) (map[string]any, error) {
@@ -183,6 +190,10 @@ func (f *goalFields) build(cmd *cobra.Command, client *api.ClientWithResponses) 
 	ifChanged(cmd, "start-time", "start_time", f.startTime, body)
 	ifChanged(cmd, "end-time", "end_time", f.endTime, body)
 	ifChanged(cmd, "checked", "checked", f.checked, body)
+	ifChanged(cmd, "horizon-sequence-no", "horizon_sequence_no", f.horizonSequenceNo, body)
+	ifChanged(cmd, "bucket-sequence-no", "bucket_sequence_no", f.bucketSequenceNo, body)
+	ifChanged(cmd, "subgoal-sequence-no", "subgoal_sequence_no", f.subgoalSequenceNo, body)
+	ifChanged(cmd, "assignee-sequence-no", "assignee_sequence_no", f.assigneeSequenceNo, body)
 	if cmd.Flags().Changed("space") {
 		id, err := resolveSpaceRef(cmd.Context(), client, f.spaceRef)
 		if err != nil {
