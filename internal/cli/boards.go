@@ -71,7 +71,7 @@ func newBoardsListCmd() *cobra.Command {
 	}
 	addListFlags(cmd, &f)
 	cmd.Flags().StringVar(&spaceID, "space-id", "", "filter by space ID")
-	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
+	cmd.Flags().StringVarP(&search, "search", "q", "", "case-insensitive search over name")
 	cmd.Flags().BoolVar(&archived, "archived", false, "filter by archived state")
 	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -sequence_no)")
 	return cmd
@@ -106,9 +106,9 @@ type boardFields struct {
 }
 
 func addBoardFields(cmd *cobra.Command, f *boardFields) {
-	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
-	cmd.Flags().StringVar(&f.name, "name", "", "board name")
-	cmd.Flags().StringVar(&f.spaceRef, "space", "", "parent space (ID or name)")
+	cmd.Flags().StringVarP(&f.file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVarP(&f.name, "name", "n", "", "board name")
+	cmd.Flags().StringVarP(&f.spaceRef, "space", "s", "", "parent space (ID or name)")
 	cmd.Flags().StringVar(&f.description, "description", "", "board description (Markdown)")
 	cmd.Flags().StringVar(&f.background, "background", "", "background (URL or token)")
 	cmd.Flags().StringVar(&f.layout, "layout", "", "board layout")

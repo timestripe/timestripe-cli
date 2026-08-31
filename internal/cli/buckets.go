@@ -69,7 +69,7 @@ func newBucketsListCmd() *cobra.Command {
 	}
 	addListFlags(cmd, &f)
 	cmd.Flags().StringVar(&boardID, "board-id", "", "filter by board ID")
-	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
+	cmd.Flags().StringVarP(&search, "search", "q", "", "case-insensitive search over name")
 	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -sequence_no)")
 	return cmd
 }
@@ -103,8 +103,8 @@ type bucketFields struct {
 }
 
 func addBucketFields(cmd *cobra.Command, f *bucketFields) {
-	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
-	cmd.Flags().StringVar(&f.name, "name", "", "bucket name")
+	cmd.Flags().StringVarP(&f.file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVarP(&f.name, "name", "n", "", "bucket name")
 	cmd.Flags().StringVar(&f.boardRef, "board", "", "parent board (ID or name)")
 	cmd.Flags().StringVar(&f.emoji, "emoji", "", "display emoji")
 	cmd.Flags().BoolVar(&f.expanded, "expanded", false, "whether the bucket is shown expanded")

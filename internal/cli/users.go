@@ -79,7 +79,7 @@ func newUsersListCmd() *cobra.Command {
 	}
 	addListFlags(cmd, &f)
 	cmd.Flags().StringVar(&email, "email", "", "filter by exact email match")
-	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over first name, last name, email")
+	cmd.Flags().StringVarP(&search, "search", "q", "", "case-insensitive search over first name, last name, email")
 	return cmd
 }
 

@@ -88,9 +88,9 @@ func newRootCmd() *cobra.Command {
 // is the single place that closes the `--checked false` hole.
 func addListFlags(cmd *cobra.Command, f *listFlags) {
 	cmd.Args = noArgsWithBoolHint
-	cmd.Flags().IntVar(&f.Limit, "limit", pagination.DefaultLimit, "maximum number of items to return across all pages")
+	cmd.Flags().IntVarP(&f.Limit, "limit", "l", pagination.DefaultLimit, "maximum number of items to return across all pages")
 	cmd.Flags().IntVar(&f.Offset, "offset", 0, "starting offset into the result set")
-	cmd.Flags().BoolVar(&f.All, "all", false, "fetch every page; ignores --limit")
+	cmd.Flags().BoolVarP(&f.All, "all", "A", false, "fetch every page; ignores --limit")
 }
 
 func (f *listFlags) options() pagination.Options {

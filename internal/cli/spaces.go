@@ -61,7 +61,7 @@ func newSpacesListCmd() *cobra.Command {
 		},
 	}
 	addListFlags(cmd, &f)
-	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
+	cmd.Flags().StringVarP(&search, "search", "q", "", "case-insensitive search over name")
 	return cmd
 }
 
@@ -125,8 +125,8 @@ func newSpacesCreateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON201, (&spaceTabular{[]api.Space{*resp.JSON201}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "JSON body file (or - for stdin); flags override its fields")
-	cmd.Flags().StringVar(&name, "name", "", "space name")
+	cmd.Flags().StringVarP(&file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVarP(&name, "name", "n", "", "space name")
 	return cmd
 }
 
@@ -161,8 +161,8 @@ func newSpacesUpdateCmd() *cobra.Command {
 			return renderOrFail(cmd, resp.JSON200, (&spaceTabular{[]api.Space{*resp.JSON200}}).build())
 		},
 	}
-	cmd.Flags().StringVar(&file, "file", "", "JSON body file (or - for stdin); flags override its fields")
-	cmd.Flags().StringVar(&name, "name", "", "space name")
+	cmd.Flags().StringVarP(&file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVarP(&name, "name", "n", "", "space name")
 	return cmd
 }
 
