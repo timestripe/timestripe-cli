@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/spf13/cobra"
 
@@ -129,9 +130,26 @@ func newAuthStatusCmd() *cobra.Command {
 			}
 			fmt.Fprintf(cmd.OutOrStdout(), "Signed in (%s) — backend: %s\n", creds.Type, config.Backend())
 			if creds.Type == auth.TypeOAuth && !creds.ExpiresAt.IsZero() {
-				fmt.Fprintf(cmd.OutOrStdout(), "Access token expires: %s\n", creds.ExpiresAt.Local().Format("2006-01-02 15:04:05 MST"))
+				fmt.Fprintf(cmd.OutOrStdout(), "Access token expires: %s (%s)\n",
+					creds.ExpiresAt.Local().Format("2006-01-02 15:04:05 MST"), expiryNote(creds))
 			}
 			return nil
 		},
+	}
+}
+
+// expiryNote describes what happens when the access token runs out.
+func expiryNote(c *auth.Credentials) string {
+	remaining := time.Until(c.ExpiresAt).Round(time.Minute)
+	switch {
+	case c.RefreshToken == "":
+		if remaining <= 0 {
+			return "expired; run `timestripe auth login`"
+		}
+		return fmt.Sprintf("in %s; no refresh token, re-login required after that", remaining)
+	case remaining <= 0:
+		return "expired; will refresh automatically on the next command"
+	default:
+		return fmt.Sprintf("in %s; auto-refresh enabled", remaining)
 	}
 }

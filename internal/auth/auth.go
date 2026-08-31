@@ -61,19 +61,30 @@ func DefaultStore() Store { return &fileStore{} }
 
 // Resolve returns the caller's current credentials, respecting the
 // TIMESTRIPE_TOKEN environment override (which wins over any stored creds).
-// Callers should pass ctx through to token-refresh flows when Expired().
-func Resolve(ctx context.Context) (*Credentials, error) {
+//
+// An expired OAuth token is refreshed transparently using the stored refresh
+// token. userAgent, if non-empty, is sent on the refresh request.
+func Resolve(ctx context.Context, userAgent string) (*Credentials, error) {
 	if tok := os.Getenv(config.EnvToken); tok != "" {
 		return &Credentials{Type: TypeBearer, AccessToken: tok}, nil
 	}
-	c, err := DefaultStore().Load()
+	store := DefaultStore()
+	c, err := store.Load()
 	if err != nil {
 		return nil, err
 	}
-	if c.Expired() {
-		return nil, fmt.Errorf("access token expired at %s; run `timestripe auth login` to refresh", c.ExpiresAt.Format(time.RFC3339))
+	if !c.Expired() {
+		return c, nil
 	}
-	return c, nil
+	if c.Type == TypeOAuth && c.RefreshToken != "" {
+		refreshed, err := refreshLocked(ctx, store, userAgent)
+		if err == nil {
+			return refreshed, nil
+		}
+		return nil, fmt.Errorf("access token expired at %s and could not be refreshed (%v); run `timestripe auth login`",
+			c.ExpiresAt.Format(time.RFC3339), err)
+	}
+	return nil, fmt.Errorf("access token expired at %s; run `timestripe auth login` to refresh", c.ExpiresAt.Format(time.RFC3339))
 }
 
 // encode/decode are shared between concrete stores.

@@ -25,11 +25,11 @@ const httpTimeout = 60 * time.Second
 // newAPIClient builds an authenticated API client from stored credentials.
 // Errors here are user-facing: missing token, expired OAuth token, etc.
 func newAPIClient(ctx context.Context) (*api.ClientWithResponses, error) {
-	creds, err := auth.Resolve(ctx)
+	ua := userAgent()
+	creds, err := auth.Resolve(ctx, ua)
 	if err != nil {
 		return nil, err
 	}
-	ua := userAgent()
 	editor := func(ctx context.Context, req *http.Request) error {
 		req.Header.Set("Authorization", "Bearer "+creds.AccessToken)
 		req.Header.Set("User-Agent", ua)
