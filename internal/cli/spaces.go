@@ -96,7 +96,7 @@ func newSpacesCreateCmd() *cobra.Command {
 			"The space name may be given as a positional argument or via --name. " +
 			"A base JSON body can be loaded with --file (or --file - for stdin); " +
 			"any flags passed override the corresponding fields.",
-		Args: cobra.MaximumNArgs(1),
+		Args: optionalPositional("name"),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			body, err := loadBodyFromFile(cmd, file)
 			if err != nil {

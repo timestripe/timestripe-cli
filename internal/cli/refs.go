@@ -274,4 +274,3 @@ func resolveUserRef(ctx context.Context, c *api.ClientWithResponses, value strin
 		"user",
 	)
 }
-

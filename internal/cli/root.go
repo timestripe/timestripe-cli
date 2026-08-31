@@ -2,6 +2,8 @@
 package cli
 
 import (
+	"context"
+
 	"github.com/spf13/cobra"
 
 	"github.com/timestripe/timestripe-cli/internal/output"
@@ -19,8 +21,15 @@ type listFlags struct {
 	All    bool
 }
 
-// Execute runs the CLI.
-func Execute() error {
+// Execute runs the CLI with the given context. The context carries signal
+// cancellation from main, so Ctrl-C aborts an in-flight paginated walk.
+func Execute(ctx context.Context) error {
+	return newRootCmd().ExecuteContext(ctx)
+}
+
+// newRootCmd builds the command tree. Split out from Execute so tests can
+// drive it with SetArgs/SetOut/SetErr.
+func newRootCmd() *cobra.Command {
 	root := &cobra.Command{
 		Use:           "timestripe",
 		Short:         "Timestripe command-line interface",
@@ -68,11 +77,14 @@ func Execute() error {
 		root.AddCommand(c)
 	}
 
-	return root.Execute()
+	return root
 }
 
-// addListFlags registers --limit, --offset, and --all on a list command.
+// addListFlags registers --limit, --offset, and --all on a list command, and
+// rejects positional arguments. Every list command routes through here, so this
+// is the single place that closes the `--checked false` hole.
 func addListFlags(cmd *cobra.Command, f *listFlags) {
+	cmd.Args = noArgsWithBoolHint
 	cmd.Flags().IntVar(&f.Limit, "limit", pagination.DefaultLimit, "maximum number of items to return across all pages")
 	cmd.Flags().IntVar(&f.Offset, "offset", 0, "starting offset into the result set")
 	cmd.Flags().BoolVar(&f.All, "all", false, "fetch every page; ignores --limit")

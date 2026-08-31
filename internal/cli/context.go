@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/spf13/cobra"
 
@@ -13,6 +14,10 @@ import (
 	"github.com/timestripe/timestripe-cli/internal/output"
 	"github.com/timestripe/timestripe-cli/internal/pagination"
 )
+
+// httpTimeout bounds a single API request. The generated client otherwise uses
+// http.DefaultClient, which has no timeout at all.
+const httpTimeout = 60 * time.Second
 
 // newAPIClient builds an authenticated API client from stored credentials.
 // Errors here are user-facing: missing token, expired OAuth token, etc.
@@ -27,7 +32,10 @@ func newAPIClient(ctx context.Context) (*api.ClientWithResponses, error) {
 		req.Header.Set("User-Agent", ua)
 		return nil
 	}
-	return api.NewClientWithResponses(config.APIBase(), api.WithRequestEditorFn(editor))
+	return api.NewClientWithResponses(config.APIBase(),
+		api.WithRequestEditorFn(editor),
+		api.WithHTTPClient(&http.Client{Timeout: httpTimeout}),
+	)
 }
 
 // pickFormat resolves the output format against the command's writer.
@@ -74,4 +82,3 @@ func apiError(status int, body []byte) error {
 	}
 	return fmt.Errorf("api returned status %d: %s", status, string(body))
 }
-

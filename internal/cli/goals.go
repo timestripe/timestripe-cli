@@ -230,7 +230,7 @@ func newGoalsCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create [name]",
 		Short: "Create a goal",
-		Args:  cobra.MaximumNArgs(1),
+		Args:  optionalPositional("name"),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {

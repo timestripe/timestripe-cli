@@ -26,9 +26,9 @@ func newFoldersCmd() *cobra.Command {
 
 func newFoldersListCmd() *cobra.Command {
 	var (
-		f                       listFlags
-		spaceID, userID, sortF  string
-		isPrivate               bool
+		f                      listFlags
+		spaceID, userID, sortF string
+		isPrivate              bool
 	)
 	cmd := &cobra.Command{
 		Use:   "list",
@@ -137,7 +137,7 @@ func newFoldersCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create [name]",
 		Short: "Create a folder",
-		Args:  cobra.MaximumNArgs(1),
+		Args:  optionalPositional("name"),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
@@ -256,7 +256,7 @@ func newFolderGoalsCmd() *cobra.Command {
 
 func newFolderGoalsListCmd() *cobra.Command {
 	var (
-		f                      listFlags
+		f                       listFlags
 		folderID, goalID, sortF string
 	)
 	cmd := &cobra.Command{
@@ -367,6 +367,7 @@ func newFolderGoalsAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add",
 		Short: "Add a goal to a folder",
+		Args:  noArgsWithBoolHint,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {

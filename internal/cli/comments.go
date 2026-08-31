@@ -26,9 +26,9 @@ func newCommentsCmd() *cobra.Command {
 
 func newCommentsListCmd() *cobra.Command {
 	var (
-		f                                                            listFlags
-		goalID, spaceID, userID                                      string
-		createdFrom, createdTo, modifiedFrom, modifiedTo, sortFlag   string
+		f                                                          listFlags
+		goalID, spaceID, userID                                    string
+		createdFrom, createdTo, modifiedFrom, modifiedTo, sortFlag string
 	)
 	cmd := &cobra.Command{
 		Use:   "list",
@@ -155,7 +155,7 @@ func newCommentsCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create [description]",
 		Short: "Create a comment",
-		Args:  cobra.MaximumNArgs(1),
+		Args:  optionalPositional("description"),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {

@@ -25,9 +25,9 @@ func newBoardsCmd() *cobra.Command {
 
 func newBoardsListCmd() *cobra.Command {
 	var (
-		f                      listFlags
-		spaceID, search, sort  string
-		archived               bool
+		f                     listFlags
+		spaceID, search, sort string
+		archived              bool
 	)
 	cmd := &cobra.Command{
 		Use:   "list",
@@ -142,7 +142,7 @@ func newBoardsCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create [name]",
 		Short: "Create a board",
-		Args:  cobra.MaximumNArgs(1),
+		Args:  optionalPositional("name"),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {

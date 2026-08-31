@@ -18,8 +18,8 @@ func newMembershipsCmd() *cobra.Command {
 
 func newMembershipsListCmd() *cobra.Command {
 	var (
-		f                listFlags
-		spaceID, userID  string
+		f               listFlags
+		spaceID, userID string
 	)
 	cmd := &cobra.Command{
 		Use:   "list",
