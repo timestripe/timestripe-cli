@@ -123,7 +123,7 @@ func (f *folderFields) build(cmd *cobra.Command, client *api.ClientWithResponses
 	ifChanged(cmd, "sequence-no", "sequence_no", f.sequenceNo, body)
 	ifChanged(cmd, "is-private", "is_private", f.isPrivate, body)
 	if cmd.Flags().Changed("space") {
-		id, err := resolveSpaceRef(cmd.Context(), client, f.spaceRef)
+		id, err := resolveSpaceRef(cmd.Context(), cmd, client, f.spaceRef)
 		if err != nil {
 			return nil, err
 		}
@@ -346,14 +346,14 @@ func (f *folderGoalFields) build(cmd *cobra.Command, client *api.ClientWithRespo
 	}
 	ifChanged(cmd, "sequence-no", "sequence_no", f.sequenceNo, body)
 	if cmd.Flags().Changed("folder") {
-		id, err := resolveFolderRef(cmd.Context(), client, f.folderRef)
+		id, err := resolveFolderRef(cmd.Context(), cmd, client, f.folderRef)
 		if err != nil {
 			return nil, err
 		}
 		body["folder_id"] = id
 	}
 	if cmd.Flags().Changed("goal") {
-		id, err := resolveGoalRef(cmd.Context(), client, f.goalRef)
+		id, err := resolveGoalRef(cmd.Context(), cmd, client, f.goalRef)
 		if err != nil {
 			return nil, err
 		}
