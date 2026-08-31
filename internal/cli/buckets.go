@@ -32,6 +32,9 @@ func newBucketsListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List buckets",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateEnum(cmd, "sort", enumSortBuckets, false); err != nil {
+				return err
+			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
@@ -71,6 +74,7 @@ func newBucketsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&boardID, "board-id", "", "filter by board ID")
 	cmd.Flags().StringVarP(&search, "search", "q", "", "case-insensitive search over name")
 	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -sequence_no)")
+	completeEnum(cmd, "sort", enumSortBuckets, false)
 	return cmd
 }
 

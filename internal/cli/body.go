@@ -10,6 +10,8 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
+
+	"github.com/timestripe/timestripe-cli/internal/dates"
 )
 
 // loadBodyFromFile returns a JSON object read from --file (path or "-" for
@@ -88,4 +90,18 @@ func encodeMultipartFile(cmd *cobra.Command, field, path string) (string, io.Rea
 		return "", nil, err
 	}
 	return w.FormDataContentType(), &buf, nil
+}
+
+// nullableString sets key from a string flag, mapping "none" to JSON null.
+// Several fields are nullable in the schema but there was no way to clear one
+// from a flag: passing "" sends an empty string, which the API rejects.
+func nullableString(cmd *cobra.Command, flag, key, v string, body map[string]any) {
+	if !cmd.Flags().Changed(flag) {
+		return
+	}
+	if dates.IsNone(v) {
+		body[key] = nil
+		return
+	}
+	body[key] = v
 }

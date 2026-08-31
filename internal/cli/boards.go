@@ -33,6 +33,9 @@ func newBoardsListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List boards",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateEnum(cmd, "sort", enumSortBoards, false); err != nil {
+				return err
+			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
@@ -74,6 +77,7 @@ func newBoardsListCmd() *cobra.Command {
 	cmd.Flags().StringVarP(&search, "search", "q", "", "case-insensitive search over name")
 	cmd.Flags().BoolVar(&archived, "archived", false, "filter by archived state")
 	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -sequence_no)")
+	completeEnum(cmd, "sort", enumSortBoards, false)
 	return cmd
 }
 
@@ -112,11 +116,15 @@ func addBoardFields(cmd *cobra.Command, f *boardFields) {
 	cmd.Flags().StringVar(&f.description, "description", "", "board description (Markdown)")
 	cmd.Flags().StringVar(&f.background, "background", "", "background (URL or token)")
 	cmd.Flags().StringVar(&f.layout, "layout", "", "board layout")
+	completeEnum(cmd, "layout", enumLayout, true)
 	cmd.Flags().BoolVar(&f.archived, "archived", false, "whether the board is archived")
 	cmd.Flags().IntVar(&f.sequenceNo, "sequence-no", 0, "sort order within the parent space")
 }
 
 func (f *boardFields) build(cmd *cobra.Command, client *api.ClientWithResponses) (map[string]any, error) {
+	if err := validateEnum(cmd, "layout", enumLayout, true); err != nil {
+		return nil, err
+	}
 	body, err := loadBodyFromFile(cmd, f.file)
 	if err != nil {
 		return nil, err

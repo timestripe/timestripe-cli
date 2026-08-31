@@ -34,6 +34,9 @@ func newFoldersListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List folders",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateEnum(cmd, "sort", enumSortFolders, false); err != nil {
+				return err
+			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
@@ -75,6 +78,7 @@ func newFoldersListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&userID, "user-id", "", "filter by owning user ID (pass \"null\" for shared folders)")
 	cmd.Flags().BoolVar(&isPrivate, "is-private", false, "filter by private state")
 	cmd.Flags().StringVar(&sortF, "sort", "", "sort order; prefix with - for descending (e.g. -sequence_no)")
+	completeEnum(cmd, "sort", enumSortFolders, false)
 	return cmd
 }
 
@@ -263,6 +267,9 @@ func newFolderGoalsListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List folder-goal memberships",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateEnum(cmd, "sort", enumSortFolderGoals, false); err != nil {
+				return err
+			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
@@ -302,6 +309,7 @@ func newFolderGoalsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&folderID, "folder-id", "", "filter by folder ID")
 	cmd.Flags().StringVar(&goalID, "goal-id", "", "filter by goal ID")
 	cmd.Flags().StringVar(&sortF, "sort", "", "sort order; prefix with - for descending (e.g. -sequence_no)")
+	completeEnum(cmd, "sort", enumSortFolderGoals, false)
 	return cmd
 }
 

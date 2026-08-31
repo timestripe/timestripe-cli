@@ -34,6 +34,9 @@ func newCommentsListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List comments",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateEnum(cmd, "sort", enumSortComments, false); err != nil {
+				return err
+			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
@@ -99,6 +102,7 @@ func newCommentsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&modifiedFrom, "modified-from", "", "inclusive lower bound on modified_datetime (YYYY-MM-DD or RFC3339)")
 	cmd.Flags().StringVar(&modifiedTo, "modified-to", "", "exclusive upper bound on modified_datetime (YYYY-MM-DD or RFC3339)")
 	cmd.Flags().StringVar(&sortFlag, "sort", "", "sort order; prefix with - for descending (e.g. -modified_datetime)")
+	completeEnum(cmd, "sort", enumSortComments, false)
 	return cmd
 }
 
