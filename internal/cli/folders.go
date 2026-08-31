@@ -107,9 +107,9 @@ type folderFields struct {
 }
 
 func addFolderFields(cmd *cobra.Command, f *folderFields) {
-	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
-	cmd.Flags().StringVar(&f.name, "name", "", "folder name")
-	cmd.Flags().StringVar(&f.spaceRef, "space", "", "parent space (ID or name)")
+	cmd.Flags().StringVarP(&f.file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVarP(&f.name, "name", "n", "", "folder name")
+	cmd.Flags().StringVarP(&f.spaceRef, "space", "s", "", "parent space (ID or name)")
 	cmd.Flags().IntVar(&f.sequenceNo, "sequence-no", 0, "sort order within the parent space")
 	cmd.Flags().BoolVar(&f.isPrivate, "is-private", false, "whether the folder is private to its owner")
 }
@@ -333,7 +333,7 @@ type folderGoalFields struct {
 }
 
 func addFolderGoalFields(cmd *cobra.Command, f *folderGoalFields) {
-	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVarP(&f.file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
 	cmd.Flags().StringVar(&f.folderRef, "folder", "", "parent folder (ID or name)")
 	cmd.Flags().StringVar(&f.goalRef, "goal", "", "linked goal (ID or name)")
 	cmd.Flags().IntVar(&f.sequenceNo, "sequence-no", 0, "sort order within the folder")

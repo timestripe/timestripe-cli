@@ -129,7 +129,7 @@ type commentFields struct {
 }
 
 func addCommentFields(cmd *cobra.Command, f *commentFields) {
-	cmd.Flags().StringVar(&f.file, "file", "", "JSON body file (or - for stdin); flags override its fields")
+	cmd.Flags().StringVarP(&f.file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
 	cmd.Flags().StringVar(&f.goalRef, "goal", "", "parent goal (ID or name)")
 	cmd.Flags().StringVar(&f.description, "description", "", "comment body (Markdown)")
 }
