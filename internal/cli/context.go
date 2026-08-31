@@ -1,9 +1,12 @@
 package cli
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -32,9 +35,13 @@ func newAPIClient(ctx context.Context) (*api.ClientWithResponses, error) {
 		req.Header.Set("User-Agent", ua)
 		return nil
 	}
+	hc := &http.Client{Timeout: httpTimeout}
+	if verbose {
+		hc.Transport = &verboseTransport{base: http.DefaultTransport, w: os.Stderr}
+	}
 	return api.NewClientWithResponses(config.APIBase(),
 		api.WithRequestEditorFn(editor),
-		api.WithHTTPClient(&http.Client{Timeout: httpTimeout}),
+		api.WithHTTPClient(hc),
 	)
 }
 
@@ -75,10 +82,28 @@ func renderListOrFail[T any](cmd *cobra.Command, env *pagination.Envelope[T], of
 	return nil
 }
 
-// apiError pulls a readable message out of a non-2xx API response body.
-func apiError(status int, body []byte) error {
-	if len(body) == 0 {
-		return fmt.Errorf("api returned status %d", status)
+// verboseTransport logs each request and its response body to w. Enabled by
+// --verbose; the body is what makes an unrecognized error shape debuggable.
+type verboseTransport struct {
+	base http.RoundTripper
+	w    io.Writer
+}
+
+func (t *verboseTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	start := time.Now()
+	resp, err := t.base.RoundTrip(req)
+	if err != nil {
+		fmt.Fprintf(t.w, "> %s %s\n< error after %s: %v\n", req.Method, req.URL, time.Since(start).Round(time.Millisecond), err)
+		return resp, err
 	}
-	return fmt.Errorf("api returned status %d: %s", status, string(body))
+	fmt.Fprintf(t.w, "> %s %s\n< %s in %s\n", req.Method, req.URL, resp.Status, time.Since(start).Round(time.Millisecond))
+	if resp.Body != nil {
+		body, readErr := io.ReadAll(resp.Body)
+		_ = resp.Body.Close()
+		resp.Body = io.NopCloser(bytes.NewReader(body))
+		if readErr == nil && len(body) > 0 {
+			fmt.Fprintf(t.w, "< %s\n", string(body))
+		}
+	}
+	return resp, nil
 }
