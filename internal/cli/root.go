@@ -17,6 +17,13 @@ var outputFlags output.Flags
 // verbose logs API traffic to stderr. Populated by the persistent --verbose flag.
 var verbose bool
 
+// Help groups, so a root listing of ~17 commands stays readable.
+const (
+	groupQuick     = "quick"
+	groupResources = "resources"
+	groupSetup     = "setup"
+)
+
 // listFlags holds the pagination selectors shared by every list subcommand.
 type listFlags struct {
 	Limit  int
@@ -54,22 +61,32 @@ func newRootCmd() *cobra.Command {
 	pf.BoolVar(&outputFlags.CSV, "csv", false, "output CSV")
 	root.MarkFlagsMutuallyExclusive("json", "yaml", "markdown", "table", "csv")
 
-	root.AddCommand(
-		newAuthCmd(),
-		newSpacesCmd(),
-		newBoardsCmd(),
-		newBucketsCmd(),
-		newGoalsCmd(),
-		newCommentsCmd(),
-		newEventsCmd(),
-		newFoldersCmd(),
-		newMembershipsCmd(),
-		newUsersCmd(),
-		newConfigCmd(),
-		newCompletionCmd(),
-		newVersionCmd(),
+	root.AddGroup(
+		&cobra.Group{ID: groupQuick, Title: "Quick commands:"},
+		&cobra.Group{ID: groupResources, Title: "Resources:"},
+		&cobra.Group{ID: groupSetup, Title: "Setup:"},
 	)
 
+	root.AddCommand(newAddCmd(), newDoneCmd(), newReopenCmd())
+
+	for _, c := range []*cobra.Command{
+		newSpacesCmd(), newBoardsCmd(), newBucketsCmd(), newGoalsCmd(),
+		newCommentsCmd(), newEventsCmd(), newFoldersCmd(), newMembershipsCmd(),
+		newUsersCmd(),
+	} {
+		c.GroupID = groupResources
+		root.AddCommand(c)
+	}
+
+	for _, c := range []*cobra.Command{
+		newAuthCmd(), newConfigCmd(), newCompletionCmd(), newVersionCmd(),
+	} {
+		c.GroupID = groupSetup
+		root.AddCommand(c)
+	}
+
+	// Muscle-memory aliases: `timestripe login` alongside `timestripe auth login`.
+	// Hidden, since they duplicate what `auth` already advertises.
 	for _, c := range []*cobra.Command{
 		newAuthLoginCmd(),
 		newAuthLogoutCmd(),

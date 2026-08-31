@@ -26,6 +26,12 @@ func newEventsListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List events",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := validateEnum(cmd, "sort", enumSortEvents, false); err != nil {
+				return err
+			}
+			if err := validateEnum(cmd, "type", enumEventType, false); err != nil {
+				return err
+			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
@@ -86,6 +92,8 @@ func newEventsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&userID, "user-id", "", "filter by acting user ID")
 	cmd.Flags().StringVar(&eventType, "type", "", "filter by event type (e.g. GOAL_CREATED, COMMENT_CREATED, BOARD_MODIFIED)")
 	cmd.Flags().StringVar(&sortF, "sort", "", "sort order; prefix with - for descending (e.g. -datetime)")
+	completeEnum(cmd, "sort", enumSortEvents, false)
+	completeEnum(cmd, "type", enumEventType, false)
 	return cmd
 }
 

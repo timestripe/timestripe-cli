@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/timestripe/timestripe-cli/internal/api"
+	"github.com/timestripe/timestripe-cli/internal/dates"
 	"github.com/timestripe/timestripe-cli/internal/output"
 	"github.com/timestripe/timestripe-cli/internal/pagination"
 )
@@ -24,6 +25,8 @@ func newGoalsCmd() *cobra.Command {
 		newGoalsUpdateCmd(),
 		newGoalsDeleteCmd(),
 		newGoalsAttachCmd(),
+		nested(newDoneCmd()),
+		nested(newReopenCmd()),
 	)
 	return cmd
 }
@@ -40,6 +43,16 @@ func newGoalsListCmd() *cobra.Command {
 		Use:   "list",
 		Short: "List goals",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			// Validate before authenticating: a typo should cost no round trip.
+			if err := validateEnumSlice(cmd, "horizon", horizon, enumHorizon); err != nil {
+				return err
+			}
+			if err := validateEnum(cmd, "color", enumColor, false); err != nil {
+				return err
+			}
+			if err := validateEnum(cmd, "sort", enumSortGoals, false); err != nil {
+				return err
+			}
 			client, err := newAPIClient(cmd.Context())
 			if err != nil {
 				return err
@@ -127,6 +140,9 @@ func newGoalsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&dateTo, "date-to", "", "inclusive upper bound on due date (YYYY-MM-DD)")
 	cmd.Flags().StringVar(&updatedSince, "updated-since", "", "inclusive lower bound on modified_datetime (RFC3339)")
 	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -modified_datetime)")
+	completeEnum(cmd, "horizon", enumHorizon, false)
+	completeEnum(cmd, "color", enumColor, false)
+	completeEnum(cmd, "sort", enumSortGoals, false)
 	return cmd
 }
 
@@ -183,35 +199,62 @@ func addGoalFields(cmd *cobra.Command, f *goalFields) {
 	cmd.Flags().StringVarP(&f.file, "file", "f", "", "JSON body file (or - for stdin); flags override its fields")
 	cmd.Flags().StringVarP(&f.name, "name", "n", "", "goal name")
 	cmd.Flags().StringVarP(&f.spaceRef, "space", "s", "", "parent space (ID or name)")
-	cmd.Flags().StringVarP(&f.bucketRef, "bucket", "b", "", "parent bucket (ID or name)")
+	cmd.Flags().StringVarP(&f.bucketRef, "bucket", "b", "", "parent bucket (ID or name), or none to clear")
 	cmd.Flags().StringVarP(&f.assigneeRef, "assignee", "a", "", "assignee (user ID, email, or full name)")
 	cmd.Flags().StringVar(&f.parentRef, "parent", "", "parent goal (ID or name)")
 	cmd.Flags().StringVar(&f.description, "description", "", "goal description (Markdown)")
-	cmd.Flags().StringVarP(&f.horizon, "horizon", "H", "", "horizon: day|week|month|quarter|year|decade|life")
-	cmd.Flags().StringVar(&f.color, "color", "", "palette color (e.g. #ecce32)")
-	cmd.Flags().StringVarP(&f.date, "date", "d", "", "ISO date (YYYY-MM-DD)")
-	cmd.Flags().StringVar(&f.startTime, "start-time", "", "start time")
-	cmd.Flags().StringVar(&f.endTime, "end-time", "", "end time")
+	cmd.Flags().StringVarP(&f.horizon, "horizon", "H", "", "horizon: day|week|month|quarter|year|decade|life, or none to clear")
+	cmd.Flags().StringVar(&f.color, "color", "", "palette color (e.g. #ecce32), or none to clear")
+	cmd.Flags().StringVarP(&f.date, "date", "d", "", "due date: YYYY-MM-DD, today, friday, +3d, or none to clear")
+	cmd.Flags().StringVar(&f.startTime, "start-time", "", "start time of day (HH:MM, e.g. 09:00 or 9am), or none to clear")
+	cmd.Flags().StringVar(&f.endTime, "end-time", "", "end time of day (HH:MM, e.g. 17:30 or 5:30pm), or none to clear")
 	cmd.Flags().BoolVar(&f.checked, "checked", false, "whether the goal is checked/done")
 	cmd.Flags().IntVar(&f.horizonSequenceNo, "horizon-sequence-no", 0, "sort order within the horizon")
 	cmd.Flags().IntVar(&f.bucketSequenceNo, "bucket-sequence-no", 0, "sort order within the parent bucket")
 	cmd.Flags().IntVar(&f.subgoalSequenceNo, "subgoal-sequence-no", 0, "sort order among the parent goal's subgoals")
 	cmd.Flags().IntVar(&f.assigneeSequenceNo, "assignee-sequence-no", 0, "sort order in the Team section and Inbox")
+	completeEnum(cmd, "horizon", enumHorizon, true)
+	completeEnum(cmd, "color", enumColor, true)
 }
 
 func (f *goalFields) build(cmd *cobra.Command, client *api.ClientWithResponses) (map[string]any, error) {
+	if err := validateEnum(cmd, "horizon", enumHorizon, true); err != nil {
+		return nil, err
+	}
+	if err := validateEnum(cmd, "color", enumColor, true); err != nil {
+		return nil, err
+	}
+	f.color = normalizeColor(f.color)
 	body, err := loadBodyFromFile(cmd, f.file)
 	if err != nil {
 		return nil, err
 	}
 	ifChanged(cmd, "name", "name", f.name, body)
 	ifChanged(cmd, "description", "description", f.description, body)
-	ifChanged(cmd, "horizon", "horizon", f.horizon, body)
-	ifChanged(cmd, "color", "color", f.color, body)
-	ifChanged(cmd, "date", "date", f.date, body)
-	ifChanged(cmd, "start-time", "start_time", f.startTime, body)
-	ifChanged(cmd, "end-time", "end_time", f.endTime, body)
 	ifChanged(cmd, "checked", "checked", f.checked, body)
+	// horizon and color are nullable: "none" clears them.
+	nullableString(cmd, "horizon", "horizon", f.horizon, body)
+	nullableString(cmd, "color", "color", f.color, body)
+	if cmd.Flags().Changed("date") {
+		v, err := dateBody("date", f.date)
+		if err != nil {
+			return nil, err
+		}
+		body["date"] = v
+	}
+	for _, tf := range []struct{ flag, key, val string }{
+		{"start-time", "start_time", f.startTime},
+		{"end-time", "end_time", f.endTime},
+	} {
+		if !cmd.Flags().Changed(tf.flag) {
+			continue
+		}
+		v, err := clockBody(tf.flag, tf.val)
+		if err != nil {
+			return nil, err
+		}
+		body[tf.key] = v
+	}
 	ifChanged(cmd, "horizon-sequence-no", "horizon_sequence_no", f.horizonSequenceNo, body)
 	ifChanged(cmd, "bucket-sequence-no", "bucket_sequence_no", f.bucketSequenceNo, body)
 	ifChanged(cmd, "subgoal-sequence-no", "subgoal_sequence_no", f.subgoalSequenceNo, body)
@@ -224,25 +267,37 @@ func (f *goalFields) build(cmd *cobra.Command, client *api.ClientWithResponses) 
 		body["space_id"] = id
 	}
 	if cmd.Flags().Changed("bucket") {
-		id, err := resolveBucketRef(cmd.Context(), cmd, client, f.bucketRef)
-		if err != nil {
-			return nil, err
+		if dates.IsNone(f.bucketRef) {
+			body["bucket_id"] = nil
+		} else {
+			id, err := resolveBucketRef(cmd.Context(), cmd, client, f.bucketRef)
+			if err != nil {
+				return nil, err
+			}
+			body["bucket_id"] = id
 		}
-		body["bucket_id"] = id
 	}
 	if cmd.Flags().Changed("assignee") {
-		id, err := resolveUserRef(cmd.Context(), cmd, client, f.assigneeRef)
-		if err != nil {
-			return nil, err
+		if dates.IsNone(f.assigneeRef) {
+			body["assignee_id"] = nil
+		} else {
+			id, err := resolveUserRef(cmd.Context(), cmd, client, f.assigneeRef)
+			if err != nil {
+				return nil, err
+			}
+			body["assignee_id"] = id
 		}
-		body["assignee_id"] = id
 	}
 	if cmd.Flags().Changed("parent") {
-		id, err := resolveGoalRef(cmd.Context(), cmd, client, f.parentRef)
-		if err != nil {
-			return nil, err
+		if dates.IsNone(f.parentRef) {
+			body["parent_id"] = nil
+		} else {
+			id, err := resolveGoalRef(cmd.Context(), cmd, client, f.parentRef)
+			if err != nil {
+				return nil, err
+			}
+			body["parent_id"] = id
 		}
-		body["parent_id"] = id
 	}
 	return body, nil
 }
