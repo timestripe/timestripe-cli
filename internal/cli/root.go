@@ -14,6 +14,9 @@ import (
 // persistent flags registered on the root command.
 var outputFlags output.Flags
 
+// verbose logs API traffic to stderr. Populated by the persistent --verbose flag.
+var verbose bool
+
 // listFlags holds the pagination selectors shared by every list subcommand.
 type listFlags struct {
 	Limit  int
@@ -39,11 +42,11 @@ func newRootCmd() *cobra.Command {
 		SilenceErrors: true,
 	}
 	root.SetVersionTemplate("{{.Version}}")
-	// Pre-register --version without a shorthand so Cobra does not auto-bind -v,
-	// which we want to reserve for a future --verbose flag.
+	// Pre-register --version without a shorthand: -v is --verbose.
 	root.Flags().Bool("version", false, "version for timestripe")
 
 	pf := root.PersistentFlags()
+	pf.BoolVarP(&verbose, "verbose", "v", false, "log each API request and its raw response to stderr")
 	pf.BoolVar(&outputFlags.JSON, "json", false, "output JSON")
 	pf.BoolVar(&outputFlags.YAML, "yaml", false, "output YAML")
 	pf.BoolVar(&outputFlags.Markdown, "markdown", false, "output a Markdown table")
