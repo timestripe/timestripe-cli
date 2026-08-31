@@ -18,9 +18,9 @@ func newEventsCmd() *cobra.Command {
 
 func newEventsListCmd() *cobra.Command {
 	var (
-		f                                          listFlags
-		from, to                                   string
-		goalID, spaceID, userID, eventType, sortF  string
+		f                                         listFlags
+		from, to                                  string
+		goalID, spaceID, userID, eventType, sortF string
 	)
 	cmd := &cobra.Command{
 		Use:   "list",

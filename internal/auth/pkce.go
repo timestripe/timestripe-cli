@@ -52,7 +52,7 @@ func LoginPKCE(ctx context.Context, scopes []string, userAgent string) (*Credent
 	conf := &oauth2.Config{
 		ClientID:    ClientID,
 		RedirectURL: redirectURL,
-		Scopes:       scopes,
+		Scopes:      scopes,
 		Endpoint: oauth2.Endpoint{
 			AuthURL:  config.OAuthAuthorizeURL(),
 			TokenURL: config.OAuthTokenURL(),
