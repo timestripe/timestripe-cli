@@ -33,7 +33,7 @@ func newGoalsListCmd() *cobra.Command {
 		f                                                   listFlags
 		assigneeID, bucketID, parentID, spaceID             string
 		color, search, sort, dateFrom, dateTo, updatedSince string
-		checked                                             bool
+		checked, open, done                                 bool
 		horizon                                             []string
 	)
 	cmd := &cobra.Command{
@@ -83,7 +83,7 @@ func newGoalsListCmd() *cobra.Command {
 					ParentId:     strFlag(cmd, "parent-id", parentID),
 					SpaceId:      strFlag(cmd, "space-id", spaceID),
 					Search:       strFlag(cmd, "search", search),
-					Checked:      boolFlag(cmd, "checked", checked),
+					Checked:      checkedFilter(cmd, checked, open, done),
 					Color:        colorPtr,
 					Sort:         sortPtr,
 					Horizon:      horizons,
@@ -115,7 +115,12 @@ func newGoalsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&parentID, "parent-id", "", "filter by parent goal ID (pass \"null\" for top-level)")
 	cmd.Flags().StringVar(&spaceID, "space-id", "", "filter by space ID")
 	cmd.Flags().StringVar(&search, "search", "", "case-insensitive search over name")
-	cmd.Flags().BoolVar(&checked, "checked", false, "filter by checked state")
+	cmd.Flags().BoolVar(&checked, "checked", false, `filter by checked state (note the "=": --checked=false)`)
+	cmd.Flags().BoolVar(&open, "open", false, "only goals that are not checked")
+	cmd.Flags().BoolVar(&done, "done", false, "only goals that are checked")
+	cmd.MarkFlagsMutuallyExclusive("checked", "open")
+	cmd.MarkFlagsMutuallyExclusive("checked", "done")
+	cmd.MarkFlagsMutuallyExclusive("open", "done")
 	cmd.Flags().StringVar(&color, "color", "", "filter by palette color (e.g. #ecce32)")
 	cmd.Flags().StringSliceVar(&horizon, "horizon", nil, "filter by horizon (repeat for OR): day|week|month|quarter|year|decade|life")
 	cmd.Flags().StringVar(&dateFrom, "date-from", "", "inclusive lower bound on due date (YYYY-MM-DD)")
@@ -123,6 +128,23 @@ func newGoalsListCmd() *cobra.Command {
 	cmd.Flags().StringVar(&updatedSince, "updated-since", "", "inclusive lower bound on modified_datetime (RFC3339)")
 	cmd.Flags().StringVar(&sort, "sort", "", "sort order; prefix with - for descending (e.g. -modified_datetime)")
 	return cmd
+}
+
+// checkedFilter maps --open/--done/--checked onto the checked query param.
+//
+// --open and --done exist because `--checked false` is a trap: pflag needs
+// `--checked=false`, and the bare form used to be silently misparsed.
+func checkedFilter(cmd *cobra.Command, checked, open, done bool) *bool {
+	switch {
+	case open:
+		f := false
+		return &f
+	case done:
+		t := true
+		return &t
+	default:
+		return boolFlag(cmd, "checked", checked)
+	}
 }
 
 func newGoalsGetCmd() *cobra.Command {
