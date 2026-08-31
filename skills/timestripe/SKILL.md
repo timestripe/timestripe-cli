@@ -52,7 +52,7 @@ If `Not signed in.`, pick one:
 # Personal API token (best for scripts / CI)
 timestripe auth login --token <API_KEY>
 
-# Or OAuth2 + PKCE (opens a browser; fixed loopback on 127.0.0.1:53682)
+# Or OAuth2 + PKCE (opens a browser; loopback on a random 127.0.0.1 port)
 timestripe auth login
 
 # Add --read-only to request the read_only scope (write commands will fail)
@@ -96,11 +96,14 @@ timestripe auth         login | logout | whoami | status
                         (login alias: signin; logout alias: signout;
                          all four also available as top-level commands,
                          e.g. `timestripe login`, `timestripe whoami`)
+timestripe add [name]   quick alias for `goals create`
+timestripe done <goal>  mark a goal done   (accepts a name or an ID)
+timestripe reopen <goal>  mark a goal not done
 timestripe spaces       list | get <id> | create | update <id> | delete <id>
 timestripe boards       list | get <id> | create | update <id> | delete <id>
 timestripe buckets      list | get <id> | create | update <id> | delete <id>
 timestripe goals        list | get <id> | create | update <id> | delete <id>
-                        | attach <id> <file>
+                        | attach <id> <file> | done <goal> | reopen <goal>
                         (aliases: tasks, todos, items — the resource's
                          semantics are up to the user)
 timestripe comments     list | get <id> | create | update <id> | delete <id>
@@ -116,7 +119,9 @@ timestripe completion   bash | zsh | fish | powershell
 timestripe version
 ```
 
-Webhooks, goal completion, and space cloning are intentionally not exposed.
+Webhooks and space cloning are intentionally not exposed. Goal completion is
+available via `timestripe done <goal>` / `timestripe reopen <goal>`, or
+`goals update <id> --checked`.
 
 ## Pagination (list commands)
 
@@ -150,11 +155,39 @@ with `jq` — they are cheaper and correct across all pages.
 Nullable foreign-key filters (`--assignee-id`, `--bucket-id`, `--parent-id`)
 accept the literal string `null` to match items where that field is unset.
 `--sort` accepts the API field name; prefix with `-` for descending, e.g.
-`--sort -modified_datetime`. Dates are `YYYY-MM-DD`; `--updated-since` is RFC3339.
+`--sort -modified_datetime`. Invalid enum values for `--horizon`, `--color`,
+`--sort`, `--layout` and `--type` are rejected locally, before any request,
+with a "did you mean" suggestion.
+
+Date flags accept `YYYY-MM-DD`, RFC3339, `today`/`tomorrow`/`yesterday`, a
+weekday (`friday`, `next friday`, `last friday`), or an offset (`+3d`, `-1w`,
+`+2m`). A bare weekday means the next occurrence *including today*.
+
+Prefer `--open` and `--done` over `--checked`. `--checked` needs an `=`
+(`--checked=false`); the bare `--checked false` is an error, not a filter.
 
 ## Create and update
 
-`create` and `update <id>` read a JSON body from `--file`:
+Every field has a flag. Prefer flags over `--file` — they are shorter, they are
+validated locally, and the reference flags accept names.
+
+```bash
+timestripe goals create "Ship v1" --space Work --bucket "This Week" \
+  --horizon week --date friday
+```
+
+`--space`, `--bucket`, `--board`, `--goal`, `--folder`, `--parent` and
+`--assignee` accept **a name or an ID**; an ID wins if a name collides with
+one. `--assignee` also matches an email or a full name. An ambiguous name
+returns an error listing the candidates (and prompts, if a human is at a
+terminal — never when stdin is a pipe).
+
+Pass `none` to clear a nullable field: `--horizon none`, `--date none`,
+`--bucket none`, `--color none`, `--parent none`, `--assignee none`.
+An empty string is not a valid way to clear one.
+
+`create` and `update <id>` also read a JSON body from `--file`, with any
+explicitly-set flag overriding the corresponding field:
 
 ```bash
 # From a file
@@ -166,6 +199,10 @@ echo '{"space_id":"...","name":"Ship v1","horizon":"week"}' | \
 ```
 
 `update` performs a PATCH (send only the fields you want to change).
+
+Short flags, consistent across every command:
+`-f --file`, `-n --name`, `-s --space`, `-b --bucket`, `-a --assignee`,
+`-H --horizon`, `-d --date`, `-q --search`, `-l --limit`, `-A --all`.
 
 ## Data model cheatsheet
 
@@ -218,6 +255,10 @@ otherwise reach for `- [ ]`.
 - non-zero — failure; a human-readable message goes to stderr. Check `$?` and
   surface the stderr text to the user verbatim.
 
+Errors are parsed, not raw JSON: a 400 lists the offending fields, and a 401 or
+403 names the command to run. `--verbose` logs each request, its status, and
+the raw response body to stderr when a message is not enough.
+
 ## Common recipes
 
 ```bash
@@ -231,10 +272,13 @@ timestripe goals list --all --json | jq '.items'
 timestripe goals list --horizon week --all --json | jq '.items'
 
 # Open goals with a due date this month, newest first
-timestripe goals list --checked=false --date-from 2026-04-01 --date-to 2026-04-30 \
+timestripe goals list --open --date-from 2026-04-01 --date-to 2026-04-30 \
   --sort -date --json
 
-# Create a goal from a heredoc
+# Create a goal with flags (preferred: names are resolved for you)
+timestripe add "Draft the Q3 plan" --space "Work" --horizon week --date friday
+
+# Or from a heredoc, when the body is generated
 cat <<'EOF' | timestripe goals create --file -
 {
   "space_id": "spc_abc",
@@ -244,8 +288,9 @@ cat <<'EOF' | timestripe goals create --file -
 }
 EOF
 
-# Mark a goal as checked (PATCH)
-echo '{"checked": true}' | timestripe goals update gl_xyz --file -
+# Mark a goal as done, by ID or by name
+timestripe done gl_xyz
+timestripe done "Draft the Q3 plan"
 
 # Attach a file to a goal (appended inline to its description)
 timestripe goals attach gl_xyz ./screenshot.png
@@ -268,6 +313,7 @@ including pagination and format flags. Shell completion is available via
 - Do not scrape `--table` output; always use `--json`.
 - Do not hand-assemble URLs against the API — use the CLI.
 - Do not store API tokens in shell history; prefer `TIMESTRIPE_TOKEN` in an
-  env file or `timestripe auth login --token` (persisted to keychain).
+  env file or `timestripe auth login --token` (persisted to
+  `~/.config/timestripe/credentials.json`, mode 0600).
 - Do not stuff Markdown checklists into a board's or goal's `description` —
   create subgoals (`parent_id`) instead.
