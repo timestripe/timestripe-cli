@@ -51,10 +51,14 @@ Download for macOS or Linux (amd64 / arm64) from the [Releases](https://github.c
 ## Quick start
 
 ```bash
-timestripe auth login                       # opens your browser
+timestripe auth login                  # opens your browser
 timestripe spaces list
-timestripe boards list --space <space-id>
-timestripe goals create --bucket <bucket-id> --title "Ship the thing"
+timestripe boards list --space-id <space-id>
+
+# Parent references accept a name or an ID, so you rarely need to look one up:
+timestripe add "Ship the thing" --space Work --bucket "This Week" --horizon week --date friday
+timestripe goals list --open
+timestripe done "Ship the thing"
 ```
 
 Every command has `--help` with full flag and subcommand documentation:
@@ -114,7 +118,74 @@ Related commands:
 | `config` | Show resolved configuration |
 | `version` | Print version, commit, and build date |
 
-Most resource commands expose `list`, `get`, `create`, `update`, and `delete` subcommands. Run `--help` on any command for details.
+Most resource commands expose `list`, `get`, `create`, `update`, and `delete`. `events`, `memberships`, and `users` are read-only: they expose `list` and `get` only. Run `--help` on any command for details.
+
+## Shortcuts
+
+### Quick commands
+
+| Command | Same as |
+| --- | --- |
+| `timestripe add "Buy milk"` | `timestripe goals create "Buy milk"` |
+| `timestripe done <goal>` | `timestripe goals update <id> --checked` |
+| `timestripe reopen <goal>` | `timestripe goals update <id> --checked=false` |
+
+`done` and `reopen` accept a goal name as well as an ID.
+
+### Short flags
+
+A letter means the same thing on every command.
+
+| Short | Long | | Short | Long |
+| --- | --- | --- | --- | --- |
+| `-f` | `--file` | | `-H` | `--horizon` |
+| `-n` | `--name` | | `-d` | `--date` |
+| `-s` | `--space` | | `-q` | `--search` |
+| `-b` | `--bucket` | | `-l` | `--limit` |
+| `-a` | `--assignee` | | `-A` | `--all` |
+
+Note that `-s` is always `--space` and `-q` is always `--search`; `-b` is always `--bucket`, never `--board`.
+
+### Names instead of IDs
+
+`--space`, `--bucket`, `--board`, `--goal`, `--folder`, `--parent`, and `--assignee` all accept a name as well as an ID. An ID always wins if a name happens to collide with one. `--assignee` also matches an email address or a full name.
+
+If a name is ambiguous, the CLI lists the candidates. In an interactive terminal it prompts you to pick one; when stdin is a pipe or a file it just returns the error, so scripts never block.
+
+### Dates
+
+`--date` (and `--date-from`, `--date-to`, `--updated-since`) accept:
+
+| Form | Example |
+| --- | --- |
+| ISO date | `2026-09-01` |
+| Relative day | `today`, `tomorrow`, `yesterday` |
+| Weekday | `friday`, `next friday`, `last friday` |
+| Offset | `+3d`, `-1w`, `+2m`, `+1y` |
+| Clear the field | `none` |
+
+A bare weekday means the next one **including today**, so `friday` on a Friday means today. `next friday` is strictly after today.
+
+`--start-time` and `--end-time` are times of day: `09:00`, `9am`, `21:30`, `5:30pm`.
+
+`none` also clears `--horizon`, `--color`, `--bucket`, `--parent`, and `--assignee`.
+
+### Filtering by completion
+
+```bash
+timestripe goals list --open      # not done
+timestripe goals list --done      # done
+```
+
+`--checked` still works, but needs an `=`: `--checked=false`. The bare `--checked false` is rejected rather than silently parsed as `--checked=true`.
+
+### Shell completion
+
+```bash
+timestripe completion zsh > "${fpath[1]}/_timestripe"
+```
+
+Enum flags (`--horizon`, `--color`, `--sort`, `--layout`, `--type`) complete their valid values. Invalid values are caught locally, before any network request, with a "did you mean" suggestion.
 
 ## Output formats
 
@@ -131,7 +202,10 @@ Pick a format with one of these mutually-exclusive flags:
 When stdout isn't a TTY, the default switches to JSON, so piping is safe:
 
 ```bash
-timestripe goals list --json | jq '.[] | select(.completed == false) | .title'
+timestripe goals list --json | jq '.items[] | select(.checked == false) | .name'
+
+# or let the server do the filtering
+timestripe goals list --open --json | jq '.items[].name'
 ```
 
 ## Pagination
