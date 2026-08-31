@@ -123,7 +123,7 @@ func (f *bucketFields) build(cmd *cobra.Command, client *api.ClientWithResponses
 	ifChanged(cmd, "show-emoji", "show_emoji", f.showEmoji, body)
 	ifChanged(cmd, "sequence-no", "sequence_no", f.sequenceNo, body)
 	if cmd.Flags().Changed("board") {
-		id, err := resolveBoardRef(cmd.Context(), client, f.boardRef)
+		id, err := resolveBoardRef(cmd.Context(), cmd, client, f.boardRef)
 		if err != nil {
 			return nil, err
 		}

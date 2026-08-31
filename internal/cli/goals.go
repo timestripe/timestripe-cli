@@ -195,28 +195,28 @@ func (f *goalFields) build(cmd *cobra.Command, client *api.ClientWithResponses) 
 	ifChanged(cmd, "subgoal-sequence-no", "subgoal_sequence_no", f.subgoalSequenceNo, body)
 	ifChanged(cmd, "assignee-sequence-no", "assignee_sequence_no", f.assigneeSequenceNo, body)
 	if cmd.Flags().Changed("space") {
-		id, err := resolveSpaceRef(cmd.Context(), client, f.spaceRef)
+		id, err := resolveSpaceRef(cmd.Context(), cmd, client, f.spaceRef)
 		if err != nil {
 			return nil, err
 		}
 		body["space_id"] = id
 	}
 	if cmd.Flags().Changed("bucket") {
-		id, err := resolveBucketRef(cmd.Context(), client, f.bucketRef)
+		id, err := resolveBucketRef(cmd.Context(), cmd, client, f.bucketRef)
 		if err != nil {
 			return nil, err
 		}
 		body["bucket_id"] = id
 	}
 	if cmd.Flags().Changed("assignee") {
-		id, err := resolveUserRef(cmd.Context(), client, f.assigneeRef)
+		id, err := resolveUserRef(cmd.Context(), cmd, client, f.assigneeRef)
 		if err != nil {
 			return nil, err
 		}
 		body["assignee_id"] = id
 	}
 	if cmd.Flags().Changed("parent") {
-		id, err := resolveGoalRef(cmd.Context(), client, f.parentRef)
+		id, err := resolveGoalRef(cmd.Context(), cmd, client, f.parentRef)
 		if err != nil {
 			return nil, err
 		}

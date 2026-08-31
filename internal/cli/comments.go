@@ -141,7 +141,7 @@ func (f *commentFields) build(cmd *cobra.Command, client *api.ClientWithResponse
 	}
 	ifChanged(cmd, "description", "description", f.description, body)
 	if cmd.Flags().Changed("goal") {
-		id, err := resolveGoalRef(cmd.Context(), client, f.goalRef)
+		id, err := resolveGoalRef(cmd.Context(), cmd, client, f.goalRef)
 		if err != nil {
 			return nil, err
 		}

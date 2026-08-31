@@ -128,7 +128,7 @@ func (f *boardFields) build(cmd *cobra.Command, client *api.ClientWithResponses)
 	ifChanged(cmd, "archived", "archived", f.archived, body)
 	ifChanged(cmd, "sequence-no", "sequence_no", f.sequenceNo, body)
 	if cmd.Flags().Changed("space") {
-		id, err := resolveSpaceRef(cmd.Context(), client, f.spaceRef)
+		id, err := resolveSpaceRef(cmd.Context(), cmd, client, f.spaceRef)
 		if err != nil {
 			return nil, err
 		}
