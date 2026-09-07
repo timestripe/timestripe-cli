@@ -21,7 +21,11 @@ var (
 	enumColor   = []string{"#ecce32", "#df496d", "#92ce14", "#278dea", "#955be0", "#f2713a"}
 	enumLayout  = []string{"horizontal", "vertical"}
 
-	enumSortGoals       = sortable("assignee", "checked", "created_datetime", "date", "horizon", "modified_datetime", "name")
+	enumSortGoals = sortable(
+		"assignee", "assignee_sequence_no", "bucket_sequence_no", "checked",
+		"created_datetime", "date", "horizon", "horizon_sequence_no",
+		"modified_datetime", "name", "subgoal_sequence_no",
+	)
 	enumSortBoards      = sortable("archived", "name", "sequence_no")
 	enumSortBuckets     = sortable("created_datetime", "name", "sequence_no")
 	enumSortComments    = sortable("created_datetime", "modified_datetime")

@@ -155,9 +155,15 @@ with `jq` — they are cheaper and correct across all pages.
 Nullable foreign-key filters (`--assignee-id`, `--bucket-id`, `--parent-id`)
 accept the literal string `null` to match items where that field is unset.
 `--sort` accepts the API field name; prefix with `-` for descending, e.g.
-`--sort -modified_datetime`. Invalid enum values for `--horizon`, `--color`,
-`--sort`, `--layout` and `--type` are rejected locally, before any request,
-with a "did you mean" suggestion.
+`--sort -modified_datetime`. `goals list` sorts by `assignee`, `checked`,
+`created_datetime`, `date`, `horizon`, `modified_datetime`, `name`, and by the
+manual order the user set in the app: `horizon_sequence_no` (within a horizon),
+`bucket_sequence_no` (within a bucket), `subgoal_sequence_no` (among a parent's
+subgoals), `assignee_sequence_no` (Team section and Inbox). The manual orders
+are only meaningful alongside the matching filter, e.g.
+`goals list --bucket-id <code> --sort bucket_sequence_no`. Invalid enum values
+for `--horizon`, `--color`, `--sort`, `--layout` and `--type` are rejected
+locally, before any request, with a "did you mean" suggestion.
 
 Date flags accept `YYYY-MM-DD`, RFC3339, `today`/`tomorrow`/`yesterday`, a
 weekday (`friday`, `next friday`, `last friday`), or an offset (`+3d`, `-1w`,
