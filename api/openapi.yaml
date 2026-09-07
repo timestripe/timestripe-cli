@@ -1200,19 +1200,27 @@ paths:
           type: string
           enum:
           - assignee
+          - assignee_sequence_no
+          - bucket_sequence_no
           - checked
           - created_datetime
           - date
           - horizon
+          - horizon_sequence_no
           - modified_datetime
           - name
+          - subgoal_sequence_no
           - -assignee
+          - -assignee_sequence_no
+          - -bucket_sequence_no
           - -checked
           - -created_datetime
           - -date
           - -horizon
+          - -horizon_sequence_no
           - -modified_datetime
           - -name
+          - -subgoal_sequence_no
       - name: space_id
         in: query
         required: false
